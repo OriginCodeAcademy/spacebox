@@ -12,7 +12,7 @@ export default class App extends Component {
   }
 
   state = {
-    songs: null
+    songs: []
   };
 
   componentDidMount() {
@@ -25,6 +25,9 @@ export default class App extends Component {
         <h1>Songs</h1>
         <p>Start at /register</p>
         <section>
+          {this.state.songs.map((song) => {
+            return <li>{song.name}</li>
+          })}
         </section>
       </section>
     );

@@ -7,36 +7,54 @@ require('dotenv').config();
 
 var songs = [];
 
+let lastTime = new Date();
 let accessToken = null;
 let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
-const spotifyApi = new SpotifyWebApi({ 
-  clientId: process.env.SPOTIFY_CLIENT_ID, 
+const spotifyApi = new SpotifyWebApi({
+  clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   redirectUri: 'http://localhost:8080/',
-  refreshToken 
+  refreshToken
 });
-
-const createAuthorizationUrl = () => {
-  //Retrieves authorizationURL which prompts login
-  return spotifyApi.createAuthorizeURL(['playlist-read-private', 'playlist-modify-private', 'streaming', 'app-remote-control', 'user-modify-playback-state', 'user-read-currently-playing', 'user-read-playback-state'], 'random-string')
-}
-const getTokens = () => {
-    // Using code in response headers, requests a token
-    spotifyApi.authorizationCodeGrant(process.env.CODE)
-    .then(data => {
+const checkToken = (req, res, cb) => {
+  const currentTime = new Date();
+ 
+  if (lastTime < currentTime || !accessToken) {
+    spotifyApi.refreshAccessToken()
+      .then(data => {
+        lastTime = new Date();
+        lastTime.setSeconds(data.body.expires_in); 
+        accessToken = data.body['access_token'];
         spotifyApi.setAccessToken(data.body['access_token']);
-        spotifyApi.setRefreshToken(data.body['refresh_token']);
-        return {
-          accessToken: data.body['access_token'],
-          refreshToken: data.body['refresh_token']
-        }
-      }
-    )
-    .catch(err => console.log(err))
-}
+        cb();
+      })
+      .catch(err => console.log(err))
+    } else {
+      cb();
+    }
+  }
 
-//console.log(createAuthorizationUrl());
-//console.log(getTokens())
+  const getPlaylist = () => {
+    spotifyApi.getPlaylist('jy0ambrgj79gi3vw9ndg4qxlf', '25wrjLz6FFIPS4tnwartfC')
+      .then(data => {
+        const playlistInfo = {
+          url: data.body.external_urls.spotify,
+          image: data.body.images[0].url,
+          tracks: data.body.tracks.items.map(i => ({
+            id: i.track.id,
+            name: i.track.name,
+            artist: i.track.artists[0].name,
+            albumCover: i.track.album.images[0].url,
+            duration: i.track.duration_ms,
+            uri: i.track.uri
+          }))
+        }
+        songs = playlistInfo.tracks
+        io.emit('update', songs)
+        return songs;
+      })
+      .catch(err => console.log(err));
+  }
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -69,54 +87,21 @@ app.post('/request', (req, res) => {
 //Custom routes
 app.get('/404', (req, res) => res.json({ message: 'Nothing is here. But thanks for checking!' }));
 
-app.use('/api', (req, res, next) => {
 
-  const lastTime = new Date();
-  const currentTime = new Date();
-  
-  if (lastTime < currentTime || !accessToken) {
-    spotifyApi.refreshAccessToken()
-      .then(data => {
-            lastTime.setSeconds(data.body.expires_in);
-            accessToken = data.body['access_token'];
-            spotifyApi.setAccessToken(data.body['access_token']);
-            next();
-      })
-      .catch(err => console.log(err))
-  } else {
-    next();
-  }
-});
-
-app.get('/api/artist/:artist', (req,res) => {
+app.use('/api', checkToken);
+app.get('/api/artist/:artist', (req, res) => {
   // clientId, clientSecret and refreshToken has been set on the api object previous to this call.
   spotifyApi.searchArtists(req.params.artist)
-  .then(data => {
-    const items = data.body.artists.items;
-    if (!items.length) res.send('Stop it');
-    res.send(items[0])
-  })
-  .catch(err => console.log(err));
+    .then(data => {
+      const items = data.body.artists.items;
+      if (!items.length) res.send('Stop it');
+      res.send(items[0])
+    })
+    .catch(err => console.log(err));
 })
 
 app.get('/api/playlist', (req, res) => {
-  spotifyApi.getPlaylist('jy0ambrgj79gi3vw9ndg4qxlf', '25wrjLz6FFIPS4tnwartfC')
-  .then(data => {
-    const playlistInfo = {
-      url: data.body.external_urls.spotify,
-      image: data.body.images[0].url,
-      tracks: data.body.tracks.items.map(i => ({
-        id: i.track.id,
-        name: i.track.name,
-        artist: i.track.artists[0].name,
-        albumCover: i.track.album.images[0].url,
-        duration: i.track.duration_ms,
-        uri: i.track.uri
-      }))
-    }
-    res.send(playlistInfo);
-  })
-  .catch(err => console.log(err));
+  res.send(getPlaylist());
 });
 
 // app.post('/queue',(req, res ) => {
@@ -134,4 +119,7 @@ app.delete('/api/request', (req, res, next) => {
 
 
 const PORT = process.env.PORT || 8080;
-http.listen(PORT, () => console.log(`Server is listening on ${PORT}`));
+http.listen(PORT, checkToken(null, null, () => {
+  getPlaylist();
+  console.log(`Server is listening on ${PORT}`)
+}));
