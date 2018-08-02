@@ -9,7 +9,7 @@ var songs = [];
 
 let lastTime = new Date();
 let accessToken = null;
-let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
+let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN_AV;
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
@@ -35,7 +35,7 @@ const checkToken = (req, res, cb) => {
   }
 
   const getPlaylist = () => {
-    spotifyApi.getPlaylist('jy0ambrgj79gi3vw9ndg4qxlf', '25wrjLz6FFIPS4tnwartfC')
+    spotifyApi.getPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV)
       .then(data => {
         const playlistInfo = {
           url: data.body.external_urls.spotify,
@@ -103,6 +103,21 @@ app.get('/api/artist/:artist', (req, res) => {
 app.get('/api/playlist', (req, res) => {
   res.send(getPlaylist());
 });
+
+app.get('/api/pause', (req, res) => {
+  spotifyApi.pause()
+  .then((data) => {
+    res.send(data);
+  })
+  .catch(err => console.log(err))
+})
+app.get('/api/play', (req, res) => {
+  spotifyApi.play()
+  .then((data) => {
+    res.send(data);
+  })
+  .catch(err => console.log(err))
+})
 
 // app.post('/queue',(req, res ) => {
 //   const link =`https://api.spotify.com/v1/users/jy0ambrgj79gi3vw9ndg4qxlf/playlists/25wrjLz6FFIPS4tnwartfC/tracks`
