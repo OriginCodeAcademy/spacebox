@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+app.use(express.json())
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 var SpotifyWebApi = require('spotify-web-api-node');
@@ -35,7 +36,7 @@ const checkToken = (req, res, cb) => {
   }
 
   const getPlaylist = () => {
-    spotifyApi.getPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV)
+    return spotifyApi.getPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV)
       .then(data => {
         const playlistInfo = {
           url: data.body.external_urls.spotify,
@@ -78,10 +79,13 @@ app.get('/board', (req, res) => res.json(songs));
 
 
 //Register
-app.post('/request', (req, res) => {
-  songs.push([]);
+app.post('/api/request', (req, res) => {
+  spotifyApi.addTracksToPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV, [req.body.uri])
+  .then((response) => {
+  res.send(response)
+  })
+  .catch(err => console.log(err))
   io.emit('update', songs);
-  res.json({ message: `Thanks` });
 });
 
 //Custom routes
@@ -100,8 +104,9 @@ app.get('/api/artist/:artist', (req, res) => {
     .catch(err => console.log(err));
 })
 
-app.get('/api/playlist', (req, res) => {
-  res.send(getPlaylist());
+app.get('/api/playlist', async (req, res) => {
+  const songs = await getPlaylist();
+  res.send(songs);
 });
 
 app.get('/api/pause', (req, res) => {
@@ -126,8 +131,12 @@ app.get('/api/play', (req, res) => {
 
 //Deleting teams
 app.delete('/api/request', (req, res, next) => {
-  const newSongs = songs.filter(t => t.name != req.body.name);
-  songs = newSongs;
+  // const newSongs = songs.filter(t => t.name != req.body.name);
+  spotifyApi.removeTracksFromPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV, req.body.tracks)
+    .then((response) => {
+      res.send(response)
+    })
+    .catch(err => console.log(err))
   io.emit('update', songs);
   return res.send('Team deleted');
 });
