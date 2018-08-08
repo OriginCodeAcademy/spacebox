@@ -79,13 +79,33 @@ app.get('/board', (req, res) => res.json(songs));
 
 
 //Register
+const isDup = uri => songs.some(song => song.uri === uri);
+
 app.post('/api/request', (req, res) => {
-  spotifyApi.addTracksToPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV, [req.body.uri])
-  .then((response) => {
-  res.send(response)
-  })
-  .catch(err => console.log(err))
-  io.emit('update', songs);
+    if (isDup(req.body.uri)) {
+      res.send("Naww son")
+    } else{
+      spotifyApi.getMyCurrentPlayingTrack()
+        .then(response => {
+          while(songs[0].uri !== response.body.item.uri && songs.length){
+            songs.shift()
+          }
+          //Add track to songs array
+
+          //Update spotify playlist with new queue
+          
+          
+          io.emit('update', songs);
+          res.send(songs);
+        }) 
+        .catch(err => console.log(err))
+    }
+  // spotifyApi.addTracksToPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV, [req.body.uri])
+  // .then((response) => {
+  // res.send(response)
+  // })
+  // .catch(err => console.log(err))
+  // io.emit('update', songs);
 });
 
 //Custom routes
