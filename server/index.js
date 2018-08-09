@@ -5,56 +5,85 @@ const io = require('socket.io')(http);
 var SpotifyWebApi = require('spotify-web-api-node');
 require('dotenv').config();
 
+/**
+ * A global array of Spotify track objects
+ * @type {Array<{}>}
+ */
 var songs = [];
 
 let lastTime = new Date();
 let accessToken = null;
-let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
+let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN_AV;
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
   redirectUri: 'http://localhost:8080/',
   refreshToken
 });
+
+/**
+ * checks if we have a valid access token and if not refreshes token
+ * @param {{}} req users request
+ * @param {{}} res servers response obj
+ * @param {Function} cb callback function that is invoked after retrieving access token
+ */
 const checkToken = (req, res, cb) => {
   const currentTime = new Date();
- 
+  
   if (lastTime < currentTime || !accessToken) {
     spotifyApi.refreshAccessToken()
-      .then(data => {
-        lastTime = new Date();
-        lastTime.setSeconds(data.body.expires_in); 
-        accessToken = data.body['access_token'];
-        spotifyApi.setAccessToken(data.body['access_token']);
-        cb();
-      })
-      .catch(err => console.log(err))
-    } else {
+    .then(data => {
+      lastTime = new Date();
+      lastTime.setSeconds(data.body.expires_in);
+      accessToken = data.body['access_token'];
+      spotifyApi.setAccessToken(data.body['access_token']);
       cb();
-    }
+    })
+    .catch(err => console.log(err))
+  } else {
+    cb();
   }
+}
 
-  const getPlaylist = () => {
-    spotifyApi.getPlaylist('jy0ambrgj79gi3vw9ndg4qxlf', '25wrjLz6FFIPS4tnwartfC')
-      .then(data => {
-        const playlistInfo = {
-          url: data.body.external_urls.spotify,
-          image: data.body.images[0].url,
-          tracks: data.body.tracks.items.map(i => ({
-            id: i.track.id,
-            name: i.track.name,
-            artist: i.track.artists[0].name,
-            albumCover: i.track.album.images[0].url,
-            duration: i.track.duration_ms,
-            uri: i.track.uri
-          }))
-        }
-        songs = playlistInfo.tracks
-        io.emit('update', songs)
-        return songs;
-      })
-      .catch(err => console.log(err));
-  }
+/**
+ * takes a track object and formats it
+ * @param {{}} track the track object
+ * @returns {{ id: String, name: String, artist: String, albumCover: String, duration: Number, uri: String }} formatted track
+ */
+const formatSong = track => ({
+  id: track.id,
+  name: track.name,
+  artist: track.artists[0].name,
+  albumCover: track.album.images[0].url,
+  duration: track.duration_ms,
+  uri: track.uri
+})
+
+/**
+ * retrieves playlist from Spotify
+ * @returns {{url: String, image: String, tracks: Array<{}>}} playlist information and tracks
+ */
+const getPlaylist = () => {
+  return spotifyApi.getPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV)
+  .then(data => {
+    const playlistInfo = {
+      url: data.body.external_urls.spotify,
+      image: data.body.images[0].url,
+      tracks: data.body.tracks.items.map(i => formatSong(i.track))
+    }
+    songs = playlistInfo.tracks
+    io.emit('update', songs)
+    return songs;
+  })
+  .catch(err => console.log(err));
+}
+
+/** 
+ * checking to see if URI exists in songs array 
+ * @param {String} uri spotify track identifier
+ * @return {Boolean} false if there is no duplicate
+ */  
+const isDup = uri => songs.some(song => song.uri === uri);
 
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -65,32 +94,43 @@ app.use(express.json());
 app.use('/', express.static('build'));
 app.use('/', express.static('public'));
 
-
-//Validation checks
-app.post('*', (req, res, next) => {
-
-  next();
-})
-
-//Main pages
 app.get('/', (req, res) => res.render('index', { songs }));
 app.get('/board', (req, res) => res.json(songs));
 
+app.post('/api/request', (req, res) => {
+  if (isDup(req.body.uri)) {
+    res.json({ error: 'Duplicate song!' })
+  }
+  else {
+    spotifyApi.getTrack(req.body.uri.slice(14))
+      .then(track => {
+        const trackData = formatSong(track.body);
 
-//Register
-app.post('/request', (req, res) => {
-  songs.push([]);
-  io.emit('update', songs);
-  res.json({ message: `Thanks` });
+        spotifyApi.getMyCurrentPlayingTrack()
+          .then(response => {
+            while (songs[0].uri !== response.body.item.uri && songs.length) {
+              songs.shift()
+            }
+            songs.push(trackData);
+
+            spotifyApi.replaceTracksInPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV, songs.map(s => s.uri))
+              .then(response => {
+                io.emit('update', songs);
+                res.send(songs);
+              })
+              .catch(err => res.json({ error: 'We couldn\'t add your song for some reason. Try again!' }));  
+            })
+            .catch(err => res.json({ error: 'SPACEBOX is turned off. Tell an instructor!'}))
+      })
+      .catch(err => res.json({ error: 'Track doesn\'t exist! Try spotify:track:{SONG_ID}'}));
+  }
 });
 
 //Custom routes
 app.get('/404', (req, res) => res.json({ message: 'Nothing is here. But thanks for checking!' }));
 
-
 app.use('/api', checkToken);
 app.get('/api/artist/:artist', (req, res) => {
-  // clientId, clientSecret and refreshToken has been set on the api object previous to this call.
   spotifyApi.searchArtists(req.params.artist)
     .then(data => {
       const items = data.body.artists.items;
@@ -100,23 +140,19 @@ app.get('/api/artist/:artist', (req, res) => {
     .catch(err => console.log(err));
 })
 
-app.get('/api/playlist', (req, res) => {
-  res.send(getPlaylist());
+app.get('/api/playlist', async (req, res) => {
+  const songs = await getPlaylist();
+  res.send(songs);
 });
 
-// app.post('/queue',(req, res ) => {
-//   const link =`https://api.spotify.com/v1/users/jy0ambrgj79gi3vw9ndg4qxlf/playlists/25wrjLz6FFIPS4tnwartfC/tracks`
-//   res.send(link, playtistInfo) 
-// });
-
-//Deleting teams
 app.delete('/api/request', (req, res, next) => {
-  const newSongs = songs.filter(t => t.name != req.body.name);
-  songs = newSongs;
-  io.emit('update', songs);
-  return res.send('Team deleted');
+  spotifyApi.removeTracksFromPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV, req.body.tracks)
+    .then((response) => {
+      io.emit('update', songs);
+      res.send(response)
+    })
+    .catch(err => console.log(err))
 });
-
 
 const PORT = process.env.PORT || 8080;
 http.listen(PORT, checkToken(null, null, () => {

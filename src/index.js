@@ -8,22 +8,43 @@ const socket = io();
 export default class App extends Component {
   constructor() {
     super();
+    this.state = {
+      uri: "",
+      songs: []
+    }
     socket.on('update', songs => this.setState({ songs }));
+    this.getUri = this.getUri.bind(this)
+    this.handleSearch = this.handleSearch.bind(this)
   }
 
-  state = {
-    songs: []
-  };
 
   componentDidMount() {
     axios.get('/board').then(r => this.setState({ songs: r.data }));
   }
 
+  getUri(e) {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
+
+  handleSearch() {
+    axios.post('/api/request', {uri: this.state.uri})
+    .then( res => { 
+      if (res.data.error) alert(res.data.error)
+      return res.data
+    }); 
+  }
+
   render() {
     return (
       <section id="main">
-        <h1>Songs</h1>
-        <p>Start at /register</p>
+        <h1>S P A C E B O X</h1>
+        <p>Add a spotify track URI below</p>
+        <div>
+          <input type="text" name="uri" onChange={this.getUri} value={this.state.uri}/>
+          <button name="button" onClick={this.handleSearch}>Search</button>
+        </div>
         <section>
           {this.state.songs.map((song) => {
             return <li>{song.name}</li>
