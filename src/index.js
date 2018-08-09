@@ -31,7 +31,7 @@ export default class App extends Component {
   handleSearch() {
     axios.post('/api/request', {uri: this.state.uri})
     .then( res => { 
-      console.log(res.data)
+      if (res.data.error) alert(res.data.error)
       return res.data
     }); 
   }
@@ -39,8 +39,8 @@ export default class App extends Component {
   render() {
     return (
       <section id="main">
-        <h1>Songs</h1>
-        <p>Start at /register</p>
+        <h1>S P A C E B O X</h1>
+        <p>Add a spotify track URI below</p>
         <div>
           <input type="text" name="uri" onChange={this.getUri} value={this.state.uri}/>
           <button name="button" onClick={this.handleSearch}>Search</button>
