@@ -33,21 +33,33 @@ export default class App extends Component {
     .then( res => { 
       if (res.data.error) alert(res.data.error)
       return res.data
-    }); 
+    });  
   }
 
   render() {
     return (
       <section id="main">
-        <h1>S P A C E B O X</h1>
-        <p>Add a spotify track URI below</p>
-        <div>
-          <input type="text" name="uri" onChange={this.getUri} value={this.state.uri}/>
-          <button name="button" onClick={this.handleSearch}>Search</button>
+        <h1 className="glitch" data-text="SPACEBOX">SPACEBOX</h1>
+        <div className="request">
+          <input type="text" placeholder="spotify:track:URI" name="uri" onChange={this.getUri} value={this.state.uri}/>
+          <button name="button" onClick={this.handleSearch}>Add Song</button>
         </div>
-        <section>
-          {this.state.songs.map((song) => {
-            return <li>{song.name}</li>
+        <section className="playlist">
+          {this.state.songs.map((song, index) => {
+            if (index < 3) {
+              return (
+              <div className={index === 0 ? "currently-playing" : "up-next"}>
+                <img src={song.albumCover}/>
+                <div className='song-info'>
+                <h2>{song.name}</h2>
+                <h3>{song.artist}</h3>
+                </div>
+              </div>
+              )
+            }
+            return (
+                <li className ="queue" key={song.id}>{song.name}</li>
+            )
           })}
         </section>
       </section>
