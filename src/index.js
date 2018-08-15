@@ -51,6 +51,7 @@ export default class App extends Component {
               <div className={index === 0 ? "currently-playing" : "up-next"}>
                 <img src={song.albumCover}/>
                 <div className='song-info'>
+                {index === 0 && <p>// Now Playing</p>}
                 <h2>{song.name}</h2>
                 <h3>{song.artist}</h3>
                 </div>
