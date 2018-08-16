@@ -10,6 +10,7 @@ export default class App extends Component {
     super();
     this.state = {
       uri: "",
+      disabled: false,
       songs: []
     }
     socket.on('update', songs => this.setState({ songs }));
@@ -19,7 +20,7 @@ export default class App extends Component {
 
 
   componentDidMount() {
-    axios.get('/board').then(r => this.setState({ songs: r.data }));
+    axios.get('/api/playlist').then(r => this.setState({ songs: r.data }));
   }
 
   getUri(e) {
@@ -29,25 +30,44 @@ export default class App extends Component {
   }
 
   handleSearch() {
+    this.setState({disabled: true});
     axios.post('/api/request', {uri: this.state.uri})
     .then( res => { 
       if (res.data.error) alert(res.data.error)
       return res.data
-    }); 
+    })
+    .then(() => this.setState({disabled: false}))
+    .catch(err => {
+      alert(err.message)
+      this.setState({disabled: true})
+    })
   }
 
   render() {
     return (
       <section id="main">
-        <h1>S P A C E B O X</h1>
-        <p>Add a spotify track URI below</p>
-        <div>
-          <input type="text" name="uri" onChange={this.getUri} value={this.state.uri}/>
-          <button name="button" onClick={this.handleSearch}>Search</button>
+        <h1 className="glitch" data-text="SPACEBOX">SPACEBOX</h1>
+        <div className="request">
+          <input type="text" placeholder="spotify:track:URI" name="uri" onChange={this.getUri} value={this.state.uri}/>
+          <button name="button" onClick={this.handleSearch} disabled={this.state.disabled}>Add Song</button>
         </div>
-        <section>
-          {this.state.songs.map((song) => {
-            return <li>{song.name}</li>
+        <section className="playlist">
+          {this.state.songs.map((song, index) => {
+            if (index < 3) {
+              return (
+              <div className={index === 0 ? "currently-playing" : "up-next"}>
+                <img src={song.albumCover}/>
+                <div className='song-info'>
+                {index === 0 && <p>// Recently Playing</p>}
+                <h2>{song.name}</h2>
+                <h3>{song.artist}</h3>
+                </div>
+              </div>
+              )
+            }
+            return (
+              <li className ="queue" key={song.id}>{song.name}</li>
+            )
           })}
         </section>
       </section>
