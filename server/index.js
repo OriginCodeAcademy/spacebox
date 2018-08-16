@@ -17,7 +17,7 @@ let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: process.env.SITE_URL,
+  redirectUri: `${process.env.SITE_URL}/auth`,
   refreshToken
 });
 
@@ -98,6 +98,42 @@ app.use('/', express.static('build'));
 app.use('/', express.static('public'));
 
 app.get('/', (req, res) => res.render('index', { songs }));
+
+app.get('/login', (req, res) => {
+  const scopes = [
+    'playlist-modify-public',
+    'playlist-read-private',
+    'playlist-modify-private',
+    'streaming',
+    'app-remote-control',
+    'user-modify-playback-state',
+    'user-read-currently-playing',
+    'user-read-playback-state'
+  ];
+  res.redirect(spotifyApi.createAuthorizeURL(scopes, 'spacebox'))
+})
+
+app.get('/auth', (req, res) => {
+  const { code, state } = req.query;
+
+  if (state === 'spacebox' && code) {
+    spotifyApi.authorizationCodeGrant(code)
+      .then(data => {
+        spotifyApi.setAccessToken(data.body['access_token']);
+        spotifyApi.setRefreshToken(data.body['refresh_token']);
+        return {
+          accessToken: data.body['access_token'],
+          refreshToken: data.body['refresh_token']
+        }
+      })
+      .then(() => res.redirect('/'))
+      .catch((err) => res.send(err));
+  }
+  else {
+    res.redirect('/');
+  }
+})
+
 app.get('/board', (req, res) => res.json(songs));
 
 const updatePlaylist = async (trackData = null) => {
