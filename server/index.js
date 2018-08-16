@@ -13,11 +13,11 @@ var songs = [];
 
 let lastTime = new Date();
 let accessToken = null;
-let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN_AV;
+let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: 'http://localhost:8080/',
+  redirectUri: process.env.SITE_URL,
   refreshToken
 });
 
@@ -64,15 +64,18 @@ const formatSong = track => ({
  * @returns {{url: String, image: String, tracks: Array<{}>}} playlist information and tracks
  */
 const getPlaylist = () => {
-  return spotifyApi.getPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV)
+  return spotifyApi.getPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST)
   .then(data => {
+    if (data.body.tracks.items.length === 0) {
+      songs = [];
+      return songs;
+    }
     const playlistInfo = {
       url: data.body.external_urls.spotify,
       image: data.body.images[0].url,
       tracks: data.body.tracks.items.map(i => formatSong(i.track))
     }
     songs = playlistInfo.tracks
-    io.emit('update', songs)
     return songs;
   })
   .catch(err => console.log(err));
@@ -97,6 +100,36 @@ app.use('/', express.static('public'));
 app.get('/', (req, res) => res.render('index', { songs }));
 app.get('/board', (req, res) => res.json(songs));
 
+const updatePlaylist = async (trackData = null) => {
+  const songs = await getPlaylist();
+  return spotifyApi.getMyCurrentPlayingTrack()
+          .then(response => {
+            
+            while (songs.length && songs[0].uri !== response.body.item.uri) {
+              songs.shift()
+            }
+            if (songs.length===1 && songs[0].uri === response.body.item.uri && !response.body.is_playing) {
+              songs.shift()
+            }
+            if(trackData) {
+              songs.push(trackData);
+            }
+            return spotifyApi.replaceTracksInPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST, songs.map(s => s.uri))
+              .then(response2 => {
+                if (!response.body.is_playing) {
+                  spotifyApi.play({
+                    context_uri: `spotify:user:${process.env.SPOTIFY_USER}:playlist:${process.env.SPOTIFY_PLAYLIST}`
+                  })
+                  .catch(err => res.send(err));
+                }
+                io.emit('update', songs);
+                return songs;
+              })
+              .catch(err => ({ error: 'We couldn\'t add your song for some reason. Try again!', err}));  
+            })
+            .catch(err => ({ error: 'SPACEBOX is turned off. Tell an instructor!', err}))
+}
+
 app.post('/api/request', (req, res) => {
   if (isDup(req.body.uri)) {
     res.json({ error: 'Duplicate song!' })
@@ -105,22 +138,9 @@ app.post('/api/request', (req, res) => {
     spotifyApi.getTrack(req.body.uri.slice(14))
       .then(track => {
         const trackData = formatSong(track.body);
-
-        spotifyApi.getMyCurrentPlayingTrack()
-          .then(response => {
-            while (songs[0].uri !== response.body.item.uri && songs.length) {
-              songs.shift()
-            }
-            songs.push(trackData);
-
-            spotifyApi.replaceTracksInPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV, songs.map(s => s.uri))
-              .then(response => {
-                io.emit('update', songs);
-                res.send(songs);
-              })
-              .catch(err => res.json({ error: 'We couldn\'t add your song for some reason. Try again!' }));  
-            })
-            .catch(err => res.json({ error: 'SPACEBOX is turned off. Tell an instructor!'}))
+        updatePlaylist(trackData)
+        .then(songs => res.send(songs))
+        
       })
       .catch(err => res.json({ error: 'Track doesn\'t exist! Try spotify:track:{SONG_ID}'}));
   }
@@ -141,12 +161,12 @@ app.get('/api/artist/:artist', (req, res) => {
 })
 
 app.get('/api/playlist', async (req, res) => {
-  const songs = await getPlaylist();
+  const songs = await updatePlaylist();
   res.send(songs);
 });
 
 app.delete('/api/request', (req, res, next) => {
-  spotifyApi.removeTracksFromPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV, req.body.tracks)
+  spotifyApi.removeTracksFromPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST, req.body.tracks)
     .then((response) => {
       io.emit('update', songs);
       res.send(response)
@@ -156,6 +176,5 @@ app.delete('/api/request', (req, res, next) => {
 
 const PORT = process.env.PORT || 8080;
 http.listen(PORT, checkToken(null, null, () => {
-  getPlaylist();
   console.log(`Server is listening on ${PORT}`)
 }));
