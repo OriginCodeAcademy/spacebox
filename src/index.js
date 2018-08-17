@@ -20,7 +20,10 @@ export default class App extends Component {
 
 
   componentDidMount() {
-    axios.get('/api/playlist').then(r => this.setState({ songs: r.data }));
+    axios.get('/api/playlist').then(response => { 
+      if (response.data.error) return alert(response.data.error);
+      this.setState({ songs: response.data })
+    });
   }
 
   getUri(e) {
@@ -33,7 +36,7 @@ export default class App extends Component {
     this.setState({disabled: true});
     axios.post('/api/request', {uri: this.state.uri})
     .then( res => { 
-      if (res.data.error) alert(res.data.error)
+      if (res.data.error) return alert(res.data.error)
       return res.data
     })
     .then(() => this.setState({disabled: false}))

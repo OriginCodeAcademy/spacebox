@@ -1,5 +1,5 @@
 {
-  "name": "spacebox",
+  "name": "origin-spacebox",
   "version": "1.0.0",
   "private": true,
   "description": "Origin Code Academy's Jukebox",
@@ -8,7 +8,8 @@
     "server": "nodemon server",
     "build": "webpack -p",
     "start": "npm run build && node server",
-    "dev": "concurrently \"webpack -w\" \"nodemon server\""
+    "dev": "concurrently \"webpack -w\" \"nodemon server\"",
+    "test": "mocha tests"
   },
   "author": "",
   "license": "ISC",
@@ -19,11 +20,14 @@
     "@babel/preset-react": "^7.0.0-beta.39",
     "axios": "^0.17.1",
     "babel-loader": "^8.0.0-beta.0",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
     "dotenv": "^6.0.0",
     "ejs": "^2.5.7",
     "express": "^4.15.2",
     "file-loader": "^1.1.11",
     "http": "0.0.0",
+    "mocha": "^5.2.0",
     "path": "^0.12.7",
     "react": "^16.4.1",
     "react-dom": "^16.2.0",
