@@ -7,7 +7,7 @@
     "watch": "webpack -w",
     "server": "nodemon server",
     "build": "webpack -p",
-    "start": "npm run build && node server",
+    "start": "node server",
     "dev": "concurrently \"webpack -w\" \"nodemon server\"",
     "test": "mocha tests"
   },
