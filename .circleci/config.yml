@@ -27,7 +27,7 @@ jobs:
           command: sudo npm install --global --unsafe-perm now
       - run:
           name: Deploy using Now
-          command: now -e SPOTIFY_CLIENT_ID -e SPOTIFY_CLIENT_SECRET -e SPOTIFY_REFRESH_TOKEN -e SPOTIFY_USER -e SPOTIFY_PLAYLIST -e SITE_URL -t ${NOW_TOKEN} -T origin && alias
+          command: now -e SPOTIFY_CLIENT_ID -e SPOTIFY_CLIENT_SECRET -e SPOTIFY_REFRESH_TOKEN -e SPOTIFY_USER -e SPOTIFY_PLAYLIST -e SITE_URL -t ${NOW_TOKEN} -T origin && now alias
 workflows:
   version: 2
   build:
