@@ -5,6 +5,7 @@ const server = require('http').Server(app);
 const io = new Server(server);
 
 var SpotifyWebApi = require('spotify-web-api-node');
+const defaultSongs = require('./default');
 require('dotenv').config();
 
 /**
@@ -13,13 +14,18 @@ require('dotenv').config();
  */
 var songs = [];
 
+/**
+ * Last song played
+ */
+var lastPlayed = {};
+
 let lastTime = new Date();
 let accessToken = null;
 let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: process.env.SITE_URL,
+  redirectUri: process.env.SITE_URL || 'http://localhost:8080',
   refreshToken
 });
 
@@ -67,7 +73,7 @@ const formatSong = track => ({
  */
 const getPlaylist = () => {
   return spotifyApi.getPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST)
-  .then(data => {
+    .then(data => {
     if (data.body.tracks.items.length === 0) {
       songs = [];
       return songs;
@@ -102,34 +108,53 @@ app.use('/', express.static('public'));
 app.get('/', (req, res) => res.render('index', { songs }));
 app.get('/board', (req, res) => res.json(songs));
 
-const updatePlaylist = async (trackData = null) => {
+const updatePlaylist = async (songToAdd = null) => {
   const songs = await getPlaylist();
   return spotifyApi.getMyCurrentPlayingTrack()
-          .then(response => {
-            
-            while (songs.length && songs[0].uri !== response.body.item.uri) {
-              songs.shift()
-            }
-            if (songs.length===1 && songs[0].uri === response.body.item.uri && !response.body.is_playing) {
-              songs.shift()
-            }
-            if(trackData) {
-              songs.push(trackData);
-            }
-            return spotifyApi.replaceTracksInPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST, songs.map(s => s.uri))
-              .then(response2 => {
-                if (!response.body.is_playing) {
-                  spotifyApi.play({
-                    context_uri: `spotify:user:${process.env.SPOTIFY_USER}:playlist:${process.env.SPOTIFY_PLAYLIST}`
-                  })
-                  .catch(err => res.send(err));
+    .then(response => {
+      const songCurrentlyPlaying = response.body.item;
+      const isJukeboxOn = response.body.is_playing;
+      
+      if (songs[0].uri === songCurrentlyPlaying.uri) {
+        lastPlayed = songs[0];
+        songs.shift();
+      }
+      else if (songs[0].uri !== songCurrentlyPlaying.uri && lastPlayed.uri !== songCurrentlyPlaying.uri) {
+        // Make song list match currently playing
+        while (songs.length && songs[0].uri !== songCurrentlyPlaying.uri)
+          songs.shift();
+      }
+      // If new songs to add
+      if (songToAdd) songs.push(songToAdd);
+
+      // If last song and no longer playing ? add default songs.
+      if (songs.length === 1) {
+        songs.push(...defaultSongs.filter(s => s.uri !== songCurrentlyPlaying.uri));
+      }
+
+      let tracks = [...songs].map(s => s.uri);
+      
+      return spotifyApi.replaceTracksInPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST, tracks)
+        .then(() => {
+          if (!isJukeboxOn) {
+            setTimeout(() => {
+              spotifyApi.play({
+                context_uri: `spotify:user:${process.env.SPOTIFY_USER}:playlist:${process.env.SPOTIFY_PLAYLIST}`,
+                offset: {
+                  position: 1
                 }
-                io.emit('update', songs);
-                return songs;
               })
-              .catch(err => ({ error: 'We couldn\'t add your song for some reason. Try again!', err}));  
-            })
-            .catch(err => ({ error: 'SPACEBOX is turned off. Tell an instructor!', err}))
+              .catch(err => console.log(err))
+            }, 5000);
+          }
+          
+          if (lastPlayed.uri === songCurrentlyPlaying.uri) songs.unshift(lastPlayed);
+          io.emit('update', songs);
+          return songs;
+        })
+        .catch(err => ({ error: 'We couldn\'t add your song for some reason. Try again!', err}));  
+      })
+      .catch(err => ({ error: 'SPACEBOX is turned off. Tell an instructor!', err}))
 }
 
 app.post('/api/request', (req, res) => {
@@ -141,10 +166,9 @@ app.post('/api/request', (req, res) => {
       .then(track => {
         const trackData = formatSong(track.body);
         updatePlaylist(trackData)
-        .then(songs => res.send(songs))
-        
+          .then(songs => res.send(songs))
       })
-      .catch(err => res.json({ error: 'Track doesn\'t exist! Try spotify:track:{SONG_ID}'}));
+      .catch(err => res.json({ error: 'Track doesn\'t exist! Try spotify:track:{SONG_ID}' }));
   }
 });
 
