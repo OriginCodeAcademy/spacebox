@@ -25,7 +25,7 @@ let refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-  redirectUri: process.env.SITE_URL,
+  redirectUri: process.env.SITE_URL || 'http://localhost:8080',
   refreshToken
 });
 
