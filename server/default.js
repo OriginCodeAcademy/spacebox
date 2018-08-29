@@ -39,19 +39,27 @@ module.exports = [{
     uri: 'spotify:track:0ej5zbkF48ZiPZOubIX1e1'
   },
   {
-    id: '1pWAOjPUV6rrGcmLJaXgPR',
-    name: 'On the Dub-ble',
-    artist: 'DJ Krush',
-    albumCover: 'https://i.scdn.co/image/cb834f2adc55feb0dc19ec3e4380f7e8e797a368',
-    duration: 121280,
-    uri: 'spotify:track:1pWAOjPUV6rrGcmLJaXgPR'
-  },
-  {
     id: '3m9X1ZYQPKKZXZpykC2jBf',
     name: 'Whispers',
     artist: 'Freddie Joachim',
     albumCover: 'https://i.scdn.co/image/aea57c1c3d68e1dfb5c01aaeacd2bad0c0a2927c',
     duration: 133799,
     uri: 'spotify:track:3m9X1ZYQPKKZXZpykC2jBf'
+  },
+  {
+    albumCover: "https://i.scdn.co/image/1cf857b33913c2237ab017d33a49631b372e9fe6",
+    artist: "D Numbers",
+    duration: 313413,
+    id: "5Hs9xwUmu8xoU31dydcyTd",
+    name: "Xylem Up",
+    uri: "spotify:track:5Hs9xwUmu8xoU31dydcyTd",
+  },
+  {
+    albumCover: "https://i.scdn.co/image/c21c1e4c58342abb6f88dfe1b291c718f6a70e43",
+    artist: "Maxence Cyrin",
+    duration: 165160,
+    id: "4jNQkWhuzqrbqQuqanFFJ6",
+    name: "Where Is My Mind",
+    uri: "spotify:track:4jNQkWhuzqrbqQuqanFFJ6"
   }
 ]
