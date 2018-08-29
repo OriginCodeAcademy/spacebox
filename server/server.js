@@ -134,12 +134,12 @@ const updatePlaylist = async (songToAdd = null) => {
 
       let tracks = [...songs].map(s => s.uri);
       
-      return spotifyApi.replaceTracksInPlaylist(process.env.SPOTIFY_USER_AV, process.env.SPOTIFY_PLAYLIST_AV, tracks)
+      return spotifyApi.replaceTracksInPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST, tracks)
         .then(() => {
           if (!isJukeboxOn) {
             setTimeout(() => {
               spotifyApi.play({
-                context_uri: `spotify:user:${process.env.SPOTIFY_USER_AV}:playlist:${process.env.SPOTIFY_PLAYLIST_AV}`,
+                context_uri: `spotify:user:${process.env.SPOTIFY_USER}:playlist:${process.env.SPOTIFY_PLAYLIST}`,
                 offset: {
                   position: 1
                 }
