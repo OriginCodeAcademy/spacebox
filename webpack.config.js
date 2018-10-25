@@ -1,9 +1,11 @@
+'use strict';
 const path = require('path');
 
 const config = {
-  entry: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'src/styles.scss')],
+  entry: [path.resolve(__dirname, 'src'),
+    path.resolve(__dirname, 'src/styles.scss')],
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
   module: {
