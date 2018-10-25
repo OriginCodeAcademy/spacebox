@@ -7,11 +7,11 @@
   },
   "description": "Origin Code Academy's Jukebox",
   "scripts": {
-    "watch": "webpack -w",
+    "watch": "webpack",
     "server": "nodemon server",
     "build": "webpack -p",
     "start": "node server",
-    "dev": "concurrently \"webpack -w\" \"nodemon server\"",
+    "dev": "concurrently \"webpack\" \"nodemon server\"",
     "test": "mocha tests"
   },
   "dependencies": {
