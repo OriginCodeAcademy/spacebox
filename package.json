@@ -7,12 +7,12 @@
   },
   "description": "Origin Code Academy's Jukebox",
   "scripts": {
-    "watch": "webpack",
+    "watch": "webpack -w",
     "server": "nodemon server",
     "build": "webpack -p",
     "start": "node server",
-    "dev": "concurrently \"webpack\" \"nodemon server\"",
-    "test": "mocha tests"
+    "dev": "concurrently \"webpack -w\" \"nodemon server\"",
+    "test": "mocha tests --exit"
   },
   "dependencies": {
     "@babel/core": "^7.0.0-beta.39",
