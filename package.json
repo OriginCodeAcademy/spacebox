@@ -9,7 +9,7 @@
   "scripts": {
     "watch": "webpack -w",
     "server": "nodemon server",
-    "build": "webpack -p",
+    "build": "webpack",
     "start": "node server",
     "dev": "concurrently \"webpack -w\" \"nodemon server\"",
     "test": "mocha tests --exit"
