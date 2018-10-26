@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 
 const socket = io();
 
-export default class App extends Component {
+export default class HomeContainer extends Component {
   constructor() {
     super();
     this.state = {
@@ -77,5 +77,3 @@ export default class App extends Component {
     );
   }
 }
-
-ReactDOM.render(<App />, document.getElementById('root'));
