@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 const express = require('express');
 const Server = require('socket.io');
 const app = express();
@@ -30,42 +29,6 @@ const spotifyApi = new SpotifyWebApi({
   refreshToken
 });
 
-app.get('/login', (req, res) => {
-  const scopes = [
-    'playlist-modify-public',
-    'playlist-read-private',
-    'playlist-modify-private',
-    'streaming',
-    'app-remote-control',
-    'user-modify-playback-state',
-    'user-read-currently-playing',
-    'user-read-playback-state'
-  ];
-  res.redirect(spotifyApi.createAuthorizeURL(scopes, 'spacebox'))
-})
-
-app.get('/auth', (req, res) => {
-  const { code, state } = req.query;
-
-  if (state === 'spacebox' && code) {
-    spotifyApi.authorizationCodeGrant(code)
-      .then(data => {
-        console.log('data:body:', data.body);
-        spotifyApi.setAccessToken(data.body['access_token']);
-        spotifyApi.setRefreshToken(data.body['refresh_token']);
-        return {
-          accessToken: data.body['access_token'],
-          refreshToken: data.body['refresh_token']
-        }
-      })
-      .then(() => res.redirect('/'))
-      .catch((err) => res.send(err));
-  }
-  else {
-    res.redirect('/');
-  }
-})
-
 /**
  * checks if we have a valid access token and if not refreshes token
  * @param {{}} req users request
@@ -74,17 +37,17 @@ app.get('/auth', (req, res) => {
  */
 const checkToken = (req, res, cb) => {
   const currentTime = new Date();
-
+  
   if (lastTime < currentTime || !accessToken) {
     spotifyApi.refreshAccessToken()
-      .then(data => {
-        lastTime = new Date();
-        lastTime.setSeconds(data.body.expires_in);
-        accessToken = data.body['access_token'];
-        spotifyApi.setAccessToken(data.body['access_token']);
-        cb();
-      })
-      .catch(err => console.log(err))
+    .then(data => {
+      lastTime = new Date();
+      lastTime.setSeconds(data.body.expires_in);
+      accessToken = data.body['access_token'];
+      spotifyApi.setAccessToken(data.body['access_token']);
+      cb();
+    })
+    .catch(err => console.log(err))
   } else {
     cb();
   }
@@ -111,26 +74,26 @@ const formatSong = track => ({
 const getPlaylist = () => {
   return spotifyApi.getPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST)
     .then(data => {
-      if (data.body.tracks.items.length === 0) {
-        songs = [];
-        return songs;
-      }
-      const playlistInfo = {
-        url: data.body.external_urls.spotify,
-        image: data.body.images[0].url,
-        tracks: data.body.tracks.items.map(i => formatSong(i.track))
-      }
-      songs = playlistInfo.tracks
+    if (data.body.tracks.items.length === 0) {
+      songs = [];
       return songs;
-    })
-    .catch(err => console.log(err));
+    }
+    const playlistInfo = {
+      url: data.body.external_urls.spotify,
+      image: data.body.images[0].url,
+      tracks: data.body.tracks.items.map(i => formatSong(i.track))
+    }
+    songs = playlistInfo.tracks
+    return songs;
+  })
+  .catch(err => console.log(err));
 }
 
 /** 
  * checking to see if URI exists in songs array 
  * @param {String} uri spotify track identifier
  * @return {Boolean} false if there is no duplicate
- */
+ */  
 const isDup = uri => songs.some(song => song.uri === uri);
 
 app.use((req, res, next) => {
@@ -151,7 +114,7 @@ const updatePlaylist = async (songToAdd = null) => {
     .then(response => {
       const songCurrentlyPlaying = response.body.item;
       const isJukeboxOn = response.body.is_playing;
-
+      
       if (songs[0].uri === songCurrentlyPlaying.uri) {
         lastPlayed = songs[0];
         songs.shift();
@@ -163,34 +126,78 @@ const updatePlaylist = async (songToAdd = null) => {
       }
       // If new songs to add
       if (songToAdd) songs.push(songToAdd);
-=======
-'use strict';
 
-var loopback = require('loopback');
-var boot = require('loopback-boot');
+      // If last song and no longer playing ? add default songs.
+      if (songs.length === 1) {
+        songs.push(...defaultSongs.filter(s => s.uri !== songCurrentlyPlaying.uri));
+      }
 
-var app = module.exports = loopback();
+      let tracks = [...songs].map(s => s.uri);
+      
+      return spotifyApi.replaceTracksInPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST, tracks)
+        .then(() => {
+          if (!isJukeboxOn) {
+            setTimeout(() => {
+              spotifyApi.play({
+                context_uri: `spotify:user:${process.env.SPOTIFY_USER}:playlist:${process.env.SPOTIFY_PLAYLIST}`,
+                offset: {
+                  position: 1
+                }
+              })
+              .catch(err => console.log(err))
+            }, 5000);
+          }
+          
+          if (lastPlayed.uri === songCurrentlyPlaying.uri) songs.unshift(lastPlayed);
+          io.emit('update', songs);
+          return songs;
+        })
+        .catch(err => ({ error: 'We couldn\'t add your song for some reason. Try again!', err}));  
+      })
+      .catch(err => ({ error: 'SPACEBOX is turned off. Tell an instructor!', err}))
+}
 
-app.start = function() {
-  // start the web server
-  return app.listen(function() {
-    app.emit('started');
-    var baseUrl = app.get('url').replace(/\/$/, '');
-    console.log('Web server listening at: %s', baseUrl);
-    if (app.get('loopback-component-explorer')) {
-      var explorerPath = app.get('loopback-component-explorer').mountPath;
-      console.log('Browse your REST API at %s%s', baseUrl, explorerPath);
-    }
-  });
-};
->>>>>>> 89656434dff5b98e83ddbc8114edc5907feb41d8
-
-// Bootstrap the application, configure models, datasources and middleware.
-// Sub-apps like REST API are mounted via boot scripts.
-boot(app, __dirname, function(err) {
-  if (err) throw err;
-
-  // start the server if `$ node server.js`
-  if (require.main === module)
-    app.start();
+app.post('/api/request', (req, res) => {
+  if (isDup(req.body.uri)) {
+    res.json({ error: 'Duplicate song!' })
+  }
+  else {
+    spotifyApi.getTrack(req.body.uri.slice(14))
+      .then(track => {
+        const trackData = formatSong(track.body);
+        updatePlaylist(trackData)
+          .then(songs => res.send(songs))
+      })
+      .catch(err => res.json({ error: 'Track doesn\'t exist! Try spotify:track:{SONG_ID}' }));
+  }
 });
+
+//Custom routes
+app.get('/404', (req, res) => res.json({ message: 'Nothing is here. But thanks for checking!' }));
+
+app.use('/api', checkToken);
+app.get('/api/artist/:artist', (req, res) => {
+  spotifyApi.searchArtists(req.params.artist)
+    .then(data => {
+      const items = data.body.artists.items;
+      if (!items.length) res.send('Stop it');
+      res.send(items[0])
+    })
+    .catch(err => console.log(err));
+})
+
+app.get('/api/playlist', async (req, res) => {
+  const songs = await updatePlaylist();
+  res.send(songs);
+});
+
+app.delete('/api/request', (req, res, next) => {
+  spotifyApi.removeTracksFromPlaylist(process.env.SPOTIFY_USER, process.env.SPOTIFY_PLAYLIST, req.body.tracks)
+    .then((response) => {
+      io.emit('update', songs);
+      res.send(response)
+    })
+    .catch(err => console.log(err))
+});
+
+module.exports = { server, checkToken };
