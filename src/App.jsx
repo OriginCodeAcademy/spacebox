@@ -4,15 +4,15 @@ import {
 	Route, Switch
 } from 'react-router-dom';
 
-import MainApp from './routes/HomeContainer';
-import AdminContainer from './routes/AdminContainer';
+import HomeContainer from './containers/HomeContainer';
+import AdminContainer from './containers/AdminContainer';
 
 export default class Routes extends Component {
 	render() {
 		return (
 			<Router>
 				<Switch>
-					<Route path='/' component={MainApp} />
+					<Route path='/' component={HomeContainer} />
 					<Route path='/dashboard' component={AdminContainer} />
 				</Switch>
 			</Router >

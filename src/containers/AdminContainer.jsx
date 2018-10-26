@@ -10,8 +10,11 @@ export default class AdminContainer extends Component {
 
 	render() {
 		return (
-			<div className='container'>Hello
+			<div className='container'>
 			<defaultQueue />
+				<playingSong />
+				<songQueue />
+				<Queue />
 			</div>
 		)
 	}
