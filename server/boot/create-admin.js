@@ -1,54 +1,56 @@
-module.exports = (app) => {
-  const { User, Role, Rolemapping } = this.app;
-  User.findOrCreate(
+'use-strict';
+
+module.exports = app => {
+  const {user, Role, RoleMapping} = app.models;
+  user.findOrCreate(
     // Filter to find if DefaultAdmin already exists in DB
     {
       where: {
-        'username': 'DefaultAdmin'
-      }
+        'username': 'DefaultAdmin',
+      },
     },
     // If filter doesn't return anything, create User in DB using this data
     {
       'username': 'DefaultAdmin',
       'email': 'default@admin.com',
-      'password': 'admin'
+      'password': 'admin',
     },
     // Find or create User's Role
     (err, user) => {
-      if(err) console.log(err);
+      if (err) console.log(err);
       Role.findOrCreate(
-        // Filter to see if admin Role exists in DB        
+        // Filter to see if admin Role exists in DB
         {
           where: {
-            'name': 'admin'
-          }
+            'name': 'admin',
+          },
         },
         // If filter doesn't return anything, create Role admin in DB using this data
         {
-          'name': 'admin'
+          'name': 'admin',
         },
         // Find or create RoleMapping
         (err) => {
-          if(err) console.log(err);
-          Rolemapping.findOrCreate(
+          if (err) console.log(err);
+          RoleMapping.findOrCreate(
             // Filter to see if admin Role is in RoleMapping
             {
               where: {
                 principalType: 'admin',
-                principalId: user.id
-              }
+                principalId: user.id,
+              },
             },
             // If filter doesn't return anything, create RoleMapping for admin Role
             {
               principalType: 'admin',
-              principalId: user.id
+              principalId: user.id,
             },
             (err) => {
-              if(err) console.log(err);
+              if (err) console.log(err);
             }
-          )
+          );
         }
-      )
+      );
     }
-  )
-}
+  );
+};
