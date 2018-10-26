@@ -15,6 +15,14 @@
   },
   "validations": [],
   "relations": {
+    "default": {
+      "type": "referencesMany",
+      "model": "Song",
+      "foreignKey": "defaultSongs",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "songs": {
       "type": "referencesMany",
       "model": "Song",
@@ -22,6 +30,11 @@
       "options": {
         "nestRemoting": true
       }
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": ""
     }
   },
   "acls": [],
