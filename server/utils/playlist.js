@@ -7,7 +7,6 @@ function getAccessToken(userID = null) {
         clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
         redirectUri: process.env.SITE_URL || 'http://localhost:8080',
     });
-    
     return new Promise((resolve, reject) => {
         if (!userID) {
             reject('No user id provided');
@@ -15,19 +14,19 @@ function getAccessToken(userID = null) {
         }
         const { User } = app.models;
         User.findById(userID)
-        .then((user) => {
-            if (!user.spotifyRefreshToken) {
-                reject('No refresh token');
-                return false;
-            }
-            // get their refresh token and add accessToken
-            spotifyApi.setRefreshToken(user.spotifyRefreshToken);
-            spotifyApi.refreshAccessToken()
-            .then(({ body: { 'access_token': accessToken } }) => {
-                resolve(accessToken);
+            .then((user) => {
+                if (!user.refreshToken) {
+                    reject('No refresh token');
+                    return false;
+                }
+                // get their refresh token and add accessToken
+                spotifyApi.setRefreshToken(user.refreshToken);
+                spotifyApi.refreshAccessToken()
+                    .then(({ body: { 'access_token': accessToken } }) => {
+                        resolve(accessToken);
+                    })
+                    .catch(err => reject(err));
             })
-            .catch(err => reject(err));
-        })
     })
 }
 
@@ -63,13 +62,7 @@ function getPlaylist(id) {
                                             uri: track.uri
                                         })
                                         var tracks = playlist.body.tracks.items.map(i => formatSong(i.track))
-                                        var output = {
-                                            tracks: tracks,
-                                            userID: userID,
-                                            spotifyID: spotifyID,
-                                            playlistID: playlistID
-                                        }
-                                        resolve(output)
+                                        resolve(tracks)
                                     })
                                     .catch(err => reject(err));
                             })
@@ -113,72 +106,88 @@ function addNewSong(songID, songs) {
 
 function addDefaultSongs(songs) {
     return new Promise((resolve, reject) => {
-        // const { Queue } = app.models;
-        // if (songs.length === 1) {
-        //     // songs.push(...Queue.defaultSongs.filter(s => s.uri !== songCurrentlyPlaying.uri))
-        //     songs.push(...Queue.defaultSongs)
-        //     resolve(songs)
-        // }
+        const { Queue } = app.models;
+        if (songs.length === 1) {
+            songs.push(...Queue.defaultSongs.filter(s => s.uri !== songCurrentlyPlaying.uri))
+            resolve(songs)
+        }
         resolve(songs)
     })
         .catch(err => reject(err))
 }
 
 function updatePlaylist(id, songID = null) {
-    const { Queue } = app.models;
     return new Promise((resolve, reject) => {
-        getPlaylist(id)
-            .then((response) => {
-                var userID = response.userID
-                var spotifyID = response.spotifyID
-                var playlistID = response.playlistID
-                var tracks = response.tracks
-                getAccessToken(userID)
-                    .then(accessToken => {
-                        const spotifyApi = new SpotifyWebApi({ accessToken });
-                        spotifyApi.getMyCurrentPlayingTrack()
-                            .then((response) => {
-                                // copying current playlist into a new array that we will mutate called songs
-                                var songs = [...tracks]
-                                // var lastPlayed = {}
+        const { Queue, User, Song } = app.models;
+        // finds the correct queue based on the queue ID that you put in
+        Queue.findById(id, { fields: { userId: true } })
+            .then((queue) => {
+                var userID = queue.userId;
+                // takes the userID from the queue and gets spotifyID and playlistID from that user
+                User.findById(userID)
+                    .then((user) => {
+                        var spotifyID = user.spotifyID
+                        var playlistID = user.playlistID
+                        getAccessToken(user.id)
+                            .then(accessToken => {
+                                const spotifyApi = new SpotifyWebApi({ accessToken });
+                                spotifyApi.getPlaylist(spotifyID, playlistID)
+                                    .then(playlist => {
+                                        const formatSong = track => ({
+                                            id: track.id,
+                                            name: track.name,
+                                            artist: track.artists[0].name,
+                                            albumCover: track.album.images[0].url,
+                                            duration: track.duration_ms,
+                                            uri: track.uri
+                                        })
+                                        var tracks = playlist.body.tracks.items.map(i => formatSong(i.track))
+                                        // duplicated the getPlaylist function above. Adding updatePlaylist function below
+                                        spotifyApi.getMyCurrentPlayingTrack()
+                                            .then((response) => {
+                                                // copying current playlist into a new array that we will mutate called songs
+                                                var songs = [...tracks]
+                                                // var lastPlayed = {}
 
-                                const songCurrentlyPlaying = response.body.item;
-                                const isJukeboxOn = response.body.is_playing;
+                                                const songCurrentlyPlaying = response.body.item;
+                                                const isJukeboxOn = response.body.is_playing;
 
-                                removeCurrentlyPlaying(songs, songCurrentlyPlaying)
-                                    .then((songs) => {
-                                        addNewSong(songID, songs)
-                                            .then((songs) => {
-                                                addDefaultSongs(songs)
+                                                removeCurrentlyPlaying(songs, songCurrentlyPlaying)
                                                     .then((songs) => {
-                                                        let newPlaylist = [...songs].map(s => s.uri)
-                                                        return spotifyApi.replaceTracksInPlaylist(spotifyID, playlistID, newPlaylist)
-                                                            .then(() => {
-                                                                if (!isJukeboxOn) {
-                                                                    setTimeout(() => {
-                                                                        spotifyApi.play({
-                                                                            context_uri: `spotify:user:${spotifyID}:playlist:${playlistID}`,
-                                                                            offset: {
-                                                                                position: 1
-                                                                            }
-                                                                        })
-                                                                            .catch(err => console.log(err))
-                                                                    }, 5000);
-                                                                }
-                                                                // if (lastPlayed.uri === songCurrentlyPlaying.uri) songs.unshift(lastPlayed);
-                                                                // io.emit('update', songs);
-                                                                // Need to update the queue songID here in the queue model (queue.songIds.create()?)
-                                                                var songIds = songs.map((song) => song.id)
-                                                                resolve(songIds)
-                                                            })
+                                                        addNewSong(songID, songs)
+                                                            .then((songs) => {
+                                                                addDefaultSongs(songs)
+                                                                    .then((songs) => {
+                                                                        let newPlaylist = [...songs].map(s => s.uri)
+                                                                        return spotifyApi.replaceTracksInPlaylist(spotifyID, playlistID, newPlaylist)
+                                                                            .then(() => {
+                                                                                if (!isJukeboxOn) {
+                                                                                    setTimeout(() => {
+                                                                                        spotifyApi.play({
+                                                                                            context_uri: `spotify:user:${spotifyID}:playlist:${playlistID}`,
+                                                                                            offset: {
+                                                                                                position: 1
+                                                                                            }
+                                                                                        })
+                                                                                            .catch(err => console.log(err))
+                                                                                    }, 5000);
+                                                                                }
+                                                                                // if (lastPlayed.uri === songCurrentlyPlaying.uri) songs.unshift(lastPlayed);
+                                                                                // io.emit('update', songs);
+                                                                                resolve(songs)
+                                                                            })
 
+                                                                    })
+                                                                    .catch(err => reject(err))
+                                                            })
+                                                            .catch(err => reject(err))
                                                     })
                                                     .catch(err => reject(err))
                                             })
-                                            .catch(err => reject(err))
                                     })
+                                    .catch(err => reject(err))
                             })
-                            .catch(err => reject(err))
+                            .catch(err => reject(err));
                     })
                     .catch(err => reject(err));
             })
@@ -188,4 +197,4 @@ function updatePlaylist(id, songID = null) {
 }
 
 
-module.exports = { getPlaylist, updatePlaylist, getAccessToken }
+module.exports = { getPlaylist, getAccessToken, updatePlaylist }

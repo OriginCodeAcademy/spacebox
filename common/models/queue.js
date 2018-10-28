@@ -1,5 +1,5 @@
 'use strict';
-const { getPlaylist, updatePlaylist } = require('../../server/utils/playlist')
+const { getPlaylist, getAccessToken, updatePlaylist } = require('../../server/utils/playlist')
 
 module.exports = function (Queue) {
     Queue.getPlaylist = function (id, cb) {
@@ -27,10 +27,7 @@ module.exports = function (Queue) {
 
     Queue.updatePlaylist = function (id, songID, cb) {
         updatePlaylist(id, songID)
-            .then((tracks) => {
-                // Queue.upsert({id: id}, {songIds: tracks})
-                cb(null, tracks)
-            })
+            .then((tracks) => cb(null, tracks))
             .catch(err => cb(err));
     }
 
@@ -46,10 +43,10 @@ module.exports = function (Queue) {
             arg: 'songID',
             type: 'string'
         }],
-        // http: {
-        //     path: '/updatePlaylist',
-        //     verb: 'post'
-        // },
+        http: {
+            path: '/updatePlaylist',
+            verb: 'get'
+        },
         returns: {
             arg: 'data',
             type: 'array',

@@ -44,6 +44,10 @@
     "spotifyAccessToken": {
       "type": "string",
       "required": false
+    },
+    "spotifyAccessToken": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],
