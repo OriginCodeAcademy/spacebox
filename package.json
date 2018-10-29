@@ -39,8 +39,14 @@
     "mocha": "^5.2.0",
     "path": "^0.12.7",
     "react": "^16.4.1",
+<<<<<<< HEAD
     "react-dom": "^16.2.0",
     "react-redux": "^5.1.0",
+=======
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
+    "react-router": "^4.3.1",
+>>>>>>> adds styling using grid and username and password state working
     "react-router-dom": "^4.3.1",
     "redux": "^4.0.1",
     "redux-promise-middleware": "^5.1.1",
