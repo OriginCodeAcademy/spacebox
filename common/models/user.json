@@ -7,10 +7,10 @@
     "validateUpsert": true
   },
   "properties": {
-    "first_name": {
+    "firstName": {
       "type": "string"
     },
-    "last_name": {
+    "lastName": {
       "type": "string"
     },
     "email": {
@@ -24,10 +24,36 @@
     "password": {
       "type": "string",
       "required": true
+    },
+    "accessToken": {
+      "type": "string",
+      "required": false
+    },
+    "spotifyID": {
+      "type": "string",
+      "required": false
+    },
+    "playlistID": {
+      "type": "string",
+      "required": false
+    },
+    "spotifyRefreshToken": {
+      "type": "string",
+      "required": false
+    },
+    "spotifyAccessToken": {
+      "type": "string",
+      "required": false
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "queue": {
+      "type": "hasOne",
+      "model": "Queue",
+      "foreignKey": ""
+    }
+  },
   "acls": [],
   "methods": {}
 }

@@ -14,11 +14,19 @@
       "type": "number",
       "required": true
     },
+    "artist": {
+      "type": "string",
+      "required": true
+    },
     "uri": {
       "type": "string",
       "required": true
     },
-    "album_cover": {
+    "albumCover": {
+      "type": "string",
+      "required": true
+    },
+    "spotifyId": {
       "type": "string",
       "required": true
     }

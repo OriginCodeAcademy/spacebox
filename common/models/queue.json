@@ -6,7 +6,7 @@
     "validateUpsert": true
   },
   "properties": {
-    "defaultSong": {
+    "defaultSongs": {
       "type": [
         "object"
       ],
@@ -15,13 +15,26 @@
   },
   "validations": [],
   "relations": {
+    "default": {
+      "type": "referencesMany",
+      "model": "Song",
+      "foreignKey": "defaultSongs",
+      "options": {
+        "nestRemoting": true
+      }
+    },
     "songs": {
-      "type": "hasMany",
+      "type": "referencesMany",
       "model": "Song",
       "foreignKey": "",
       "options": {
         "nestRemoting": true
       }
+    },
+    "user": {
+      "type": "belongsTo",
+      "model": "user",
+      "foreignKey": ""
     }
   },
   "acls": [],
