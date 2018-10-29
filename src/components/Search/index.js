@@ -3,11 +3,10 @@ import Search from './Search';
 
 function mapStoreToProps(store) {
 	return {
-		uri: store.Search.uri,
-		disabled: store.Search.disabled,
-		error: store.Search.error,
-		searchType: store.Search.searchType,
-		searchStr: store.Search.searchStr
+		disabled	: store.Search.disabled,
+		error		: store.Search.error,
+		searchBy	: store.Search.searchBy,
+		uri			: store.Search.uri,
 	};
 }
 export default connect(mapStoreToProps)(Search);

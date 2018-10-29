@@ -1,24 +1,18 @@
-'use strict';
-const axios = require('axios');
+//const dotenv = require('dotenv').config();
+const axios = require ("axios");
 
-export function updateSearchType(searchType) {
-    return {
-        type: 'UPDATE_SEARCH_TYPE',
-        payload: searchType
-    }
+
+export function handleApiCall(Artist) {
+  return {
+    type: "NEW_CALL",
+    payload: axios.get(`/api/${Artist}`)
+  }
 }
 
-export function updateSearch(searchStr) {
-    return {
-        type: 'UPDATE_SEARCH',
-        payload: searchStr
-    }
-}
-
-export function getSearch(searchType, searchStr) {
-    return {
-        type: 'GET_SEARCH',
-        payload: axios.get(`/search/${searchType}/${searchStr}`)
-    }
-}
+export function updateInput(input) {
+  return {
+      type: 'NEW_INPUT',
+      payload: input
+  };
+} 
 

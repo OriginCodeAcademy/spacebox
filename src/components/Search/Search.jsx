@@ -28,19 +28,40 @@ class Search extends Component {
 	// 				}));
 	// }
 
+	handleArtist(event) {
+		const { dispatch } = this.props;
+		dispatch(updateInput(event.target.value));
+	  }
+	
+	  handleButtonLine(cityName) {
+		console.log('axios function hit');
+		const { dispatch } = this.props;
+		dispatch(handleApiCall(cityName));
+	  }
+	
+	  handleApiCall() {
+		console.log('axios call hit');
+		const { dispatch, Artist } = this.props;
+
 	render() {
         const { searchType, searchStr } = this.props;
 		return (
+			<div>
 			<div className="request">
-				<input type="text" placeholder="spotify:track:URI" name="uri" /* onChange={this.getUri} value={this.props.uri} */ />
-				<button name="button" /* onClick={this.handleSearch} disabled={this.props.disabled} */ >Add Song</button>
-				<div className='col-12'>
-					<p> AUSTIN's ALERT MESSAGE SPACE </p>
-				</div>
-            	<div>
-                	<p>AUSTINS ALERT MESSAGE GOES HERE</p>
-                </div>
-            </div>
+				<select className="dropdown" name="querySelect" id="querySelect" placeholder="Select By:">
+				<option className="drop" background= "rgba(100, 100, 100, 0.3)" value="">Song</option>
+				<option className="drop" value="">Artist</option>
+				<option className="drop" value="">URI</option>
+				</select>
+			
+				<input className="input" type="text" placeholder="spotify:track:URI" name="uri" onChange={this.getUri} value={this.props.uri} />
+				<button name="button" onClick={this.handleSearch} disabled={this.props.disabled}>Search</button>
+			</div>
+			<div>
+				<p>AUSTINS ALERT MESSAGE GOES HERE</p>
+			</div>
+		
+			</div>
 		)
 	}
 }
