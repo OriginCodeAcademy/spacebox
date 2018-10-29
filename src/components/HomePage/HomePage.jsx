@@ -2,21 +2,21 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import io from 'socket.io-client';
 import Search from '../Search';
-const socket = io();
+// const socket = io();
 
 class HomePage extends Component {
 	constructor() {
 		super();
-		socket.on('update', songs =>
-			dispatch({ type: 'UPDATE_SONGS', payload: { songs } }));
+		// socket.on('update', songs =>
+		// 	dispatch({ type: 'UPDATE_SONGS', payload: { songs } }));
 	}
 
-	componentDidMount() {
-		axios.get('/api/playlist').then(response => {
-			if (response.data.error) return alert(response.data.error);
-			dispatch({ type: 'UPDATE_SONGS', payload: response.data });
-		});
-	}
+	// componentDidMount() {
+	// 	axios.get('/api/playlist').then(response => {
+	// 		if (response.data.error) return alert(response.data.error);
+	// 		dispatch({ type: 'UPDATE_SONGS', payload: response.data });
+	// 	});
+	// }
 
 	render() {
 		return (

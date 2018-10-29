@@ -6,3 +6,5 @@ function mapStoreToProps(store) {
 		defaultQueue: store.dQueue
 	}
 }
+
+export default connect(mapStoreToProps)(DefaultQueue);

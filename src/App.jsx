@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-	BrowserRouter as Router,
+	HashRouter as Router,
 	Route, Switch
 } from 'react-router-dom';
 
@@ -12,10 +12,10 @@ export default class Routes extends Component {
 		return (
 			<Router>
 				<Switch>
-					<Route path='/' component={HomeContainer} />
+					<Route exact path='/' component={HomeContainer} />
 					<Route path='/dashboard' component={AdminContainer} />
 				</Switch>
-			</Router >
+			</Router>
 		)
 	}
 };

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import defaultQueue from '../components/DefaultQueue';
-import playingSong from '../components/CurrentSong';
-import songQueue from '../components/SongQueue';
+import DefaultQueue from '../components/DefaultQueue';
+import CurrentSong from '../components/CurrentSong';
+import SongQueue from '../components/SongQueue';
 
 export default class AdminContainer extends Component {
 	constructor(props) {
@@ -11,10 +11,9 @@ export default class AdminContainer extends Component {
 	render() {
 		return (
 			<div className='container'>
-			<defaultQueue />
-				<playingSong />
-				<songQueue />
-				<Queue />
+				<DefaultQueue />
+				<CurrentSong />
+				<SongQueue />
 			</div>
 		)
 	}
