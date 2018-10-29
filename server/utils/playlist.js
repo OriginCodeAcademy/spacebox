@@ -23,6 +23,7 @@ function getAccessToken(userID = null) {
                 spotifyApi.setRefreshToken(user.spotifyRefreshToken);
                 spotifyApi.refreshAccessToken()
                     .then(({ body: { 'access_token': accessToken } }) => {
+                        // console.log(user.spotifyRefreshToken)
                         resolve(accessToken);
                     })
                     .catch(err => reject(err));
@@ -168,7 +169,17 @@ function updatePlaylist(id, songID = null) {
                                                                 // io.emit('update', songs);
                                                                 // Need to update the queue songID here in the queue model (queue.songIds.create()?)
                                                                 var songIds = songs.map((song) => song.id)
-                                                                resolve(songIds)
+                                                                Queue.findById(id)
+                                                                    .then((singleQueue) => {
+                                                                        var queue = {
+                                                                            "defaultSongs": singleQueue.defaultSongs,
+                                                                            "id": id,
+                                                                            "songIds": songIds,
+                                                                            "userId": userID
+                                                                        }
+                                                                        resolve(queue)
+                                                                    })
+                                                                    .catch(err => reject(err))
                                                             })
 
                                                     })
