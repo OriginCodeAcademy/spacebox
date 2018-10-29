@@ -27,7 +27,10 @@ module.exports = function (Queue) {
 
     Queue.updatePlaylist = function (id, songID, cb) {
         updatePlaylist(id, songID)
-            .then((tracks) => cb(null, tracks))
+            .then((tracks) => {
+                // Queue.upsert({id: id}, {songIds: tracks})
+                cb(null, tracks)
+            })
             .catch(err => cb(err));
     }
 
@@ -43,10 +46,10 @@ module.exports = function (Queue) {
             arg: 'songID',
             type: 'string'
         }],
-        http: {
-            path: '/updatePlaylist',
-            verb: 'get'
-        },
+        // http: {
+        //     path: '/updatePlaylist',
+        //     verb: 'post'
+        // },
         returns: {
             arg: 'data',
             type: 'array',
