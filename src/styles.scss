@@ -100,7 +100,14 @@ li {
         }
     }
 }
-
+.dropdown-content  {
+    display: none;
+    position: absolute;
+    z-index: 1;
+    background-color: #3023AE;
+    background-image: linear-gradient(-134deg, #C86DD7 0%,#3023AE 100%);
+    width: 100%;
+}
 .request {
     width: 100%;
     position: relative;
@@ -118,6 +125,24 @@ li {
     input {
         padding: 13px;
         width: 100%;
+    }
+    button {
+        width: 20%;
+        margin: 20px 0;
+        background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);
+        color: white;
+        border-radius: 0;
+    }
+    select {
+        height: 100%;
+        width: 20%;
+        background-image: linear-gradient(-134deg, #C86DD7 0%,#3023AE 100%);
+        font-size: 25px;
+        color: #fff;
+        border: none;
+    }
+    option {
+        color: #000;
     }
     button {
         width: 20%;
