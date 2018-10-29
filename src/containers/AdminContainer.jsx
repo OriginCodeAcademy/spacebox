@@ -10,15 +10,13 @@ export default class AdminContainer extends Component {
 
   render() {
     return (
-      <div className='container'>
-        <h1 id='dashboard-title' className='glitch'>
-        ::before
-        DASHBOARD
-        ::after
+      <div id='dashboard-container' className='container'>
+        <h1 id='dashboard-title' data-text='DASHBOARD' className='glitch'>
+          DASHBOARD
         </h1>
-        <CurrentSong id='current-song' />
-        <DefaultQueue id='default-queue' />
-        <SongQueue id='song-queue' />
+        <CurrentSong />
+        <DefaultQueue />
+        <SongQueue />
       </div>
     )
   }

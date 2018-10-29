@@ -412,33 +412,79 @@ li {
 #song-container {
   width: 100%;
   position: relative;
+body {
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+}
 
+ul {
+  list-style-type: none;
+}
+
+.track-title {
+  font-size: 16px;
+  line-height: 22px;
+  letter-spacing: .015em;
+  color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.queue-container {
+  overflow: scroll;
+  background-image: linear-gradient(rgb(86,75,67),rgb(64,74,89) 85%);
+  padding: 15px;
+}
+
+.queue-header {
+  margin: 0;
+  border-bottom: 1px solid hsla(0,0%,100%,.1);
+}
+
+.queue-item {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  display: flex;
+  color: hsla(0,0%,100%,.6);
+}
+
+.queue-list {
+  display: block;
+}
+
+#current-song {
+  grid-area: song;
 }
 
 #dashboard-container {
   display: grid;
   width: 90%;
-  height: 100%;
+  height: 90vh;
+  grid-template-areas:
+    "header header header"
+    "song song song"
+    "search search button"
+    "dQueue . sQueue"
+    "dQueue . sQueue"
+    "dQueue . sQueue";
   grid-template-columns: repeat(3, 33%);
-  grid-template-rows: repeat(5, 20%);
+  grid-template-rows: 20% 10% 10% 20% 20% 20%;
   margin: 0 auto;
 }
 
-#current-song {
-  grid-row: 2;
-  grid-column-start: 1;
-  grid-column-end: 4;
-  justify-content: center;
+#dashboard-title {
+  grid-area: header;
 }
 
 #default-queue {
-  grid-column-start: 1;
-  grid-column-end: 2;
-  grid-row: 3;
+  grid-area: dQueue;
 }
 
 #song-queue {
-  grid-column-start: 3;
-  grid-column-end: 4;
-  grid-row: 3;
+  grid-area: sQueue;
 }

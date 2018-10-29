@@ -7,7 +7,7 @@ export default class CurrentSong extends Component {
 
   render() {
     return (
-      <div id='song-container' className='container'>
+      <div id='current-song' className='container'>
         Song
 			</div>
     )

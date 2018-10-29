@@ -8,17 +8,16 @@ export default class DefaultQueue extends Component {
   render() {
 
     return (
-      <div className='container queue-container'>
-        <ul id='default-queue-list'>
-          <li id='default-queue-item'>
-            <div>Song Title</div>
-            <div>Artist Name</div>
-            <div>Album Name</div>
-          </li>
-          <li id='default-queue-item'>
-            <div>Song Title</div>
-            <div>Artist Name</div>
-            <div>Album Name</div>
+      <div id='default-queue' className='queue-container'>
+        <h4 className='queue-header'>Comfort Music</h4>
+        <ul className='queue-list'>
+          <li className='queue-item'>
+            <div className='list-item-container'>
+              <div className='track-title'>Song Title</div>
+              <div className='artist-name'>Artist Name</div>
+              <div className='album-name'>Album Name</div>
+            </div>
+            <div className='track-length'>0:00</div>
           </li>
         </ul>
       </div >

@@ -12,7 +12,7 @@ export default class Routes extends Component {
   render() {
     return (
       <Router>
-        <div id='dashboard-container' className='container'>
+        <div className='container'>
           <Route exact path='/' component={HomeContainer} />
           <Route path='/dashboard' component={AdminContainer} />
         </div>
