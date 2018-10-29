@@ -16,12 +16,12 @@ function getAccessToken(userID = null) {
         const { User } = app.models;
         User.findById(userID)
             .then((user) => {
-                if (!user.refreshToken) {
+                if (!user.spotifyRefreshToken) {
                     reject('No refresh token');
                     return false;
                 }
                 // get their refresh token and add accessToken
-                spotifyApi.setRefreshToken(user.refreshToken);
+                spotifyApi.setRefreshToken(user.spotifyRefreshToken);
                 spotifyApi.refreshAccessToken()
                     .then(({ body: { 'access_token': accessToken } }) => {
                         resolve(accessToken);
@@ -113,17 +113,19 @@ function addNewSong(songID, songs) {
 
 function addDefaultSongs(songs) {
     return new Promise((resolve, reject) => {
-        const { Queue } = app.models;
-        if (songs.length === 1) {
-            songs.push(...Queue.defaultSongs.filter(s => s.uri !== songCurrentlyPlaying.uri))
-            resolve(songs)
-        }
+        // const { Queue } = app.models;
+        // if (songs.length === 1) {
+        //     // songs.push(...Queue.defaultSongs.filter(s => s.uri !== songCurrentlyPlaying.uri))
+        //     songs.push(...Queue.defaultSongs)
+        //     resolve(songs)
+        // }
         resolve(songs)
     })
         .catch(err => reject(err))
 }
 
 function updatePlaylist(id, songID = null) {
+    const { Queue } = app.models;
     return new Promise((resolve, reject) => {
         getPlaylist(id)
             .then((response) => {
@@ -165,7 +167,9 @@ function updatePlaylist(id, songID = null) {
                                                                 }
                                                                 // if (lastPlayed.uri === songCurrentlyPlaying.uri) songs.unshift(lastPlayed);
                                                                 // io.emit('update', songs);
-                                                                resolve(songs)
+                                                                // Need to update the queue songID here in the queue model (queue.songIds.create()?)
+                                                                var songIds = songs.map((song) => song.id)
+                                                                resolve(songIds)
                                                             })
 
                                                     })
