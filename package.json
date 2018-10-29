@@ -8,7 +8,7 @@
   "description": "Origin Code Academy's Jukebox",
   "scripts": {
     "watch": "webpack -w",
-    "server": "nodemon server",
+    "server": "nodemon server/server",
     "build": "webpack",
     "start": "node server/server",
     "dev": "concurrently \"webpack -w\" \"nodemon server\"",

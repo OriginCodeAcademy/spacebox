@@ -146,7 +146,7 @@ li {
 .currently-playing {
   justify-content: center;
 
-    .song-info {        
+    .song-info {
         transform: translateX(0);
         animation: fadeInLeftFirst 750ms ease 250ms forwards;
     }
@@ -179,7 +179,7 @@ li {
     }
     img {
         animation: fadeIn 500ms ease 1s forwards;
-    }  
+    }
   }
 }
 
@@ -298,7 +298,7 @@ li {
 .grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    
+
 }
 
 .label {
@@ -328,7 +328,7 @@ li {
  /*
 .parent {
     display: flex;
-   
+
 }
 
 .input{
@@ -358,7 +358,7 @@ li {
     font-size: 35pt;
     font-weight: normal;
 
-    
+
 }
 
 #password {
@@ -383,8 +383,8 @@ li {
 
 .flex {
     display: flex;
-    
-    
+
+
 }
 .input{
     display: flex;
@@ -402,10 +402,43 @@ li {
     font-size: 20pt;
     padding-left: 0;
     padding-right: 0;
-    
+
 }
 
 #pw-flex{
     height: 50px
 }
 
+#song-container {
+  width: 100%;
+  position: relative;
+
+}
+
+#dashboard-container {
+  display: grid;
+  width: 90%;
+  height: 100%;
+  grid-template-columns: repeat(3, 33%);
+  grid-template-rows: repeat(5, 20%);
+  margin: 0 auto;
+}
+
+#current-song {
+  grid-row: 2;
+  grid-column-start: 1;
+  grid-column-end: 4;
+  justify-content: center;
+}
+
+#default-queue {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row: 3;
+}
+
+#song-queue {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row: 3;
+}

@@ -6,9 +6,6 @@ export default class CurrentSong extends Component {
   }
 
   render() {
-    const { song } = this.props;
-    const duration = song.duration_ms / 1000;
-
     return (
       <div id='song-container' className='container'>
         Song

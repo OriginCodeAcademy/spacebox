@@ -8,17 +8,15 @@ import HomeContainer from './containers/HomeContainer';
 import AdminContainer from './containers/AdminContainer';
 import LoginContainer from './containers/LoginContainer';
 
-
-export default class Routes extends React.Component {
-	render() {
-		return (
-			<Router>
-				<div className='container'>
-					<Route exact path='/' component={HomeContainer} />
-					<Route path='/dashboard' component={AdminContainer} />
-					<Route path='/admin' component={LoginContainer} />
-				</div>
-			</Router >
-		)
-	}
+export default class Routes extends Component {
+  render() {
+    return (
+      <Router>
+        <div id='dashboard-container' className='container'>
+          <Route exact path='/' component={HomeContainer} />
+          <Route path='/dashboard' component={AdminContainer} />
+        </div>
+      </Router>
+    )
+  }
 };

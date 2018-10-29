@@ -6,7 +6,15 @@ export default class SongQueue extends Component {
   }
   render() {
     return (
-      <div>Song Queue</div>
+      <div className='queue-container container'>
+        <h4>Coming Up Next...</h4>
+        <ul>
+          <li>
+            <h6>Song Title</h6>
+            <p>Artist</p>
+          </li>
+        </ul>
+      </div>
     )
   }
 }
