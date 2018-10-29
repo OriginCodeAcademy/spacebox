@@ -29,7 +29,7 @@ class Search extends Component {
 	// }
 
 	render() {
-		const { searchType, search } = this.props;
+        const { searchType, search } = this.props;
 		return (
 			<div className="request">
 				<input type="text" placeholder="spotify:track:URI" name="uri" /* onChange={this.getUri} value={this.props.uri} */ />
