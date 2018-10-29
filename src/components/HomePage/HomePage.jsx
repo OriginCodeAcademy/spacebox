@@ -25,7 +25,7 @@ class HomePage extends Component {
 				<div className='search-component-container'>
 					<Search />
 				</div>
-				<section className='playlist'>
+				{/* <section className='playlist'>
 					{this.props.songs.map((song, index) => {
 						if (index < 3) {
 							return (
@@ -43,7 +43,7 @@ class HomePage extends Component {
 							<li className='queue' key={song.id}>{song.name}</li>
 						)
 					})}
-				</section>
+				</section> */}
 			</section>
 		);
 	}
