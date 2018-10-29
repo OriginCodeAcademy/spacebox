@@ -1,5 +1,5 @@
 'use strict';
-const { getPlaylist, getAccessToken, updatePlaylist } = require('../../server/utils/playlist')
+const { getPlaylist, updatePlaylist } = require('../../server/utils/playlist')
 
 module.exports = function (Queue) {
     Queue.getPlaylist = function (id, cb) {
