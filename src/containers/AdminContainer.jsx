@@ -4,9 +4,9 @@ import CurrentSong from '../components/CurrentSong';
 import SongQueue from '../components/SongQueue';
 
 export default class AdminContainer extends Component {
-	constructor(props) {
-		super(props);
-	}
+  constructor(props) {
+    super(props);
+  }
 
 	render() {
 		return (

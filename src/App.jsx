@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
-	HashRouter as Router,
-	Route, Switch
+  HashRouter as Router,
+  Route, Switch
 } from 'react-router-dom';
 
 import HomeContainer from './containers/HomeContainer';
@@ -16,7 +16,7 @@ export default class Routes extends React.Component {
 				<div className='container'>
 					<Route exact path='/' component={HomeContainer} />
 					<Route path='/dashboard' component={AdminContainer} />
-					<Route path='/admin' component={LoginContainer} />				
+					<Route path='/admin' component={LoginContainer} />
 				</div>
 			</Router >
 		)

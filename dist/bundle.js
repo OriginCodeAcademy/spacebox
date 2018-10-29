@@ -29677,7 +29677,9 @@ function (_Component) {
   _createClass(Routes, [{
     key: "render",
     value: function render() {
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["a" /* HashRouter */], null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["c" /* Switch */], null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], {
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["a" /* HashRouter */], null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
+        className: "container"
+      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_1_react_router_dom__["b" /* Route */], {
         exact: true,
         path: "/",
         component: __WEBPACK_IMPORTED_MODULE_2__containers_HomeContainer__["a" /* default */]
@@ -29720,7 +29722,7 @@ function (_Component) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__StaticRouter__ = __webpack_require__(96);
 /* unused harmony reexport StaticRouter */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__Switch__ = __webpack_require__(98);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_10__Switch__["a"]; });
+/* unused harmony reexport Switch */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__generatePath__ = __webpack_require__(100);
 /* unused harmony reexport generatePath */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__matchPath__ = __webpack_require__(101);
@@ -32029,7 +32031,7 @@ StaticRouter.childContextTypes = {
 // Written in this round about way for babel-transform-imports
 
 
-/* harmony default export */ __webpack_exports__["a"] = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Switch__["a" /* default */]);
+/* unused harmony default export */ var _unused_webpack_default_export = (__WEBPACK_IMPORTED_MODULE_0_react_router_es_Switch__["a" /* default */]);
 
 /***/ }),
 /* 99 */
@@ -40687,9 +40689,8 @@ function (_Component) {
   _createClass(DefaultQueue, [{
     key: "render",
     value: function render() {
-      // const { dQueue } = this.props;
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-        className: "container"
+        className: "container queue-container"
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("ul", {
         id: "default-queue-list"
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("li", {
@@ -40764,11 +40765,12 @@ function (_Component) {
   _createClass(CurrentSong, [{
     key: "render",
     value: function render() {
-      // const { song } = this.props;
-      // const duration = song.duration_ms / 1000;
+      var song = this.props.song;
+      var duration = song.duration_ms / 1000;
       return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
+        id: "song-container",
         className: "container"
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null, "Song Length"));
+      }, "Song");
     }
   }]);
 
@@ -41042,7 +41044,7 @@ function isPromise(value) {
 var rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["c" /* combineReducers */])({
   HomePage: __WEBPACK_IMPORTED_MODULE_1__components_HomePage_HomePageReducer__["a" /* default */],
   Search: __WEBPACK_IMPORTED_MODULE_2__components_Search_SearchReducer__["a" /* default */],
-  DQueue: __WEBPACK_IMPORTED_MODULE_3__components_DefaultQueue_DQueueReducer___default.a,
+  DQueue: __WEBPACK_IMPORTED_MODULE_3__components_DefaultQueue_DQueueReducer__["default"],
   SQueue: __WEBPACK_IMPORTED_MODULE_4__components_SongQueue_SQueueReducers___default.a
 });
 /* harmony default export */ __webpack_exports__["a"] = (rootReducer);
@@ -41089,21 +41091,20 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var initalstate = {
-  uri: "",
-  disableButton: false
+var initialState = {
+  query: ""
 };
 
 function SearchReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initalstate;
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
   var action = arguments.length > 1 ? arguments[1] : undefined;
   var type = action.type,
       payload = action.payload;
 
   switch (type) {
-    case 'UPDATE_URI':
+    case 'UPDATE_QUERY':
       return _objectSpread({}, state, {
-        uri: payload
+        query: payload
       });
 
     case 'TOGGLE_DISABLE_BUTTON':
@@ -41122,7 +41123,7 @@ function SearchReducer() {
 /* 186 */
 /***/ (function(module, exports) {
 
-
+throw new Error("Module build failed: SyntaxError: /Users/ADB/oca/spacebox/src/components/DefaultQueue/DQueueReducer.js: Unexpected token, expected \":\" (9:2)\n\n\u001b[0m \u001b[90m  7 | \u001b[39m  \u001b[36mswitch\u001b[39m (type) {\u001b[0m\n\u001b[0m \u001b[90m  8 | \u001b[39m    \u001b[36mcase\u001b[39m \u001b[32m'REMOVE_SONG'\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m  9 | \u001b[39m  }\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m  \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 10 | \u001b[39m}\u001b[0m\n\u001b[0m \u001b[90m 11 | \u001b[39m\u001b[0m\n    at _class.raise (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:3939:15)\n    at _class.unexpected (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:5248:16)\n    at _class.expect (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:5236:28)\n    at _class.parseSwitchStatement (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7542:14)\n    at _class.parseStatementContent (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7190:21)\n    at _class.parseStatement (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7153:17)\n    at _class.parseBlockOrModuleBlockBody (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7707:23)\n    at _class.parseBlockBody (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7694:10)\n    at _class.parseBlock (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7683:10)\n    at _class.parseFunctionBody (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:6933:24)\n    at _class.parseFunctionBodyAndFinish (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:6913:10)\n    at _class.parseFunction (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7832:10)\n    at _class.parseFunctionStatement (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7487:17)\n    at _class.parseStatementContent (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7177:21)\n    at _class.parseStatement (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7153:17)\n    at _class.parseBlockOrModuleBlockBody (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7707:23)\n    at _class.parseBlockBody (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7694:10)\n    at _class.parseTopLevel (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:7118:10)\n    at _class.parse (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:8521:17)\n    at parse (/Users/ADB/oca/spacebox/node_modules/@babel/parser/lib/index.js:10513:38)\n    at parser (/Users/ADB/oca/spacebox/node_modules/@babel/core/lib/transformation/normalize-file.js:170:34)\n    at normalizeFile (/Users/ADB/oca/spacebox/node_modules/@babel/core/lib/transformation/normalize-file.js:138:11)\n    at runSync (/Users/ADB/oca/spacebox/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/Users/ADB/oca/spacebox/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at process.nextTick (/Users/ADB/oca/spacebox/node_modules/@babel/core/lib/transform.js:34:34)\n    at process._tickCallback (internal/process/next_tick.js:61:11)");
 
 /***/ }),
 /* 187 */
