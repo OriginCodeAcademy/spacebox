@@ -1,25 +1,57 @@
 import React, { Component } from 'react';
+import { getDefaultQueue, getDefaultSongs, deleteDefaultSong, handleAddInput } from './DQueueActions'
 
 export default class DefaultQueue extends Component {
   constructor(props) {
     super(props);
+    
+	  this.getDefaultSongs = this.getDefaultSongs.bind(this);
+		this.handleAddInput = this.handleAddInput.bind(this);
+	  this.deleteDefaultSong = this.deleteDefaultSong.bind(this);	
   }
 
-  render() {
+  componentDidMount() {
+	  const { dispatch, userId } = this.props;
+	  dispatch(getDefaultQueue(userId))
+  }
 
+  getDefaultSongs() {
+	  const { dispatch, queueId } = this.props;
+	  dispatch(getDefaultSongs(queueId))
+	}
+	
+	deleteDefaultSong(event) {
+		const { dispatch, queueId } = this.props;
+		dispatch(deleteDefaultSong(event.target.name, queueId))
+	}
+
+	handleAddInput(event) {
+		const { dispatch } = this.props;
+		dispatch(handleAddInput(event.target.value))
+  }
+  
+  render() {
+    const { defaultSongs } = this.props;
     return (
       <div id='default-queue' className='queue-container'>
         <h4 className='queue-header'>Comfort Music</h4>
+        <button onClick={this.getDefaultSongs}>Get Default Songs</button>
         <ul className='queue-list'>
-          <li className='queue-item'>
-            <div className='list-item-container'>
-              <div className='track-title track-info'>Song Title</div>
-              <span className='track-artist track-info'>Artist Name</span>
-              <span className='separator track-info'> • </span>
-              <span className='track-album track-info'>Album Name</span>
-            </div>
-            <div className='track-length'>0:00</div>
-          </li>
+          {
+            defaultSongs.map(song => {
+              return (
+                <li className='queue-item'>
+                  <div className='list-item-container'>
+                    <div className='track-title track-info'>{song.name}</div>
+                    <span className='track-artist track-info'>{song.artist}</span>
+                    <span className='separator track-info'> • </span>
+                    <button name={song.id} onClick={this.deleteDefaultSong}>Delete</button>
+                  </div>
+                  <div className='track-length'>{song.duration}</div>
+                </li>
+              )
+            })
+          }
         </ul>
       </div >
     )

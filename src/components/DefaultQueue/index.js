@@ -3,7 +3,10 @@ import DefaultQueue from './DefaultQueue';
 
 function mapStoreToProps(store) {
   return {
-    // defaultQueue: store.dQueue
+	  queueId: store.DQueue.queueId,
+    defaultSongs: store.DQueue.defaultSongs,
+    inputValue: store.DQueue.inputValue,
+    userId: store.Login.userId
   }
 }
 
