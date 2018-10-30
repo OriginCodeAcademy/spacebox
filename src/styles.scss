@@ -4,14 +4,14 @@ $bg-text: #fff;
     box-sizing: border-box;
 }
 
-html {
+html, {
     -webkit-font-smoothing: antialiased;
     background: url('/moon.jpeg');
     background-size: cover;
     background-attachment: fixed;
     box-sizing: border-box;
     color: $bg-text;
-    font-family: 'NATS', Avenir, Helvetica, sans-serif;
+    font-family: Avenir, Helvetica, sans-serif;
     font-size: 25px;
     height: 100%;
     margin: 0;
@@ -23,7 +23,7 @@ section {
     max-width: 1150px;
 }
 
-h1 {
+.glitch{
     color: transparent;
     font-family: NATS;
     font-size: 100px;
@@ -282,3 +282,130 @@ li {
   font-weight: normal;
   src: url('./fonts/NATS.woff2') format('woff2');
 }
+
+.header, .input-label{
+    color: #fff;
+}
+
+.header{
+    font-size: 60pt;
+    position: relative;
+    display: block;
+    font-weight: bold;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    
+}
+
+.label {
+    display: grid;
+    justify-items: end;
+    font-size: 35pt;
+    height: 55px;
+    width: 42vw;
+    margin-top: 20px;
+}
+
+.input {
+    display: grid;
+    justify-items: start;
+    width: 23vw;
+    height: 25px;
+    margin-top: 45px;
+    margin-left: 15px;
+    font-size: 14pt;
+}
+
+#password {
+    font-size: 24pt
+}
+
+
+ /*
+.parent {
+    display: flex;
+   
+}
+
+.input{
+    display: flex;
+    flex-direction: column;
+}
+
+.label{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+#username, #password {
+    height: 30px;
+    width: 300px;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 0px;
+    position: relative;
+    bottom: 8px;
+    font-size: 12pt;
+}
+
+.input-label {
+    font-size: 35pt;
+    font-weight: normal;
+
+    
+}
+
+#password {
+    margin-left: 20px;
+    height:25px;
+    margin-top: 50px;
+    padding-top: 0;
+}
+
+#username {
+    margin-top: 50px;
+    margin-left: 20px;
+    height: 25px;
+    padding-top: 0;
+    font-family: 'NATS', Avenir, Helvetica, sans-serif;
+}
+
+.label, .input {
+    text-align: right;
+    width: 50vw;
+}
+
+.flex {
+    display: flex;
+    
+    
+}
+.input{
+    display: flex;
+} */
+
+#submit{
+    width: 306px;
+    margin-left: 570px;
+    margin-top: 45px;
+    background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);
+    color: white;
+    border-radius: 0;
+    height: 60px;
+    border: none;
+    font-size: 20pt;
+    padding-left: 0;
+    padding-right: 0;
+    
+}
+
+#pw-flex{
+    height: 50px
+}
+

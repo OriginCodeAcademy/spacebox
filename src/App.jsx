@@ -6,16 +6,19 @@ import {
 
 import HomeContainer from './containers/HomeContainer';
 import AdminContainer from './containers/AdminContainer';
+import LoginContainer from './containers/LoginContainer';
 
-export default class Routes extends Component {
+
+export default class Routes extends React.Component {
 	render() {
 		return (
 			<Router>
-				<Switch>
+				<div className='container'>
 					<Route exact path='/' component={HomeContainer} />
 					<Route path='/dashboard' component={AdminContainer} />
-				</Switch>
-			</Router>
+					<Route path='/admin' component={LoginContainer} />				
+				</div>
+			</Router >
 		)
 	}
 };
