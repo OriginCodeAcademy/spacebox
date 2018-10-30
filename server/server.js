@@ -1,5 +1,4 @@
 'use strict';
-const socketEvents = require('./events/socketEvents');
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 require('dotenv').config();
@@ -27,15 +26,11 @@ boot(app, __dirname, function (err) {
   if (require.main === module)
     app.io = require('socket.io')(app.start());
   app.io.on('connection', function(socket) {
-    console.log('user is connected');
-  
     socket.on('room', (room) => {
       console.log(room);
-      socket.join(room);
-      
+      //socket.join(room);
       setTimeout(() => {
-        //broadcast to specific rooms
-        
+        socket.to(room).emit('room', 'Hello');
       }, 5000);
     });
   });
