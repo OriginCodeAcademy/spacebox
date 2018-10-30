@@ -414,59 +414,30 @@ li {
   position: relative;
 }
 
-body {
-  position:absolute;
-  top:0;
-  bottom:0;
-  right:0;
-  left:0;
-}
-
-ul {
-  list-style-type: none;
-  font-size: 20px;
-}
-
-ul span {
-  font-size: inherit;
-}
+// #id body {
+//   position:absolute;
+//   top:0;
+//   bottom:0;
+//   right:0;
+//   left:0;
+// }
 
 // .length-wrapper {
 //   padding-left: 3em;
 // }
 
+.current-track-bottom {
+  justify-content: center;
+}
+
+.current-track-container {
+  height: 33%;
+}
+
 .list-item-container{
   display: block;
   align-items: center;
   position: relative;
-}
-
-.track-album {
-  font-size: inherit;
-}
-
-.track-artist {
-  font-size: inherit;
-}
-
-.track-length {
-  text-align: right;
-  margin-left: auto;
-  margin-right: 1em;
-
-}
-
-.track-title {
-  font-size: 24px;
-  line-height: 22px;
-  letter-spacing: .015em;
-  color: #fff;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  text-align: left;
-  vertical-align: baseline;
-  unicode-bidi: -webkit-isolate;
 }
 
 .queue-container {
@@ -492,10 +463,49 @@ ul span {
 
 .queue-list {
   display: flex;
+  list-style-type: none;
+  font-size: 20px;
 }
 
-#current-song {
-  grid-area: song;
+.track-album {
+  font-size: inherit;
+}
+
+.track-artist {
+  font-size: inherit;
+}
+
+.track-info {
+  font-size: inherit;
+}
+
+.track-length {
+  text-align: right;
+  margin-left: auto;
+  margin-right: 1em;
+
+}
+
+.track-title {
+  font-size: 24px;
+  line-height: 22px;
+  letter-spacing: .015em;
+  color: #fff;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: left;
+  vertical-align: baseline;
+  unicode-bidi: -webkit-isolate;
+}
+
+#current-track {
+  grid-area: track;
+  display: flex;
+}
+
+#current-track-name {
+  flex: center;
 }
 
 #dashboard-container {
@@ -504,7 +514,7 @@ ul span {
   height: 90vh;
   grid-template-areas:
     "header header header"
-    "song song song"
+    "track track track"
     "search search button"
     "dQueue . sQueue"
     "dQueue . sQueue"
@@ -527,9 +537,23 @@ ul span {
   height: 75px;
   width: 75px;
   border-radius: 50%;
-  border: 1px solid black;
+  border: 1px solid white;
+  background: silver;
+  justify-content: center;
+}
+
+#play-triangle {
+  width: 24px;
+  height: 32px;
+  border-top: 8px solid transparent;
+  border-left: 12px solid #000;
+  border-bottom: 8px solid transparent;
 }
 
 #song-queue {
   grid-area: sQueue;
+}
+
+#track-progress {
+
 }

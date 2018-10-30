@@ -13,10 +13,10 @@ export default class DefaultQueue extends Component {
         <ul className='queue-list'>
           <li className='queue-item'>
             <div className='list-item-container'>
-              <div className='track-title'>Song Title</div>
-              <span className='track-artist'>Artist Name</span>
-              <span className='separator'> • </span>
-              <span className='track-album'>Album Name</span>
+              <div className='track-title track-info'>Song Title</div>
+              <span className='track-artist track-info'>Artist Name</span>
+              <span className='separator track-info'> • </span>
+              <span className='track-album track-info'>Album Name</span>
             </div>
             <div className='track-length'>0:00</div>
           </li>

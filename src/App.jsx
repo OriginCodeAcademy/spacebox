@@ -6,7 +6,7 @@ import {
 
 import HomeContainer from './containers/HomeContainer';
 import AdminContainer from './containers/AdminContainer';
-import LoginContainer from './containers/LoginContainer';
+import LoginContainer from './containers/Logincontainer';
 
 export default class Routes extends Component {
   render() {
@@ -15,6 +15,7 @@ export default class Routes extends Component {
         <div className='container'>
           <Route exact path='/' component={HomeContainer} />
           <Route path='/dashboard' component={AdminContainer} />
+          <Route path='/admin' component={LoginContainer} />
         </div>
       </Router>
     )
