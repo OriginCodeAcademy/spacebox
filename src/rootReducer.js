@@ -3,14 +3,15 @@ import HomePageReducer from './components/HomePage/HomePageReducer';
 import SearchReducer from './components/Search/SearchReducer';
 import DQueueReducer from './components/DefaultQueue/DQueueReducer';
 import SQueueReducer from './components/SongQueue/SQueueReducers';
-import LoginReducer from './components/Login/LoginReducer';
+import SongReducer from './components/CurrentSong/SongReducer';
 
 const rootReducer = combineReducers({
-	HomePage: HomePageReducer,
-	Search: SearchReducer,
-	DQueue: DQueueReducer,
-	SQueue: SQueueReducer,
-	Login: LoginReducer,
+  HomePage: HomePageReducer,
+  Search: SearchReducer,
+  DQueue: DQueueReducer,
+  SQueue: SQueueReducer,
+  Song: SongReducer,
+  Login: LoginReducer
 });
 
 export default rootReducer;

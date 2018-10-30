@@ -146,7 +146,7 @@ li {
 .currently-playing {
   justify-content: center;
 
-    .song-info {        
+    .song-info {
         transform: translateX(0);
         animation: fadeInLeftFirst 750ms ease 250ms forwards;
     }
@@ -179,7 +179,7 @@ li {
     }
     img {
         animation: fadeIn 500ms ease 1s forwards;
-    }  
+    }
   }
 }
 
@@ -298,7 +298,7 @@ li {
 .grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    
+
 }
 
 .label {
@@ -328,7 +328,7 @@ li {
  /*
 .parent {
     display: flex;
-   
+
 }
 
 .input{
@@ -358,7 +358,7 @@ li {
     font-size: 35pt;
     font-weight: normal;
 
-    
+
 }
 
 #password {
@@ -383,8 +383,8 @@ li {
 
 .flex {
     display: flex;
-    
-    
+
+
 }
 .input{
     display: flex;
@@ -402,10 +402,132 @@ li {
     font-size: 20pt;
     padding-left: 0;
     padding-right: 0;
-    
+
 }
 
 #pw-flex{
     height: 50px
 }
 
+#song-container {
+  width: 100%;
+  position: relative;
+body {
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+}
+
+ul {
+  list-style-type: none;
+  font-size: 20px;
+}
+
+ul span {
+  font-size: inherit;
+}
+
+// .length-wrapper {
+//   padding-left: 3em;
+// }
+
+.list-item-container{
+  display: block;
+  align-items: center;
+  position: relative;
+}
+
+.track-album {
+  font-size: inherit;
+}
+
+.track-artist {
+  font-size: inherit;
+}
+
+.track-length {
+  text-align: right;
+  margin-left: auto;
+  margin-right: 1em;
+
+}
+
+.track-title {
+  font-size: 24px;
+  line-height: 22px;
+  letter-spacing: .015em;
+  color: #fff;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: left;
+  vertical-align: baseline;
+  unicode-bidi: -webkit-isolate;
+}
+
+.queue-container {
+  overflow: scroll;
+  background-image: linear-gradient(rgb(86,75,67),rgb(64,74,89) 85%);
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.queue-header {
+  margin: 0;
+  border-bottom: 1px solid hsla(0,0%,100%,.1);
+}
+
+.queue-item {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  display: flex;
+  color: hsla(0,0%,100%,.6);
+  width: 100%;
+}
+
+.queue-list {
+  display: flex;
+}
+
+#current-song {
+  grid-area: song;
+}
+
+#dashboard-container {
+  display: grid;
+  width: 90%;
+  height: 90vh;
+  grid-template-areas:
+    "header header header"
+    "song song song"
+    "search search button"
+    "dQueue . sQueue"
+    "dQueue . sQueue"
+    "dQueue . sQueue";
+  grid-template-columns: repeat(3, 33%);
+  grid-template-rows: 20% 10% 10% 20% 20% 20%;
+  margin: 0 auto;
+}
+
+#dashboard-title {
+  grid-area: header;
+}
+
+#default-queue {
+  grid-area: dQueue;
+}
+
+#play-btn {
+  display: block;
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+#song-queue {
+  grid-area: sQueue;
+}

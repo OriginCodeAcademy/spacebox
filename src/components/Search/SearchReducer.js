@@ -1,26 +1,24 @@
-const initalstate = {
-	uri: "",
-	disableButton: false,
-
+const initialState = {
+  query: "",
 };
 
-function SearchReducer(state = initalstate, action) {
-	const { type, payload } = action;
-	switch (type) {
-		case 'UPDATE_URI':
-			return {
-				...state,
-				uri: payload
-			}
-		case 'TOGGLE_DISABLE_BUTTON':
-			return {
-				...state,
-				uri: payload
-			}
-		default:
-			return {
-				...state
-			}
-	}
+function SearchReducer(state = initialState, action) {
+  const { type, payload } = action;
+  switch (type) {
+    case 'UPDATE_QUERY':
+      return {
+        ...state,
+        query: payload
+      }
+    case 'TOGGLE_DISABLE_BUTTON':
+      return {
+        ...state,
+        uri: payload
+      }
+    default:
+      return {
+        ...state
+      }
+  }
 }
 export default SearchReducer;

@@ -4,7 +4,7 @@ const path = require('path');
 const config = {
   devtool: 'source-map',
   entry: [path.resolve(__dirname, 'src'),
-    path.resolve(__dirname, 'src/styles.scss')],
+  path.resolve(__dirname, 'src/styles.scss')],
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
