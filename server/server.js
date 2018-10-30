@@ -28,32 +28,15 @@ boot(app, __dirname, function (err) {
     app.io = require('socket.io')(app.start());
   app.io.on('connection', function(socket) {
     console.log('user is connected');
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Updated socket.io
   
     socket.on('room', (room) => {
       console.log(room);
-      // socket.join(queueId);
+      socket.join(room);
       
       setTimeout(() => {
         //broadcast to specific rooms
-
+        
       }, 5000);
-
-
-<<<<<<< HEAD
-=======
-    socket.on('event', (event) => {
-      socketEvents.eventHandler(socket, event, app);
-    });
-    socket.on('action', (action) => {
-      socketEvents.actionHandler(socket, action, app);
->>>>>>> Added socket.io
-=======
->>>>>>> Updated socket.io
     });
   });
 });
-
