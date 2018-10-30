@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -42760,3 +42761,5 @@ module.exports = function (css) {
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.js.map
+=======
+>>>>>>> Adds initial play button, centered correctly

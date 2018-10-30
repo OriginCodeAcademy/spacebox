@@ -468,6 +468,7 @@ li {
 #current-track {
   grid-area: track;
   display: flex;
+  justify-content: center;
 }
 
 #current-track-name {
@@ -500,20 +501,31 @@ li {
 
 #play-btn {
   display: block;
-  height: 75px;
-  width: 75px;
+  height: 60px;
+  width: 60px;
   border-radius: 50%;
   border: 1px solid white;
   background: silver;
   justify-content: center;
+  box-sizing: content-box;
 }
 
 #play-triangle {
-  width: 24px;
-  height: 32px;
-  border-top: 8px solid transparent;
-  border-left: 12px solid #000;
-  border-bottom: 8px solid transparent;
+  width: 30px; // 12, 24, 32
+  height: 40px; // 16, 32, 40
+  border-top: 20px solid transparent; // 8, 16, 20
+  border-left: 30px solid #000; // 12
+  border-bottom: 20px solid transparent; // 8
+  position: relative;
+  top: 30px;
+  left: 30px;
+}
+
+#play-pause {
+  width: 12px; // 12
+  height: 16px; // 16
+  border-right: 4px solid #000;
+  border-left: 4px solid #000;
 }
 
 #song-queue {
