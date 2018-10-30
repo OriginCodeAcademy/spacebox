@@ -306,18 +306,22 @@ li {
     justify-items: end;
     font-size: 35pt;
     height: 55px;
-    width: 50vw;
+    width: 42vw;
     margin-top: 20px;
 }
 
 .input {
     display: grid;
-    justify-items: center;
+    justify-items: start;
     width: 23vw;
     height: 25px;
     margin-top: 45px;
     margin-left: 15px;
-    font-size: 12pt;
+    font-size: 14pt;
+}
+
+#password {
+    font-size: 24pt
 }
 
 
@@ -387,8 +391,8 @@ li {
 } */
 
 #submit{
-    width: 309px;
-    margin-left: 688px;
+    width: 306px;
+    margin-left: 570px;
     margin-top: 45px;
     background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);
     color: white;
