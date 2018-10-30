@@ -7,7 +7,7 @@ export default class DefaultQueue extends Component {
 
 	render() {
 
-		// const { dQueue } = this.props;
+		// const { dQueue } = this.props
 
 		return (
 			<div className='container'>
