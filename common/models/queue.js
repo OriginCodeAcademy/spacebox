@@ -44,7 +44,8 @@ module.exports = function (Queue) {
         },
         {
             arg: 'songID',
-            type: 'string'
+            type: 'string',
+            required: false
         }],
         http: {
             path: '/updatePlaylist',
