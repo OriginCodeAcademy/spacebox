@@ -10,8 +10,12 @@ export const updatePassword = (value) => ({
     payload: value,
 })
 
-export const postLogin = (userData) => ({
-    type: 'POST_lOGIN',
-    payload: axios.post('api/players/login', userData)
-    .then(response => response.data)
-})
+export const postLogin = (userData) => {
+    return {
+        type: 'POST_LOGIN',
+        payload: axios.post('api/users/login', userData)
+        .then(response => {
+            return response.data
+        })
+    }
+}

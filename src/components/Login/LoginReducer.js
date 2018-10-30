@@ -20,6 +20,20 @@ export default function LoginReducer(state = initialstate, action) {
                 password: payload
             }
         }
+        case 'POST_LOGIN_REJECTED': {
+            return {
+                ...state,
+                error: payload
+            }
+        }
+
+        case 'POST_LOGIN_FULFILLED': {
+            return {
+                ...state,
+                token: payload.id,
+                userId: payload.userId
+            }
+        }
         default: {
             return state
           }
