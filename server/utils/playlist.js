@@ -202,7 +202,9 @@ function updatePlaylist(id, songID = null) {
                             let songIds = response.songIds;
                             return spotifyApi.replaceTracksInPlaylist(spotifyID, playlistID, songURIs)
                               .then(() => {
-                                if (lastPlayed.uri === songCurrentlyPlaying.uri) songIds.unshift(lastPlayed.id);
+                                if (lastPlayed[0].uri === songCurrentlyPlaying.uri) {
+                                  songIds.unshift(lastPlayed[0].id)
+                                }
                                 // io.emit('update', songs);
                                 // what is the below function doing?
                                 if (!isJukeboxOn) {
