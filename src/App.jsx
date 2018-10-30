@@ -15,6 +15,7 @@ export default class Routes extends Component {
         <div className='container'>
           <Route exact path='/' component={HomeContainer} />
           <Route path='/dashboard' component={AdminContainer} />
+          <Route path='/admin' component={LoginContainer} />
         </div>
       </Router>
     )
