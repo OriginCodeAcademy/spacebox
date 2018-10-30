@@ -29,6 +29,9 @@ boot(app, __dirname, function (err) {
   app.io.on('connection', function(socket) {
     console.log('user is connected');
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Updated socket.io
   
     socket.on('room', (room) => {
       console.log(room);
@@ -40,6 +43,7 @@ boot(app, __dirname, function (err) {
       }, 5000);
 
 
+<<<<<<< HEAD
 =======
     socket.on('event', (event) => {
       socketEvents.eventHandler(socket, event, app);
@@ -47,6 +51,8 @@ boot(app, __dirname, function (err) {
     socket.on('action', (action) => {
       socketEvents.actionHandler(socket, action, app);
 >>>>>>> Added socket.io
+=======
+>>>>>>> Updated socket.io
     });
   });
 });
