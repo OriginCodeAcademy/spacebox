@@ -10,7 +10,7 @@ const expect = chai.expect;
 
 server.listen(4444);
 
-describe('loopback server', function() {
+describe('getSong functionality', function() {
   this.timeout(7000);
 
   it('responds to /Song/Song_find', (done) => {
