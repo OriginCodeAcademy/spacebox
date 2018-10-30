@@ -451,7 +451,7 @@ ul span {
   text-align: right;
   margin-left: auto;
   margin-right: 1em;
-  
+
 }
 
 .track-title {
@@ -518,6 +518,14 @@ ul span {
 
 #default-queue {
   grid-area: dQueue;
+}
+
+#play-btn {
+  display: block;
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  border: 1px solid black;
 }
 
 #song-queue {

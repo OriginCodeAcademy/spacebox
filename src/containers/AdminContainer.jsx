@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DefaultQueue from '../components/DefaultQueue';
 import CurrentSong from '../components/CurrentSong';
 import SongQueue from '../components/SongQueue';
+import PlayBtn from '../components/PlayBtn';
 
 export default class AdminContainer extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ export default class AdminContainer extends Component {
         <h1 id='dashboard-title' data-text='DASHBOARD' className='glitch'>
           DASHBOARD
         </h1>
+        <PlayBtn />
         <CurrentSong />
         <DefaultQueue />
         <SongQueue />
