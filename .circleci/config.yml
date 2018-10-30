@@ -4,7 +4,6 @@ jobs:
     working_directory: ~/origin-spacebox
     docker:
       - image: circleci/node:8.11.0
-      - image: mongo:4.0.3
     steps:
       - checkout
       - run:
@@ -17,12 +16,10 @@ jobs:
       - run:
           name: Mocha Test Suite
           command: 'npm run test'
-      
   deploy-job:
     working_directory: ~/origin-spacebox
     docker:
       - image: circleci/node:8.11.0
-      - image: mongo:4.0.3
     steps:
       - checkout
       - run:

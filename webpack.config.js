@@ -1,22 +1,11 @@
-'use strict';
 const path = require('path');
 
 const config = {
-  devtool: 'source-map',
-  entry: [path.resolve(__dirname, 'src'),
-    path.resolve(__dirname, 'src/styles.scss')],
+  entry: [path.resolve(__dirname, 'src'), path.resolve(__dirname, 'src/styles.scss')],
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
   },
-
-  resolve: {
-    alias: {
-      react: path.join(__dirname, 'node_modules', 'react'),
-    },
-    extensions: ['.js', '.jsx'],
-  },
-
   module: {
     rules: [{
       test: /\.jsx?$/,
