@@ -14,9 +14,9 @@ export default class Routes extends Component {
     return (
       <Router>
 				<Switch>
-					<Route path='/' component={HomeContainer} />
-					<Route path='/dashboard' component={AdminContainer} />
+					<Route exact path='/' component={HomeContainer} />
           <Route path='/admin' component={LoginContainer} />
+					<Route path='/dashboard' component={AdminContainer} />
 					<Route path='/room/:queueId' component={RoomContainer} />
 				</Switch>
 			</Router >
