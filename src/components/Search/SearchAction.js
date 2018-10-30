@@ -8,17 +8,17 @@ export function updateSearchType(searchType) {
     }
 }
 
-export function updateSearch(search) {
+export function updateSearch(searchStr) {
     return {
         type: 'UPDATE_SEARCH',
-        payload: search
+        payload: searchStr
     }
 }
 
-export function getSearch(type, query) {
+export function getSearch(searchType, searchStr) {
     return {
         type: 'GET_SEARCH',
-        payload: axios.get()
+        payload: axios.get(`/search/${searchType}/${searchStr}`)
     }
 }
 

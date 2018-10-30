@@ -7,7 +7,7 @@ function mapStoreToProps(store) {
 		disabled: store.Search.disabled,
 		error: store.Search.error,
 		searchType: store.Search.searchType,
-		search: store.Search.search
+		searchStr: store.Search.searchStr
 	};
 }
 export default connect(mapStoreToProps)(Search);

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import { updateSearchType, updateSearch } from './SearchAction';
+import { updateSearchType, updateSearch, getSearch } from './SearchAction';
 class Search extends Component {
 	constructor(props) {
 		super(props);
@@ -29,7 +29,7 @@ class Search extends Component {
 	// }
 
 	render() {
-        const { searchType, search } = this.props;
+        const { searchType, searchStr } = this.props;
 		return (
 			<div className="request">
 				<input type="text" placeholder="spotify:track:URI" name="uri" /* onChange={this.getUri} value={this.props.uri} */ />

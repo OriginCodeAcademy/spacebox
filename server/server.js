@@ -1,5 +1,5 @@
 'use strict';
-
+const socketEvents = require('./events/socketEvents');
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 require('dotenv').config();
@@ -25,5 +25,15 @@ boot(app, __dirname, function (err) {
 
   // start the server if `$ node server.js`
   if (require.main === module)
-    app.start();
+    app.io = require('socket.io')(app.start());
+  app.io.on('connection', function(socket) {
+    console.log('user is connected');
+    socket.on('event', (event) => {
+      socketEvents.eventHandler(socket, event, app);
+    });
+    socket.on('action', (action) => {
+      socketEvents.actionHandler(socket, action, app);
+    });
+  });
 });
+
