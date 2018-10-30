@@ -8,10 +8,10 @@ const actionHandler = (socket, action, app) => {
   const {type, payload} = action;
   switch (type) {
     case 'CONNECT_ROOM':
-      socket.broadcast.emit('add_to_room', true);
+      socket.broadcast.emit('room', true);
       break;
     case 'CONNECT_ROOM_FULFILLED':
-      socket.broadcast.emit('add_to_room', true);
+      socket.broadcast.emit('room', true);
       break;
     default:
       break;

@@ -3,17 +3,18 @@ import HomePage from '../HomePage/index';
 import { withRouter } from 'react-router';
 import { updateRoom, connectToRoom } from './RoomAction';
 import io from 'socket.io-client';
-const socket = io();
+const socket = io('http://localhost:3000');
 
 class Room extends Component {
     constructor(props) {
         super(props);
         socket.on('update', queueId =>
-			dispatch(updateRoom(queueId)));
+			dispatch(updateRoomTracks(queueId)));
     }
     componentDidMount() {
         const { match: { params } } = this.props;
-        socket.join(params.queueId);
+        console.log(params.queueId);
+        socket.emit('room', params.queueId);
     }
     render() {
         return (

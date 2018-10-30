@@ -1,8 +1,8 @@
 'use strict';
 
-export function updateRoom(queueId) {
+export function updateRoomTracks(queueId) {
   return {
-    type: 'UPDATE_ROOM',
+    type: 'UPDATE_ROOM_TRACKS',
     payload: queueId
   };
 }
