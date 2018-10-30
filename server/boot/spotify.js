@@ -37,7 +37,7 @@ module.exports = function(server) {
       });
 
       spotifyApi.authorizationCodeGrant(code)
-        .then(({ body: { 'access_token': accessToken, 'refresh_token': refreshToken, ...rest } }) => {
+        .then(({ body: { 'access_token': accessToken, 'refresh_token': refreshToken } }) => {
 
           const UserModel = server.models.user;
 
