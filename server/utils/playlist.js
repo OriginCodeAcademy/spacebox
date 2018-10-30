@@ -7,7 +7,7 @@ function getAccessToken(userID = null) {
         clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
         redirectUri: process.env.SITE_URL || 'http://localhost:8080',
     });
-
+    
     return new Promise((resolve, reject) => {
         if (!userID) {
             reject('No user id provided');
@@ -15,19 +15,19 @@ function getAccessToken(userID = null) {
         }
         const { User } = app.models;
         User.findById(userID)
-            .then((user) => {
-                if (!user.spotifyRefreshToken) {
-                    reject('No refresh token');
-                    return false;
-                }
-                // get their refresh token and add accessToken
-                spotifyApi.setRefreshToken(user.spotifyRefreshToken);
-                spotifyApi.refreshAccessToken()
-                    .then(({ body: { 'access_token': accessToken } }) => {
-                        resolve(accessToken);
-                    })
-                    .catch(err => reject(err));
+        .then((user) => {
+            if (!user.spotifyRefreshToken) {
+                reject('No refresh token');
+                return false;
+            }
+            // get their refresh token and add accessToken
+            spotifyApi.setRefreshToken(user.spotifyRefreshToken);
+            spotifyApi.refreshAccessToken()
+            .then(({ body: { 'access_token': accessToken } }) => {
+                resolve(accessToken);
             })
+            .catch(err => reject(err));
+        })
     })
 }
 
@@ -188,4 +188,4 @@ function updatePlaylist(id, songID = null) {
 }
 
 
-module.exports = { getPlaylist, updatePlaylist }
+module.exports = { getPlaylist, updatePlaylist, getAccessToken }
