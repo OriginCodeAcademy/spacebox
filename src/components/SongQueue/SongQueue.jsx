@@ -10,14 +10,13 @@ export default class SongQueue extends Component {
         <h4 className='queue-header'>Coming Up Next...</h4>
         <ul className='queue-list'>
           <li className='queue-item'>
-            <div>Song Title</div>
-            <div>Artist Name</div>
-            <div>Album Name</div>
-          </li>
-          <li className='queue-item'>
-            <h5>Song Title</h5>
-            <div>Artist Name</div>
-            <div>Album Name</div>
+            <div className='list-item-container'>
+              <div className='track-title'>Song Title</div>
+              <span className='track-artist'>Artist Name</span>
+              <span className='separator'> • </span>
+              <span className='track-album'>Album Name</span>
+            </div>
+            <div className='track-length'>0:00</div>
           </li>
         </ul>
       </div>
