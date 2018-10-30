@@ -8,11 +8,7 @@
   "description": "Origin Code Academy's Jukebox",
   "scripts": {
     "watch": "webpack -w",
-<<<<<<< HEAD
     "server": "nodemon server/server",
-=======
-    "server": "nodemon server",
->>>>>>> Added socket.io
     "build": "webpack",
     "start": "node server/server",
     "dev": "concurrently \"webpack -w\" \"nodemon server\"",
