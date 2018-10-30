@@ -28,6 +28,7 @@ boot(app, __dirname, function (err) {
     app.io = require('socket.io')(app.start());
   app.io.on('connection', function(socket) {
     console.log('user is connected');
+<<<<<<< HEAD
   
     socket.on('room', (room) => {
       console.log(room);
@@ -39,6 +40,13 @@ boot(app, __dirname, function (err) {
       }, 5000);
 
 
+=======
+    socket.on('event', (event) => {
+      socketEvents.eventHandler(socket, event, app);
+    });
+    socket.on('action', (action) => {
+      socketEvents.actionHandler(socket, action, app);
+>>>>>>> Added socket.io
     });
   });
 });
