@@ -63,5 +63,5 @@ export default class DefaultQueue extends Component {
         <button onClick={this.addDefaultSong}>Add</button>
       </div>
     )
-  }
+  }		
 }
