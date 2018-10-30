@@ -16,11 +16,10 @@ export default class CurrentSong extends Component {
 
   render() {
     return (
-      <div id='current-song' className='container'>
-        <div>Song Name, Artist</div>
-        <div>Song Length</div>
-        <div>progress bar</div>
-        <div>Play Button</div>
+      <div id='current-track' className='container'>
+        <div id='play-btn'>
+          <div id='play-triangle'></div>
+        </div>
       </div>
     )
   }
