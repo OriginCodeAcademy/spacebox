@@ -7,17 +7,19 @@ import {
 import HomeContainer from './containers/HomeContainer';
 import AdminContainer from './containers/AdminContainer';
 import LoginContainer from './containers/Logincontainer';
+import RoomContainer from './containers/RoomContainer';
 
 export default class Routes extends Component {
   render() {
     return (
       <Router>
-        <div className='container'>
-          <Route exact path='/' component={HomeContainer} />
-          <Route path='/dashboard' component={AdminContainer} />
+				<Switch>
+					<Route path='/' component={HomeContainer} />
+					<Route path='/dashboard' component={AdminContainer} />
           <Route path='/admin' component={LoginContainer} />
-        </div>
-      </Router>
-    )
-  }
+					<Route path='/room/:queueId' component={RoomContainer} />
+				</Switch>
+			</Router >
+		)
+	}
 };
