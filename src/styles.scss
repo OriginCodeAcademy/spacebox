@@ -422,22 +422,56 @@ body {
 
 ul {
   list-style-type: none;
+  font-size: 20px;
+}
+
+ul span {
+  font-size: inherit;
+}
+
+// .length-wrapper {
+//   padding-left: 3em;
+// }
+
+.list-item-container{
+  display: block;
+  align-items: center;
+  position: relative;
+}
+
+.track-album {
+  font-size: inherit;
+}
+
+.track-artist {
+  font-size: inherit;
+}
+
+.track-length {
+  text-align: right;
+  margin-left: auto;
+  margin-right: 1em;
+  
 }
 
 .track-title {
-  font-size: 16px;
+  font-size: 24px;
   line-height: 22px;
   letter-spacing: .015em;
   color: #fff;
   text-overflow: ellipsis;
+  overflow: hidden;
   white-space: nowrap;
+  text-align: left;
   vertical-align: baseline;
+  unicode-bidi: -webkit-isolate;
 }
 
 .queue-container {
   overflow: scroll;
   background-image: linear-gradient(rgb(86,75,67),rgb(64,74,89) 85%);
   padding: 15px;
+  box-sizing: border-box;
 }
 
 .queue-header {
@@ -451,10 +485,11 @@ ul {
   border: 0;
   display: flex;
   color: hsla(0,0%,100%,.6);
+  width: 100%;
 }
 
 .queue-list {
-  display: block;
+  display: flex;
 }
 
 #current-song {
