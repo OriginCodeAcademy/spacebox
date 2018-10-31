@@ -25,13 +25,11 @@ boot(app, __dirname, function (err) {
   if (require.main === module)
     app.io = require('socket.io')(app.start());
   app.io.on('connection', function(socket) {
-    console.log(`user connected ${socket.client.id}`);
-    socket.on('update', (queueId) => {
-      console.log('updated');
-      app.io.emit('received-update', queueId);
-    });
-    socket.on('disconnnect', () => {
-      console.log(`user disconnected ${socket.client.id}`);
+    socket.on('room', (room) => {
+      socket.join(room);
+      setTimeout(() => {
+        app.io.in(room).emit('update', []);
+      }, 5000);
     });
   });
 });
