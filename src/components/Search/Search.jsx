@@ -41,8 +41,10 @@ class Search extends Component {
 		}
 		
 		handleSelectedSongUri(e) {
+			console.log('inside if handle selected song uri');
 			const { dispatch } = this.props;
 			var uri = e.target.name
+			console.log('this is uri: ', uri);
 			var userId = '5bd9d108ef79ae228379334a';
 			dispatch(addToQueue(uri, userId))
  		}
