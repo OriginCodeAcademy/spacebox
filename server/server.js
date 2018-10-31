@@ -3,7 +3,6 @@ var loopback = require('loopback');
 var boot = require('loopback-boot');
 require('dotenv').config();
 var app = module.exports = loopback();
-
 app.start = function () {
   // start the web server
   return app.listen(function () {
@@ -26,12 +25,13 @@ boot(app, __dirname, function (err) {
   if (require.main === module)
     app.io = require('socket.io')(app.start());
   app.io.on('connection', function(socket) {
-    socket.on('room', (room) => {
-      console.log(room);
-      //socket.join(room);
-      setTimeout(() => {
-        socket.to(room).emit('room', 'Hello');
-      }, 5000);
+    console.log(`user connected ${socket.client.id}`);
+    socket.on('update', (queueId) => {
+      console.log('updated');
+      app.io.emit('received-update', queueId);
+    });
+    socket.on('disconnnect', () => {
+      console.log(`user disconnected ${socket.client.id}`);
     });
   });
 });

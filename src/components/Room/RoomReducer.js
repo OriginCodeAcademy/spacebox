@@ -1,6 +1,7 @@
 'use strict';
 const initialState = {
   queueId: '',
+  messageList: []
 };
 
 export default function RoomReducer(state = initialState, action) {
@@ -10,6 +11,11 @@ export default function RoomReducer(state = initialState, action) {
       return {
         ...state,
         queueId: payload
+      };
+    case 'UPDATE_QUEUE':
+      return {
+        ...state,
+        messageList: payload
       };
     default:
       return state;
