@@ -26,6 +26,12 @@ export default function dQueueReducer(state = initialState, action) {
         inputValue: payload
       }
     }
+    case 'ADD_DEFAULT_SONG_FULFILLED': {
+      return {
+        ...state,
+        defaultSongs: payload
+      }
+    }
     default: {
       return state;
     }
