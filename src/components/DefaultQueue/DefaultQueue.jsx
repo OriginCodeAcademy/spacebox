@@ -32,8 +32,8 @@ export default class DefaultQueue extends Component {
   }
   
   addDefaultSong() {
-    const { dispatch, inputValue } = this.props;
-    dispatch(addDefaultSong(inputValue))
+    const { dispatch, inputValue, queueId } = this.props;
+    dispatch(addDefaultSong(inputValue, queueId))
   }
 
   render() {

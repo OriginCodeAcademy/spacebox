@@ -1,5 +1,6 @@
 'use strict';
-const { getPlaylist, updatePlaylist } = require('../../server/utils/playlist')
+const { getPlaylist, updatePlaylist } = require('../../server/utils/playlist');
+const { addToDefaultSongs } = require('../../server/utils/adminQueue');
 
 module.exports = function (Queue) {
     Queue.getPlaylist = function (id, cb) {
@@ -34,8 +35,6 @@ module.exports = function (Queue) {
             .catch(err => cb(err));
     }
 
-
-
     Queue.remoteMethod('updatePlaylist', {
         description: 'Adds new song to playlist and removes current playing song from playlist. Adds default songs if needed.',
         accepts: [{
@@ -57,4 +56,37 @@ module.exports = function (Queue) {
             root: true
         },
     });
+
+    Queue.addToDefaultSongs = function (id, uri, cb) {
+        addToDefaultSongs(id, uri)
+            .then((queue) => {
+                Queue.replaceOrCreate(queue)
+                cb(null, queue)
+            })
+            .catch(err => cb(err));
+    };
+
+    Queue.remoteMethod('addToDefaultSongs', {
+        description: 'Adds new song to default song array',
+        accepts: [
+        {
+            arg: 'id',
+            type: 'string'
+        },
+        {
+            arg: 'uri',
+            type: 'string'
+        }],
+        http: {
+            path: '/addToDefaultSongs',
+            verb: 'post'
+        },
+        returns: {
+            arg: 'data',
+            type: 'array',
+            root: true
+        },
+    });
+
 };
+
