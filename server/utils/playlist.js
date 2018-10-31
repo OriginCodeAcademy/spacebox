@@ -24,7 +24,6 @@ function getAccessToken(userID = null) {
         spotifyApi.setRefreshToken(user.spotifyRefreshToken);
         spotifyApi.refreshAccessToken()
           .then(({ body: { 'access_token': accessToken } }) => {
-            // console.log(user.spotifyRefreshToken)
             resolve(accessToken);
           })
           .catch(err => reject(err));
@@ -83,7 +82,7 @@ function getPlaylist(id) {
 
 function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
   return new Promise((resolve, reject) => {
-    const { Queue } = app.models;
+    const { Queue, Song } = app.models;
     // update database so the queue matches song track from spotify 
     Queue.findById(queueId)
       .then((queue) => {
@@ -96,49 +95,12 @@ function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
         }
 
         let lastPlayed = queue.songIds[0];
-        if (songs[0].uri === songCurrentlyPlaying.uri) {
-          // update the queue so it matches songs(from spotify)
-          let songURIs = songs.map(s => s.uri)
-          getSongIds(songURIs)
-            .then((songIds) => {
-              const songIdArray = songIds
-              var newQueue = {
-                "defaultSongs": queue.defaultSongs,
-                "id": queue.id,
-                "songIds": songIdArray,
-                "userId": queue.userId
-              }
-              Queue.replaceOrCreate(newQueue)
-              // update lastplayed here (Do I still need to do this? duplicating the default above)
-              lastPlayed = queue.songIds[0]
-              // remove first song from spotify
-              songs.shift();
-            })
-            .catch(err => ({ error: '', err }))
-        }
-        else if (songs[0].uri !== songCurrentlyPlaying.uri && lastPlayed.uri !== songCurrentlyPlaying.uri) {
-          // Make song list match currently playing
-          while (songs.length && songs[0].uri !== songCurrentlyPlaying.uri) songs.shift();
-          // update queue so it matches songs
-          // console.log('lastPlayed from past', lastPlayed)
-          // console.log('songs after shift', songs)
-          let songURIs = [...songs].map(s => s.uri)
-          getSongIds(songURIs)
-            .then((songIds) => {
-              const songIdArray = songIds
-              var newQueue = {
-                "defaultSongs": queue.defaultSongs,
-                "id": queue.id,
-                "songIds": songIdArray,
-                "userId": queue.userId
-              }
-              Queue.replaceOrCreate(newQueue)
-              // update last playded it be song[0]
-              lastPlayed = newQueue.songIds[0]
-              // console.log('newLastPlayed', lastPlayed)
-              // shift queue one more time so it doesn't have currently playing song
-              songs.shift()
-              songURIs = [...songs].map(s => s.uri)
+        Song.findById(lastPlayed)
+          .then((songObject) => {
+            var lastPlayedObject = songObject
+            if (songs[0].uri === songCurrentlyPlaying.uri) {
+              // update the queue so it matches songs(from spotify)
+              let songURIs = songs.map(s => s.uri)
               getSongIds(songURIs)
                 .then((songIds) => {
                   const songIdArray = songIds
@@ -148,17 +110,68 @@ function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
                     "songIds": songIdArray,
                     "userId": queue.userId
                   }
-                  //console.log('newQueue with first song shifted', newQueue)
                   Queue.replaceOrCreate(newQueue)
+                  // update lastplayed here (Do I still need to do this? duplicating the default above)
+                  Queue.findById(queue.id)
+                    .then((queue) => {
+                      lastPlayed = queue.songIds[0]
+                      // remove first song from spotify
+                      songs.shift();
+                      return resolve({
+                        songs,
+                        lastPlayed
+                      })
+                    })
+                })
+                .catch(err => ({ error: '', err }))
+            }
+            else if (songs[0].uri !== songCurrentlyPlaying.uri && lastPlayedObject.uri !== songCurrentlyPlaying.uri) {
+              // Make song list match currently playing
+              while (songs.length && songs[0].uri !== songCurrentlyPlaying.uri) songs.shift();
+              // update queue so it matches songs
+              let songURIs = [...songs].map(s => s.uri)
+              getSongIds(songURIs)
+                .then((songIds) => {
+                  const songIdArray = songIds
+                  var newQueue = {
+                    "defaultSongs": queue.defaultSongs,
+                    "id": queue.id,
+                    "songIds": songIdArray,
+                    "userId": queue.userId
+                  }
+                  Queue.replaceOrCreate(newQueue)
+                  // update last playded it be song[0]
+                  lastPlayed = newQueue.songIds[0]
+                  // shift queue one more time so it doesn't have currently playing song
+                  songs.shift()
+                  songURIs = [...songs].map(s => s.uri)
+                  getSongIds(songURIs)
+                    .then((songIds) => {
+                      const songIdArray = songIds
+                      var newQueue = {
+                        "defaultSongs": queue.defaultSongs,
+                        "id": queue.id,
+                        "songIds": songIdArray,
+                        "userId": queue.userId
+                      }
+                      Queue.replaceOrCreate(newQueue)
+                      return resolve({
+                        songs,
+                        lastPlayed
+                      })
+                    })
+                    .catch(err => reject(err))
                 })
                 .catch(err => reject(err))
-            })
-            .catch(err => reject(err))
-        }
-        resolve({
-          songs,
-          lastPlayed
-        })
+            }
+            else {
+              return resolve({
+                songs,
+                lastPlayed
+              })
+            }
+          })
+          .catch(err => reject(err))
       })
       .catch(err => ({ error: 'couldnt find queue id', err }))
   })
@@ -169,16 +182,13 @@ function addNewSong(songID, songs) {
   return new Promise((resolve, reject) => {
     const { Song } = app.models;
     if (songID) {
-      console.log('test1')
       Song.findById(songID)
         .then((song) => {
           if (songs.every((track) => track.uri !== song.uri)) {
-            console.log('test2')
             songs.push(song)
-            console.log('fxn output', songs)
             resolve(songs)
           }
-          else reject({ message: 'Duplicate song'})
+          else reject({ message: 'Duplicate song' })
         })
         .catch(err => reject(err))
     }
@@ -253,18 +263,15 @@ function updatePlaylist(id, songID = null) {
               .then((response) => {
                 // copying current playlist into a new array that we will mutate called songs
                 let songs = [...tracks]
-                console.log('songs from spotify get playlist', songs)
                 const songCurrentlyPlaying = response.body.item;
                 const isJukeboxOn = response.body.is_playing;
 
                 removeCurrentlyPlaying(songs, songCurrentlyPlaying, id)
                   .then((response) => {
-                    console.log('response from remove currently playing', response)
                     songs = response.songs
                     lastPlayed = response.lastPlayed
                     addNewSong(songID, songs)
                       .then((songs) => {
-                        console.log('songs from addnewsong fxn', songs)
                         addDefaultSongsAndGetURIs(songs, id)
                           .then((response) => {
                             let songURIs = response.songURIs;
