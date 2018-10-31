@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { togglePlay } from './SongActions';
+import { startPlayback, pausePlayback, togglePlaying } from './SongActions';
 
 export default class CurrentSong extends Component {
   constructor(props) {
@@ -8,13 +8,23 @@ export default class CurrentSong extends Component {
     this.handleBtn = this.handleBtn.bind(this);
   }
 
+  componentDidMount() {
+    const { dispatch } = this.props;
+    let playing = false;
+    dispatch(togglePlaying(playing))
+    dispatch(startPlayback());
+  }
+
   handleBtn(e) {
     e.preventDefault();
-    const { song, playing, dispatch } = this.props;
-    dispatch(togglePlay(playingSong))
+    const { playing, dispatch } = this.props;
+    playing ? dispatch(pausePlayback()) : dispatch(startPlayback());
   }
 
   render() {
+
+    const { playing } = this.props;
+
     return (
       <div id='current-track' className='container'>
         <div id='play-btn'>

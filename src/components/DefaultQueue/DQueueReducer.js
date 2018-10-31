@@ -5,9 +5,9 @@ const initialState = {
 };
 
 export default function dQueueReducer(state = initialState, action) {
-  const {type, payload} = action;
-  
-  switch(type) {
+  const { type, payload } = action;
+
+  switch (type) {
     case 'GET_DEFAULT_QUEUE_ID_FULFILLED': {
       return {
         ...state,
