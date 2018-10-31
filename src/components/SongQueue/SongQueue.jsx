@@ -29,7 +29,7 @@ export default class SongQueue extends Component {
         {
           songs.map(song => {
             return (
-              <li className='queue-item'>
+              <li key={song.id} className='queue-item'>
                 <div className='list-item-container'>
                   <div className='track-title'>{song.name}</div>
                   <span className='track-artist'>{song.artist}</span>
