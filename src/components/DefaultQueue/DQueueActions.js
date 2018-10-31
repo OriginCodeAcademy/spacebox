@@ -29,3 +29,10 @@ export function handleAddInput(event) {
 		payload: event
 	}
 }
+
+// export function addDefaultSong(inputValue) {
+// 	return {
+// 		type: 'ADD_DEFAULT_SONG',
+// 		payload: 
+// 	}
+// }
