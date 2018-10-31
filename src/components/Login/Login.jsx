@@ -31,9 +31,9 @@ export default class Login extends Component {
       return <Redirect push to='/dashboard' />
     }
     return (
-      <div className='container'>
+      <section id='main'>
         <div>
-          <h1 className='header glitch' id='header'>Login</h1>
+          <h1 className='glitch' data-text='LOGIN' style={{text:'center'}} id='header'>LOGIN</h1>
         </div>
         <form onSubmit={this.submitLogin}>
           <div className='grid'>
@@ -46,7 +46,7 @@ export default class Login extends Component {
             <button className='submit' id='submit'>Submit</button>
           </div>
         </form>
-      </div>
+      </section>
     )
   }
 }

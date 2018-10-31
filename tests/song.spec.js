@@ -40,7 +40,7 @@ describe('getSong functionality', function() {
   })
 
   it('should return a song with name "Sunset"', (done) => {
-    getSong('spotify:track:5HE2u1IOizZwM4kWMF5Jpb', '5bd74cdb91ba9430a03c469e')
+    getSong('spotify:track:5HE2u1IOizZwM4kWMF5Jpb', '5bd8cfc0109d902574d6a423')
       .then((response) => {
         expect(response[0].name).to.equal('Sunset')
         expect(response[0].duration).to.equal(213361)
