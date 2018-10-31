@@ -33,6 +33,7 @@ export function handleAddInput(event) {
 export function addDefaultSong(inputValue, queueId) {
 	return {
 		type: 'ADD_DEFAULT_SONG',
-		payload: axios.post(`/api/Queues/addToDefaultSongs`, {uri: inputValue, queueId: queueId})
+		payload: axios.post(`/api/Queues/addToDefaultSongs`, {id: queueId, uri: inputValue})
+		  .then(response => response.data.defaultSongs)
 	}
 }
