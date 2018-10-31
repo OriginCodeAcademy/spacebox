@@ -32,7 +32,7 @@ function getAccessToken(userID = null) {
 }
 
 /**
- * 
+ *
  * @param {String} id ID for queue you're searching for
  * @returns {Promise} Resolves to array of objects with tracks on the playlist
  */
@@ -83,7 +83,7 @@ function getPlaylist(id) {
 function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
   return new Promise((resolve, reject) => {
     const { Queue, Song } = app.models;
-    // update database so the queue matches song track from spotify 
+    // update database so the queue matches song track from spotify
     Queue.findById(queueId)
       .then((queue) => {
         // last played is first song in the queue

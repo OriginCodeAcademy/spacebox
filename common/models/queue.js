@@ -1,6 +1,7 @@
 'use strict';
 const { getPlaylist, updatePlaylist } = require('../../server/utils/playlist');
 const { addToDefaultSongs } = require('../../server/utils/adminQueue');
+const { playCurrentSong } = require('../../server/utils/player');
 
 module.exports = function (Queue) {
   Queue.getPlaylist = function (id, cb) {

@@ -13,10 +13,10 @@ export const togglePlaying = (playing) => ({
 
 export const startPlayback = () => ({
   type: 'START_PLAYBACK',
-  payload: axios.put('/v1/me/player/play')
+  payload: axios.put('/Queues/playCurrentSong')
 });
 
 export const pausePlayback = () => ({
   type: 'PAUSE_PLAYBACK',
-  payload: axios.put('/v1/me/player/pause')
+  payload: axios.put('/Queues/pauseCurrentSong')
 });
