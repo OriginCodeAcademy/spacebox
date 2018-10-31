@@ -32,8 +32,8 @@ export default class DefaultQueue extends Component {
   }
   
   addDefaultSong() {
-    const { dispatch, inputValue } = this.props;
-    dispatch(addDefaultSong(inputValue))
+    const { dispatch, inputValue, queueId } = this.props;
+    dispatch(addDefaultSong(inputValue, queueId))
   }
 
   render() {
@@ -41,7 +41,7 @@ export default class DefaultQueue extends Component {
     return (
       <div id='default-queue' className='queue-container'>
         <h4 className='queue-header'>Comfort Music</h4>
-        <button onClick={this.getDefaultSongs}>Get Default Songs</button>
+        <button id='get-default' onClick={this.getDefaultSongs}>Get Default Songs</button>
         <ul className='queue-list'>
           {
             defaultSongs.map(song => {
@@ -51,7 +51,7 @@ export default class DefaultQueue extends Component {
                     <div className='track-title track-info'>{song.name}</div>
                     <span className='track-artist track-info'>{song.artist}</span>
                     <span className='separator track-info'> • </span>
-                    <button name={song.id} onClick={this.deleteDefaultSong}>Delete</button>
+                    <button className='delete-song' name={song.id} onClick={this.deleteDefaultSong}>Delete</button>
                   </div>
                   <div className='track-length'>{song.duration}</div>
                 </li>
