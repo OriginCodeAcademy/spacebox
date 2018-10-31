@@ -477,7 +477,7 @@ li {
 
 #dashboard-container {
   display: grid;
-  width: 90%;
+  width: 90vw;
   height: 90vh;
   grid-template-areas:
     "header header header"
@@ -499,7 +499,7 @@ li {
   grid-area: dQueue;
 }
 
-#play-btn {
+#play-btn-circle {
   display: block;
   height: 60px;
   width: 60px;
@@ -508,24 +508,33 @@ li {
   background: silver;
   justify-content: center;
   box-sizing: content-box;
+  box-shadow: 0 1px 0 #666, 0 5px 0 #444, 0 6px 6px;
 }
 
-#play-triangle {
-  width: 30px; // 12, 24, 32
-  height: 40px; // 16, 32, 40
-  border-top: 20px solid transparent; // 8, 16, 20
-  border-left: 30px solid #000; // 12
-  border-bottom: 20px solid transparent; // 8
+#play-btn-circle:active {
+  -webkit-transform: translateY(3px);
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #666, 0 2px 0 #444, 0 2px 2px;
+}
+
+.press-play {
   position: relative;
-  top: 30px;
-  left: 30px;
-}
+  top: 10px;
+  left: 21px;
+  box-sizing: border-box;
+  height: 40px; // 16, 32, 40
+  border-color: transparent transparent transparent #202020;
+  transition: 100ms all ease;
+  will-change: border-width;
+  cursor: pointer;
 
-#play-pause {
-  width: 12px; // 12
-  height: 16px; // 16
-  border-right: 4px solid #000;
-  border-left: 4px solid #000;
+  border-style: solid;
+  border-width: 20px 0 20px 25px;
+
+  &.pause {
+    border-style: double;
+    border-width: 0px 0 0px 32px;
+  }
 }
 
 #song-queue {

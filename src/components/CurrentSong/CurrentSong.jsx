@@ -27,8 +27,8 @@ export default class CurrentSong extends Component {
 
     return (
       <div id='current-track' className='container'>
-        <div id='play-btn'>
-          <div id='play-triangle'></div>
+        <div id='play-btn-circle'>
+          <div className='press-play'></div>
         </div>
       </div>
     )
