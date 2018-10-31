@@ -3,7 +3,8 @@ import SongQueue from './SongQueue';
 
 function mapStoreToProps(store) {
 	return {
-		// SQueue: store.SQueue
+		songs: store.SQueue.songs,
+		queueId: store.DQueue.queueId
 	}
 }
 

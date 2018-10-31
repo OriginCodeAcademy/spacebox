@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getDefaultQueue, getDefaultSongs, deleteDefaultSong, handleAddInput } from './DQueueActions'
+import { getDefaultQueue, getDefaultSongs, deleteDefaultSong, handleAddInput, addDefaultSong } from './DQueueActions'
 
 export default class DefaultQueue extends Component {
   constructor(props) {
@@ -7,7 +7,8 @@ export default class DefaultQueue extends Component {
     
 	  this.getDefaultSongs = this.getDefaultSongs.bind(this);
 		this.handleAddInput = this.handleAddInput.bind(this);
-	  this.deleteDefaultSong = this.deleteDefaultSong.bind(this);	
+    this.deleteDefaultSong = this.deleteDefaultSong.bind(this);
+	  this.addDefaultSong = this.addDefaultSong.bind(this);    
   }
 
   componentDidMount() {
@@ -30,6 +31,11 @@ export default class DefaultQueue extends Component {
 		dispatch(handleAddInput(event.target.value))
   }
   
+  addDefaultSong() {
+    const { dispatch, inputValue } = this.props;
+    dispatch(addDefaultSong(inputValue))
+  }
+
   render() {
     const { defaultSongs } = this.props;
     return (
@@ -40,7 +46,7 @@ export default class DefaultQueue extends Component {
           {
             defaultSongs.map(song => {
               return (
-                <li className='queue-item'>
+                <li key={song.id} className='queue-item'>
                   <div className='list-item-container'>
                     <div className='track-title track-info'>{song.name}</div>
                     <span className='track-artist track-info'>{song.artist}</span>
@@ -53,7 +59,9 @@ export default class DefaultQueue extends Component {
             })
           }
         </ul>
-      </div >
+        <input placeholder='spotify:track:URI' onChange={this.handleAddInput} />
+        <button onClick={this.addDefaultSong}>Add</button>
+      </div>
     )
   }
 }
