@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   DQueue: DQueueReducer,
   SQueue: SQueueReducer,
   Song: SongReducer,
-  Login: LoginReducer
+  Login: LoginReducer,
 });
 
 export default rootReducer;

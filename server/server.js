@@ -1,10 +1,8 @@
 'use strict';
-
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 require('dotenv').config();
 var app = module.exports = loopback();
-
 app.start = function () {
   // start the web server
   return app.listen(function () {
@@ -25,5 +23,13 @@ boot(app, __dirname, function (err) {
 
   // start the server if `$ node server.js`
   if (require.main === module)
-    app.start();
+    app.io = require('socket.io')(app.start());
+  app.io.on('connection', function(socket) {
+    socket.on('room', (room) => {
+      socket.join(room);
+      setTimeout(() => {
+        app.io.in(room).emit('update', []);
+      }, 5000);
+    });
+  });
 });
