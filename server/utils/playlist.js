@@ -328,4 +328,4 @@ function updatePlaylist(id, songID = null) {
 }
 
 
-module.exports = { getPlaylist, getAccessToken, updatePlaylist }
+module.exports = { getPlaylist, updatePlaylist, getAccessToken, removeCurrentlyPlaying, addNewSong, addDefaultSongsAndGetURIs }
