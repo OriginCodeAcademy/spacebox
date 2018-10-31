@@ -6,3 +6,9 @@ export function updateRoomTracks(queueId) {
     payload: queueId
   };
 }
+export function updateMessages(messageList){
+  return {
+    type: 'UPDATE_MESSAGES',
+    payload: messageList 
+  };
+}
