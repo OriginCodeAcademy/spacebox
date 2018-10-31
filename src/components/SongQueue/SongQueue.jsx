@@ -24,7 +24,7 @@ export default class SongQueue extends Component {
     return (
       <div id='song-queue' className='queue-container'>
         <h4 className='queue-header'>Coming Up Next...</h4>
-        <button onClick={this.getQueue}>Get Queue</button>
+        <button id='get-queue' onClick={this.getQueue}>Get Queue</button>
         <ul className='queue-list'>
         {
           songs.map(song => {
@@ -34,7 +34,7 @@ export default class SongQueue extends Component {
                   <div className='track-title'>{song.name}</div>
                   <span className='track-artist'>{song.artist}</span>
                   <span className='separator'> • </span>
-                  <button name={song.id} onClick={this.deleteSong}>Delete</button>
+                  <button className='delete-song' name={song.id} onClick={this.deleteSong}>Delete</button>
                 </div>
                 <div className='track-length'>{song.duration}ms</div>
               </li>
