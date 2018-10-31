@@ -40647,6 +40647,7 @@ function (_Component) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react_redux__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DefaultQueue__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DefaultQueue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__DefaultQueue__);
 
 
 
@@ -40659,140 +40660,14 @@ function mapStoreToProps(store) {
   };
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_react_redux__["b" /* connect */])(mapStoreToProps)(__WEBPACK_IMPORTED_MODULE_1__DefaultQueue__["a" /* default */]));
+/* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_0_react_redux__["b" /* connect */])(mapStoreToProps)(__WEBPACK_IMPORTED_MODULE_1__DefaultQueue__["default"]));
 
 /***/ }),
 /* 177 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, __webpack_exports__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DefaultQueue; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DQueueActions__ = __webpack_require__(204);
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-
-
-
-var DefaultQueue =
-/*#__PURE__*/
-function (_Component) {
-  _inherits(DefaultQueue, _Component);
-
-  function DefaultQueue(props) {
-    var _this;
-
-    _classCallCheck(this, DefaultQueue);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(DefaultQueue).call(this, props));
-    _this.getDefaultSongs = _this.getDefaultSongs.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleAddInput = _this.handleAddInput.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.deleteDefaultSong = _this.deleteDefaultSong.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.addDefaultSong = _this.addDefaultSong.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    return _this;
-  }
-
-  _createClass(DefaultQueue, [{
-    key: "componentDidMount",
-    value: function componentDidMount() {
-      var _this$props = this.props,
-          dispatch = _this$props.dispatch,
-          userId = _this$props.userId;
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__DQueueActions__["c" /* getDefaultQueue */])(userId));
-    }
-  }, {
-    key: "getDefaultSongs",
-    value: function getDefaultSongs() {
-      var _this$props2 = this.props,
-          dispatch = _this$props2.dispatch,
-          queueId = _this$props2.queueId;
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__DQueueActions__["d" /* getDefaultSongs */])(queueId));
-    }
-  }, {
-    key: "deleteDefaultSong",
-    value: function deleteDefaultSong(event) {
-      var _this$props3 = this.props,
-          dispatch = _this$props3.dispatch,
-          queueId = _this$props3.queueId;
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__DQueueActions__["b" /* deleteDefaultSong */])(event.target.name, queueId));
-    }
-  }, {
-    key: "handleAddInput",
-    value: function handleAddInput(event) {
-      var dispatch = this.props.dispatch;
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__DQueueActions__["e" /* handleAddInput */])(event.target.value));
-    }
-  }, {
-    key: "addDefaultSong",
-    value: function addDefaultSong() {
-      var _this$props4 = this.props,
-          dispatch = _this$props4.dispatch,
-          inputValue = _this$props4.inputValue;
-      dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__DQueueActions__["addDefaultSong"])(inputValue));
-    }
-  }, {
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      var defaultSongs = this.props.defaultSongs;
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-        id: "default-queue",
-        className: "queue-container"
-      }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("h4", {
-        className: "queue-header"
-      }, "Comfort Music"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("button", {
-        onClick: this.getDefaultSongs
-      }, "Get Default Songs"), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("ul", {
-        className: "queue-list"
-      }, defaultSongs.map(function (song) {
-        return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("li", {
-          key: song.id,
-          className: "queue-item"
-        }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-          className: "list-item-container"
-        }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-          className: "track-title track-info"
-        }, song.name), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("span", {
-          className: "track-artist track-info"
-        }, song.artist), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("span", {
-          className: "separator track-info"
-        }, " \u2022 "), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("button", {
-          name: song.id,
-          onClick: _this2.deleteDefaultSong
-        }, "Delete")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-          className: "track-length"
-        }, song.duration));
-      })), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
-        placeholder: "spotify:track:URI",
-        onChange: this.handleAddInput
-      }), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("button", {
-        onClick: this.addDefaultSong
-      }, "Add"));
-    }
-  }]);
-
-  return DefaultQueue;
-}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
-
-
+throw new Error("Module build failed: SyntaxError: /Users/andrew/oca/spacebox/src/components/DefaultQueue/DefaultQueue.jsx: Unexpected token (39:0)\n\n\u001b[0m \u001b[90m 37 | \u001b[39m  }\u001b[0m\n\u001b[0m \u001b[90m 38 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 39 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 40 | \u001b[39m  render() {\u001b[0m\n\u001b[0m \u001b[90m 41 | \u001b[39m    \u001b[36mconst\u001b[39m { defaultSongs } \u001b[33m=\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mprops\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 42 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\u001b[0m\n    at _class.raise (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:3939:15)\n    at _class.unexpected (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:5248:16)\n    at _class.parseIdentifierName (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7029:18)\n    at _class.parseIdentifier (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7011:21)\n    at _class.parseMaybePrivateName (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:6359:19)\n    at _class.parsePropertyName (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:6836:98)\n    at _class.parseClassPropertyName (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:8060:20)\n    at _class.parseClassMemberWithIsStatic (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7977:20)\n    at _class.parseClassMember (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7948:10)\n    at _class.parseClassBody (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7903:12)\n    at _class.parseClass (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7853:10)\n    at _class.parseExportDefaultExpression (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:8226:19)\n    at _class.parseExport (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:8177:31)\n    at _class.parseStatementContent (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7240:27)\n    at _class.parseStatement (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7153:17)\n    at _class.parseBlockOrModuleBlockBody (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7707:23)\n    at _class.parseBlockBody (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7694:10)\n    at _class.parseTopLevel (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:7118:10)\n    at _class.parse (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:8521:17)\n    at parse (/Users/andrew/oca/spacebox/node_modules/@babel/parser/lib/index.js:10513:38)\n    at parser (/Users/andrew/oca/spacebox/node_modules/@babel/core/lib/transformation/normalize-file.js:170:34)\n    at normalizeFile (/Users/andrew/oca/spacebox/node_modules/@babel/core/lib/transformation/normalize-file.js:138:11)\n    at runSync (/Users/andrew/oca/spacebox/node_modules/@babel/core/lib/transformation/index.js:44:43)\n    at runAsync (/Users/andrew/oca/spacebox/node_modules/@babel/core/lib/transformation/index.js:35:14)\n    at process.nextTick (/Users/andrew/oca/spacebox/node_modules/@babel/core/lib/transform.js:34:34)\n    at _combinedTickCallback (internal/process/next_tick.js:131:7)\n    at process._tickCallback (internal/process/next_tick.js:180:9)");
 
 /***/ }),
 /* 178 */
@@ -41190,12 +41065,16 @@ function (_Component) {
         });
       }
 
-      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
-        className: "container"
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("section", {
+        id: "main"
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", null, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("h1", {
-        className: "header glitch",
+        className: "glitch",
+        "data-text": "LOGIN",
+        style: {
+          text: 'center'
+        },
         id: "header"
-      }, "Login")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("form", {
+      }, "LOGIN")), __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("form", {
         onSubmit: this.submitLogin
       }, __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("div", {
         className: "grid"
@@ -41863,7 +41742,7 @@ exports = module.exports = __webpack_require__(200)(false);
 
 
 // module
-exports.push([module.i, "* {\n  box-sizing: border-box; }\n\nhtml {\n  -webkit-font-smoothing: antialiased;\n  background: url(\"/moon.jpeg\");\n  background-size: cover;\n  background-attachment: fixed;\n  box-sizing: border-box;\n  color: #fff;\n  font-family: Avenir, Helvetica, sans-serif;\n  font-size: 25px;\n  height: 100%;\n  margin: 0;\n  padding: 0; }\n\nsection {\n  margin: 40px auto;\n  max-width: 1150px; }\n\n.glitch {\n  color: transparent;\n  font-family: NATS;\n  font-size: 100px;\n  letter-spacing: 105px;\n  line-height: 1;\n  margin: 50px 0;\n  text-transform: uppercase; }\n  .glitch + p {\n    font-size: 30px;\n    letter-spacing: 9px;\n    margin: 0;\n    text-transform: uppercase; }\n\nh2 {\n  letter-spacing: 3px;\n  text-transform: uppercase; }\n\nli {\n  list-style-type: none;\n  text-align: center; }\n\n.card {\n  align-items: center;\n  background: #000;\n  border-radius: 2px;\n  display: flex;\n  font-size: 20px;\n  justify-content: space-between;\n  line-height: 0;\n  margin-bottom: 16px;\n  padding: 10px 30px;\n  position: relative; }\n  .card::after {\n    animation: gradient 3s ease alternate infinite;\n    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);\n    background-size: 300% 300%;\n    border-radius: 2px;\n    content: '';\n    height: calc(100% + 1px * 2);\n    left: calc(-1 * 1px);\n    position: absolute;\n    top: calc(-1 * 1px);\n    width: calc(100% + 1px * 2);\n    z-index: -1; }\n  .card p {\n    font-size: 15px;\n    text-transform: uppercase; }\n    .card p span {\n      margin-right: 7px; }\n  .card:first-of-type {\n    background: none; }\n    .card:first-of-type h2,\n    .card:first-of-type p {\n      font-size: 30px; }\n  .card:nth-of-type(2) h2,\n  .card:nth-of-type(2) p {\n    font-size: 25px; }\n  .card:nth-of-type(3) h2,\n  .card:nth-of-type(3) p {\n    font-size: 20px; }\n\n.request {\n  width: 100%;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  height: 60px; }\n  .request input,\n  .request button {\n    height: 100%;\n    background: white;\n    font-size: 25px;\n    border: none; }\n  .request input {\n    padding: 13px;\n    width: 100%; }\n  .request button {\n    width: 20%;\n    margin: 20px 0;\n    background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);\n    color: white;\n    border-radius: 0; }\n\n.playlist img {\n  max-width: 200px;\n  opacity: 0; }\n\n.currently-playing,\n.up-next:nth-of-type(2),\n.up-next:nth-of-type(3) {\n  display: flex;\n  align-items: center;\n  margin: 100px; }\n\n.currently-playing {\n  justify-content: center; }\n  .currently-playing .song-info {\n    transform: translateX(0);\n    animation: fadeInLeftFirst 750ms ease 250ms forwards; }\n  .currently-playing h2 {\n    font-size: 40px; }\n  .currently-playing h3 {\n    font-size: 30px; }\n  .currently-playing img {\n    max-width: 350px;\n    animation: fadeIn 500ms ease forwards; }\n\n.up-next {\n  font-size: 70%; }\n  .up-next:nth-of-type(2) {\n    justify-content: flex-end; }\n    .up-next:nth-of-type(2) .song-info {\n      animation: fadeInLeft 500ms ease 750ms forwards; }\n    .up-next:nth-of-type(2) img {\n      animation: fadeIn 500ms ease 500ms forwards; }\n  .up-next:nth-of-type(3) .song-info {\n    animation: fadeInLeft 500ms ease 1.25s forwards; }\n  .up-next:nth-of-type(3) img {\n    animation: fadeIn 500ms ease 1s forwards; }\n\n.song-info {\n  background: #fffffff0;\n  padding: 30px 100px 30px 40px;\n  line-height: 1.4;\n  opacity: 0; }\n  .song-info p {\n    font-size: 22px;\n    text-transform: lowercase;\n    letter-spacing: 7px;\n    font-style: italic;\n    color: #3e2ab1; }\n  .song-info h2,\n  .song-info h3 {\n    color: #000; }\n  .song-info h3 {\n    color: #696969;\n    letter-spacing: 7px;\n    text-transform: uppercase; }\n  .song-info h2,\n  .song-info h3,\n  .song-info p {\n    margin: 0; }\n\n.glitch {\n  color: white;\n  font-size: 100px;\n  position: relative; }\n\n@keyframes noise-anim {\n  0% {\n    clip: rect(17px, 9999px, 24px, 0); }\n  5% {\n    clip: rect(34px, 9999px, 43px, 0); }\n  10% {\n    clip: rect(54px, 9999px, 11px, 0); }\n  15% {\n    clip: rect(60px, 9999px, 70px, 0); }\n  20% {\n    clip: rect(93px, 9999px, 70px, 0); }\n  25% {\n    clip: rect(88px, 9999px, 42px, 0); }\n  30% {\n    clip: rect(30px, 9999px, 33px, 0); }\n  35% {\n    clip: rect(72px, 9999px, 17px, 0); }\n  40% {\n    clip: rect(91px, 9999px, 100px, 0); }\n  45% {\n    clip: rect(45px, 9999px, 3px, 0); }\n  50% {\n    clip: rect(74px, 9999px, 54px, 0); }\n  55% {\n    clip: rect(66px, 9999px, 38px, 0); }\n  60% {\n    clip: rect(52px, 9999px, 46px, 0); }\n  65% {\n    clip: rect(67px, 9999px, 90px, 0); }\n  70% {\n    clip: rect(80px, 9999px, 86px, 0); }\n  75% {\n    clip: rect(49px, 9999px, 65px, 0); }\n  80% {\n    clip: rect(84px, 9999px, 68px, 0); }\n  85% {\n    clip: rect(64px, 9999px, 77px, 0); }\n  90% {\n    clip: rect(27px, 9999px, 48px, 0); }\n  95% {\n    clip: rect(68px, 9999px, 20px, 0); }\n  100% {\n    clip: rect(92px, 9999px, 47px, 0); } }\n\n.glitch:after {\n  content: attr(data-text);\n  position: absolute;\n  left: 2px;\n  text-shadow: -1px 0 #ef4e7b;\n  top: 0;\n  color: white;\n  overflow: hidden;\n  clip: rect(0, 900px, 0, 0);\n  animation: noise-anim 4s infinite linear alternate-reverse; }\n\n@keyframes noise-anim-2 {\n  0% {\n    clip: rect(42px, 9999px, 69px, 0); }\n  5% {\n    clip: rect(75px, 9999px, 31px, 0); }\n  10% {\n    clip: rect(79px, 9999px, 74px, 0); }\n  15% {\n    clip: rect(32px, 9999px, 70px, 0); }\n  20% {\n    clip: rect(90px, 9999px, 3px, 0); }\n  25% {\n    clip: rect(26px, 9999px, 35px, 0); }\n  30% {\n    clip: rect(55px, 9999px, 51px, 0); }\n  35% {\n    clip: rect(49px, 9999px, 72px, 0); }\n  40% {\n    clip: rect(26px, 9999px, 4px, 0); }\n  45% {\n    clip: rect(65px, 9999px, 59px, 0); }\n  50% {\n    clip: rect(58px, 9999px, 51px, 0); }\n  55% {\n    clip: rect(81px, 9999px, 90px, 0); }\n  60% {\n    clip: rect(32px, 9999px, 87px, 0); }\n  65% {\n    clip: rect(25px, 9999px, 29px, 0); }\n  70% {\n    clip: rect(54px, 9999px, 95px, 0); }\n  75% {\n    clip: rect(35px, 9999px, 83px, 0); }\n  80% {\n    clip: rect(52px, 9999px, 63px, 0); }\n  85% {\n    clip: rect(5px, 9999px, 25px, 0); }\n  90% {\n    clip: rect(68px, 9999px, 99px, 0); }\n  95% {\n    clip: rect(56px, 9999px, 42px, 0); }\n  100% {\n    clip: rect(76px, 9999px, 14px, 0); } }\n\n.glitch:before {\n  content: attr(data-text);\n  position: absolute;\n  left: -2px;\n  text-shadow: 1px 0 #5073b8;\n  top: 0;\n  color: white;\n  overflow: hidden;\n  clip: rect(0, 900px, 0, 0);\n  animation: noise-anim-2 6s infinite linear alternate-reverse; }\n\n@keyframes fadeIn {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 0.9; } }\n\n@keyframes fadeInLeftFirst {\n  0% {\n    opacity: 0;\n    transform: translateX(-50px); }\n  100% {\n    opacity: 1;\n    transform: translateX(-100px); } }\n\n@keyframes fadeInLeft {\n  0% {\n    opacity: 0;\n    transform: translateX(-20px); }\n  100% {\n    opacity: 1;\n    transform: translateX(-70px); } }\n\n@font-face {\n  font-family: 'NATS';\n  font-style: normal;\n  font-weight: normal;\n  src: url(" + escape(__webpack_require__(201)) + ") format(\"woff2\"); }\n\n.header, .input-label {\n  color: #fff; }\n\n.header {\n  font-size: 60pt;\n  position: relative;\n  display: block;\n  font-weight: bold;\n  text-align: center; }\n\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 2fr; }\n\n.label {\n  display: grid;\n  justify-items: end;\n  font-size: 35pt;\n  height: 55px;\n  width: 42vw;\n  margin-top: 20px; }\n\n.input {\n  display: grid;\n  justify-items: start;\n  width: 23vw;\n  height: 25px;\n  margin-top: 45px;\n  margin-left: 15px;\n  font-size: 14pt; }\n\n#password {\n  font-size: 24pt; }\n\n/*\n.parent {\n    display: flex;\n\n}\n\n.input{\n    display: flex;\n    flex-direction: column;\n}\n\n.label{\n    display: flex;\n    flex-direction: column;\n}\n\n\n\n#username, #password {\n    height: 30px;\n    width: 300px;\n    padding-top: 10px;\n    margin-bottom: 10px;\n    padding-bottom: 0px;\n    position: relative;\n    bottom: 8px;\n    font-size: 12pt;\n}\n\n.input-label {\n    font-size: 35pt;\n    font-weight: normal;\n\n\n}\n\n#password {\n    margin-left: 20px;\n    height:25px;\n    margin-top: 50px;\n    padding-top: 0;\n}\n\n#username {\n    margin-top: 50px;\n    margin-left: 20px;\n    height: 25px;\n    padding-top: 0;\n    font-family: 'NATS', Avenir, Helvetica, sans-serif;\n}\n\n.label, .input {\n    text-align: right;\n    width: 50vw;\n}\n\n.flex {\n    display: flex;\n\n\n}\n.input{\n    display: flex;\n} */\n#submit {\n  width: 306px;\n  margin-left: 570px;\n  margin-top: 45px;\n  background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);\n  color: white;\n  border-radius: 0;\n  height: 60px;\n  border: none;\n  font-size: 20pt;\n  padding-left: 0;\n  padding-right: 0; }\n\n#pw-flex {\n  height: 50px; }\n\n#song-container {\n  width: 100%;\n  position: relative; }\n\n.current-track-bottom {\n  justify-content: center; }\n\n.current-track-container {\n  height: 33%; }\n\n.list-item-container {\n  display: block;\n  align-items: center;\n  position: relative; }\n\n.queue-container {\n  overflow: scroll;\n  background-image: linear-gradient(#564b43, #404a59 85%);\n  padding: 15px;\n  box-sizing: border-box; }\n\n.queue-header {\n  margin: 0;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.1); }\n\n.queue-item {\n  padding: 0;\n  margin: 0;\n  border: 0;\n  display: flex;\n  color: rgba(255, 255, 255, 0.6);\n  width: 100%; }\n\n.queue-list {\n  display: flex;\n  list-style-type: none;\n  font-size: 20px; }\n\n.track-album {\n  font-size: inherit; }\n\n.track-artist {\n  font-size: inherit; }\n\n.track-info {\n  font-size: inherit; }\n\n.track-length {\n  text-align: right;\n  margin-left: auto;\n  margin-right: 1em; }\n\n.track-title {\n  font-size: 24px;\n  line-height: 22px;\n  letter-spacing: .015em;\n  color: #fff;\n  text-overflow: ellipsis;\n  overflow: hidden;\n  white-space: nowrap;\n  text-align: left;\n  vertical-align: baseline;\n  unicode-bidi: -webkit-isolate; }\n\n#current-track {\n  grid-area: track;\n  display: flex; }\n\n#current-track-name {\n  flex: center; }\n\n#dashboard-container {\n  display: grid;\n  width: 90%;\n  height: 90vh;\n  grid-template-areas: \"header header header\" \"track track track\" \"search search button\" \"dQueue . sQueue\" \"dQueue . sQueue\" \"dQueue . sQueue\";\n  grid-template-columns: repeat(3, 33%);\n  grid-template-rows: 20% 10% 10% 20% 20% 20%;\n  margin: 0 auto; }\n\n#dashboard-title {\n  grid-area: header; }\n\n#default-queue {\n  grid-area: dQueue; }\n\n#play-btn {\n  display: block;\n  height: 75px;\n  width: 75px;\n  border-radius: 50%;\n  border: 1px solid white;\n  background: silver;\n  justify-content: center; }\n\n#play-triangle {\n  width: 24px;\n  height: 32px;\n  border-top: 8px solid transparent;\n  border-left: 12px solid #000;\n  border-bottom: 8px solid transparent; }\n\n#song-queue {\n  grid-area: sQueue; }\n", ""]);
+exports.push([module.i, "* {\n  box-sizing: border-box; }\n\nhtml {\n  -webkit-font-smoothing: antialiased;\n  background: url(\"/moon.jpeg\");\n  background-size: cover;\n  background-attachment: fixed;\n  box-sizing: border-box;\n  color: #fff;\n  font-family: Avenir, Helvetica, sans-serif;\n  font-size: 25px;\n  height: 100%;\n  margin: 0;\n  padding: 0; }\n\nsection {\n  margin: 40px auto;\n  max-width: 1150px; }\n\n.glitch {\n  color: transparent;\n  font-family: NATS;\n  font-size: 100px;\n  letter-spacing: 105px;\n  line-height: 1;\n  margin: 50px 0;\n  text-transform: uppercase; }\n  .glitch + p {\n    font-size: 30px;\n    letter-spacing: 9px;\n    margin: 0;\n    text-transform: uppercase; }\n\nh2 {\n  letter-spacing: 3px;\n  text-transform: uppercase; }\n\nli {\n  list-style-type: none;\n  text-align: center; }\n\n.card {\n  align-items: center;\n  background: #000;\n  border-radius: 2px;\n  display: flex;\n  font-size: 20px;\n  justify-content: space-between;\n  line-height: 0;\n  margin-bottom: 16px;\n  padding: 10px 30px;\n  position: relative; }\n  .card::after {\n    animation: gradient 3s ease alternate infinite;\n    background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);\n    background-size: 300% 300%;\n    border-radius: 2px;\n    content: '';\n    height: calc(100% + 1px * 2);\n    left: calc(-1 * 1px);\n    position: absolute;\n    top: calc(-1 * 1px);\n    width: calc(100% + 1px * 2);\n    z-index: -1; }\n  .card p {\n    font-size: 15px;\n    text-transform: uppercase; }\n    .card p span {\n      margin-right: 7px; }\n  .card:first-of-type {\n    background: none; }\n    .card:first-of-type h2,\n    .card:first-of-type p {\n      font-size: 30px; }\n  .card:nth-of-type(2) h2,\n  .card:nth-of-type(2) p {\n    font-size: 25px; }\n  .card:nth-of-type(3) h2,\n  .card:nth-of-type(3) p {\n    font-size: 20px; }\n\n.request {\n  width: 100%;\n  position: relative;\n  display: flex;\n  align-items: center;\n  justify-content: space-between;\n  height: 60px; }\n  .request input,\n  .request button {\n    height: 100%;\n    background: white;\n    font-size: 25px;\n    border: none; }\n  .request input {\n    padding: 13px;\n    width: 100%; }\n  .request button {\n    width: 20%;\n    margin: 20px 0;\n    background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);\n    color: white;\n    border-radius: 0; }\n\n.playlist img {\n  max-width: 200px;\n  opacity: 0; }\n\n.currently-playing,\n.up-next:nth-of-type(2),\n.up-next:nth-of-type(3) {\n  display: flex;\n  align-items: center;\n  margin: 100px; }\n\n.currently-playing {\n  justify-content: center; }\n  .currently-playing .song-info {\n    transform: translateX(0);\n    animation: fadeInLeftFirst 750ms ease 250ms forwards; }\n  .currently-playing h2 {\n    font-size: 40px; }\n  .currently-playing h3 {\n    font-size: 30px; }\n  .currently-playing img {\n    max-width: 350px;\n    animation: fadeIn 500ms ease forwards; }\n\n.up-next {\n  font-size: 70%; }\n  .up-next:nth-of-type(2) {\n    justify-content: flex-end; }\n    .up-next:nth-of-type(2) .song-info {\n      animation: fadeInLeft 500ms ease 750ms forwards; }\n    .up-next:nth-of-type(2) img {\n      animation: fadeIn 500ms ease 500ms forwards; }\n  .up-next:nth-of-type(3) .song-info {\n    animation: fadeInLeft 500ms ease 1.25s forwards; }\n  .up-next:nth-of-type(3) img {\n    animation: fadeIn 500ms ease 1s forwards; }\n\n.song-info {\n  background: #fffffff0;\n  padding: 30px 100px 30px 40px;\n  line-height: 1.4;\n  opacity: 0; }\n  .song-info p {\n    font-size: 22px;\n    text-transform: lowercase;\n    letter-spacing: 7px;\n    font-style: italic;\n    color: #3e2ab1; }\n  .song-info h2,\n  .song-info h3 {\n    color: #000; }\n  .song-info h3 {\n    color: #696969;\n    letter-spacing: 7px;\n    text-transform: uppercase; }\n  .song-info h2,\n  .song-info h3,\n  .song-info p {\n    margin: 0; }\n\n.glitch {\n  color: white;\n  font-size: 100px;\n  position: relative;\n  max-width: fit-content;\n  margin: auto; }\n\n@keyframes noise-anim {\n  0% {\n    clip: rect(78px, 9999px, 51px, 0); }\n  5% {\n    clip: rect(73px, 9999px, 83px, 0); }\n  10% {\n    clip: rect(44px, 9999px, 45px, 0); }\n  15% {\n    clip: rect(46px, 9999px, 82px, 0); }\n  20% {\n    clip: rect(80px, 9999px, 70px, 0); }\n  25% {\n    clip: rect(37px, 9999px, 7px, 0); }\n  30% {\n    clip: rect(98px, 9999px, 15px, 0); }\n  35% {\n    clip: rect(87px, 9999px, 8px, 0); }\n  40% {\n    clip: rect(21px, 9999px, 93px, 0); }\n  45% {\n    clip: rect(18px, 9999px, 20px, 0); }\n  50% {\n    clip: rect(46px, 9999px, 92px, 0); }\n  55% {\n    clip: rect(81px, 9999px, 91px, 0); }\n  60% {\n    clip: rect(74px, 9999px, 85px, 0); }\n  65% {\n    clip: rect(89px, 9999px, 50px, 0); }\n  70% {\n    clip: rect(38px, 9999px, 26px, 0); }\n  75% {\n    clip: rect(41px, 9999px, 46px, 0); }\n  80% {\n    clip: rect(68px, 9999px, 93px, 0); }\n  85% {\n    clip: rect(16px, 9999px, 20px, 0); }\n  90% {\n    clip: rect(1px, 9999px, 90px, 0); }\n  95% {\n    clip: rect(45px, 9999px, 19px, 0); }\n  100% {\n    clip: rect(92px, 9999px, 80px, 0); } }\n\n.glitch:after {\n  content: attr(data-text);\n  position: absolute;\n  left: 2px;\n  text-shadow: -1px 0 #ef4e7b;\n  top: 0;\n  color: white;\n  overflow: hidden;\n  clip: rect(0, 900px, 0, 0);\n  animation: noise-anim 4s infinite linear alternate-reverse; }\n\n@keyframes noise-anim-2 {\n  0% {\n    clip: rect(29px, 9999px, 21px, 0); }\n  5% {\n    clip: rect(46px, 9999px, 77px, 0); }\n  10% {\n    clip: rect(28px, 9999px, 75px, 0); }\n  15% {\n    clip: rect(58px, 9999px, 53px, 0); }\n  20% {\n    clip: rect(61px, 9999px, 88px, 0); }\n  25% {\n    clip: rect(21px, 9999px, 42px, 0); }\n  30% {\n    clip: rect(33px, 9999px, 60px, 0); }\n  35% {\n    clip: rect(61px, 9999px, 15px, 0); }\n  40% {\n    clip: rect(18px, 9999px, 70px, 0); }\n  45% {\n    clip: rect(98px, 9999px, 81px, 0); }\n  50% {\n    clip: rect(99px, 9999px, 33px, 0); }\n  55% {\n    clip: rect(37px, 9999px, 94px, 0); }\n  60% {\n    clip: rect(20px, 9999px, 65px, 0); }\n  65% {\n    clip: rect(43px, 9999px, 78px, 0); }\n  70% {\n    clip: rect(78px, 9999px, 62px, 0); }\n  75% {\n    clip: rect(64px, 9999px, 8px, 0); }\n  80% {\n    clip: rect(34px, 9999px, 90px, 0); }\n  85% {\n    clip: rect(73px, 9999px, 13px, 0); }\n  90% {\n    clip: rect(3px, 9999px, 74px, 0); }\n  95% {\n    clip: rect(49px, 9999px, 74px, 0); }\n  100% {\n    clip: rect(41px, 9999px, 6px, 0); } }\n\n.glitch:before {\n  content: attr(data-text);\n  position: absolute;\n  left: -2px;\n  text-shadow: 1px 0 #5073b8;\n  top: 0;\n  color: white;\n  overflow: hidden;\n  clip: rect(0, 900px, 0, 0);\n  animation: noise-anim-2 6s infinite linear alternate-reverse; }\n\n@keyframes fadeIn {\n  0% {\n    opacity: 0; }\n  100% {\n    opacity: 0.9; } }\n\n@keyframes fadeInLeftFirst {\n  0% {\n    opacity: 0;\n    transform: translateX(-50px); }\n  100% {\n    opacity: 1;\n    transform: translateX(-100px); } }\n\n@keyframes fadeInLeft {\n  0% {\n    opacity: 0;\n    transform: translateX(-20px); }\n  100% {\n    opacity: 1;\n    transform: translateX(-70px); } }\n\n@font-face {\n  font-family: 'NATS';\n  font-style: normal;\n  font-weight: normal;\n  src: url(" + escape(__webpack_require__(201)) + ") format(\"woff2\"); }\n\n/*\n#header, .input-label{\n    color: #fff;\n}\n\n#header{\n    font-size: 60pt;\n    display: block;\n    font-weight: bold;\n    text-align: center;\n} \n*/\n#header {\n  margin-bottom: 6vw; }\n\n.grid {\n  display: grid;\n  grid-template-columns: 1fr 2fr; }\n\n.label {\n  display: grid;\n  justify-items: end;\n  font-size: 35pt;\n  height: 55px;\n  width: 34vw;\n  margin-top: 20px; }\n\n.input {\n  display: grid;\n  justify-items: start;\n  width: 23vw;\n  height: 25px;\n  margin-top: 45px;\n  margin-left: 15px;\n  font-size: 14pt; }\n\n#password {\n  font-size: 24pt; }\n\n#submit {\n  width: 23.05vw;\n  margin-left: 35.1vw;\n  margin-top: 45px;\n  background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);\n  color: white;\n  border-radius: 0;\n  height: 60px;\n  border: none;\n  font-size: 20pt;\n  padding-left: 0;\n  padding-right: 0; }\n\n#pw-flex {\n  height: 50px; }\n\n#song-container {\n  width: 100%;\n  position: relative; }\n\n.current-track-bottom {\n  justify-content: center; }\n\n.current-track-container {\n  height: 33%; }\n\n.list-item-container {\n  display: block;\n  align-items: center;\n  position: relative; }\n\n.queue-container {\n  overflow: scroll;\n  background-image: linear-gradient(#564b43, #404a59 85%);\n  padding: 15px;\n  box-sizing: border-box; }\n\n.queue-header {\n  margin: 0;\n  border-bottom: 1px solid rgba(255, 255, 255, 0.1); }\n\n.queue-item {\n  padding: 0;\n  margin: 0;\n  border: 0;\n  display: flex;\n  color: rgba(255, 255, 255, 0.6);\n  width: 100%; }\n\n.queue-list {\n  display: flex;\n  list-style-type: none;\n  font-size: 20px; }\n\n.track-album {\n  font-size: inherit; }\n\n.track-artist {\n  font-size: inherit; }\n\n.track-info {\n  font-size: inherit; }\n\n.track-length {\n  text-align: right;\n  margin-left: auto;\n  margin-right: 1em; }\n\n.track-title {\n  font-size: 24px;\n  line-height: 22px;\n  letter-spacing: .015em;\n  color: #fff;\n  text-overflow: ellipsis;\n  overflow: hidden;\n  white-space: nowrap;\n  text-align: left;\n  vertical-align: baseline;\n  unicode-bidi: -webkit-isolate; }\n\n#current-track {\n  grid-area: track;\n  display: flex; }\n\n#current-track-name {\n  flex: center; }\n\n#dashboard-container {\n  display: grid;\n  width: 90%;\n  height: 90vh;\n  grid-template-areas: \"header header header\" \"track track track\" \"search search button\" \"dQueue . sQueue\" \"dQueue . sQueue\" \"dQueue . sQueue\";\n  grid-template-columns: repeat(3, 33%);\n  grid-template-rows: 20% 10% 10% 20% 20% 20%;\n  margin: 0 auto; }\n\n#dashboard-title {\n  grid-area: header; }\n\n#default-queue {\n  grid-area: dQueue; }\n\n#play-btn {\n  display: block;\n  height: 75px;\n  width: 75px;\n  border-radius: 50%;\n  border: 1px solid white;\n  background: silver;\n  justify-content: center; }\n\n#play-triangle {\n  width: 24px;\n  height: 32px;\n  border-top: 8px solid transparent;\n  border-left: 12px solid #000;\n  border-bottom: 8px solid transparent; }\n\n#song-queue {\n  grid-area: sQueue; }\n", ""]);
 
 // exports
 
@@ -42456,51 +42335,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 204 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["c"] = getDefaultQueue;
-/* harmony export (immutable) */ __webpack_exports__["d"] = getDefaultSongs;
-/* harmony export (immutable) */ __webpack_exports__["b"] = deleteDefaultSong;
-/* harmony export (immutable) */ __webpack_exports__["e"] = handleAddInput;
-var axios = __webpack_require__(17);
-
-function getDefaultQueue(userId) {
-  return {
-    type: 'GET_DEFAULT_QUEUE_ID',
-    payload: axios.get("/api/users/".concat(userId, "/queue")).then(function (response) {
-      return response.data.id;
-    })
-  };
-}
-function getDefaultSongs(queueId) {
-  return {
-    type: 'GET_DEFAULT_SONGS',
-    payload: axios.get("/api/Queues/".concat(queueId, "/default")).then(function (response) {
-      return response.data;
-    })
-  };
-}
-function deleteDefaultSong(songId, queueId) {
-  return {
-    type: 'DELETE_DEFAULT_SONG',
-    payload: axios.delete("/api/Queues/".concat(queueId, "/default/").concat(songId))
-  };
-}
-function handleAddInput(event) {
-  return {
-    type: 'GET_INPUT_VALUE',
-    payload: event
-  };
-} // export function addDefaultSong(inputValue) {
-// 	return {
-// 		type: 'ADD_DEFAULT_SONG',
-// 		payload: 
-// 	}
-// }
-
-/***/ }),
+/* 204 */,
 /* 205 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
