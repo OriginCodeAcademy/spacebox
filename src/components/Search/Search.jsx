@@ -1,68 +1,93 @@
 import axios from 'axios';
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import { updateSearchType, updateSearch, getSearch } from './SearchAction';
+=======
+import { updateQuery, dbSearch, spotifySearch, updateType, addToQueue } from './SearchAction';
+//import { getSong } from '../../../server/utils/song';
+
+>>>>>>> finished the db query and mapping out the results. currently working the functionality of two buttons to add the uri to the queue
 class Search extends Component {
 	constructor(props) {
 		super(props);
-		// this.getUri = this.getUri.bind(this);
-		// this.handleSearch = this.handleSearch.bind(this);
+		this.handleSpotifyCall     = this.handleSpotifyCall.bind(this);
+		this.handleSelect          = this.handleSelect.bind(this);
+		this.handleQuery           = this.handleQuery.bind(this);
+		this.handleDbSearch        = this.handleDbSearch.bind(this);
+		this.handleSelectedSongUri = this.handleSelectedSongUri.bind(this);
+
+
 	}
 
-	// getUri(e) {
-	// 	const { dispatch } = this.props
-	// 	dispatch({ type: 'UPDATE_URI', payload: e.target.value });
-	// }
-
-	// handleSearch() {
-	// 	this.setState({ disabled: true });
-	// 	axios.post('/api/request', { uri: this.props.uri })
-	// 		.then(res => {
-	// 			if (res.data.error) return alert(res.data.error);
-	// 			return res.data;
-	// 		})
-	// 		.then(() =>
-	// 			dispatch({ type: 'TOGGLE_DISABLE_BUTTON', payload: true })
-	// 				.catch(err => {
-	// 					alert(err.message);
-	// 					dispatch({ type: 'TOGGLE_DISABLE_BUTTON', payload: true });
-	// 				}));
-	// }
-
-	handleArtist(event) {
+	handleSelect(event) {
+		console.log('handle select');
 		const { dispatch } = this.props;
-		dispatch(updateInput(event.target.value));
-	  }
-	
-	  handleButtonLine(cityName) {
-		console.log('axios function hit');
+		const { value }    = event.target;
+		dispatch(updateType( value ));
+	}
+
+	handleQuery(event) {
+		console.log('handle query');
 		const { dispatch } = this.props;
-		dispatch(handleApiCall(cityName));
-	  }
+		const { value }    = event.target;
+		dispatch(updateQuery( value ));
+	}
 	
-	  handleApiCall() {
+		handleDbSearch(e) {
+			console.log('handleDbSearch');
+			const { dispatch, query, type } = this.props;
+			console.log('inside handle', type);
+			dispatch(dbSearch(type, query));
+		}
+		
+		handleSelectedSongUri(e) {
+			const { dispatch } = this.props;
+			var uri = e.target.name
+			var userId = '5bd9d108ef79ae228379334a';
+			dispatch(addToQueue(uri, userId))
+ 		}
+
+	  handleSpotifyCall() {
 		console.log('axios call hit');
-		const { dispatch, Artist } = this.props;
+		const { dispatch, type, query } = this.props;
+		dispatch(spotifySearch(type, query));
+
+		}
 
 	render() {
-        const { searchType, searchStr } = this.props;
+		console.log('this is data: ', this.props.data)
 		return (
 			<div>
 			<div className="request">
-				<select className="dropdown" name="querySelect" id="querySelect" placeholder="Select By:">
-				<option className="drop" background= "rgba(100, 100, 100, 0.3)" value="">Song</option>
-				<option className="drop" value="">Artist</option>
-				<option className="drop" value="">URI</option>
+				<select className = "dropdown" name = "query-select" id = "query-select" placeholder="Select By:"  onChange = {this.handleSelect}>
+				<option className = "drop" id = "default-option" background = "rgba(100, 100, 100, 0.3)" >Search By:</option>
+				<option className = "drop" id = "song-option" background = "rgba(100, 100, 100, 0.3)" value = "name">Song</option>
+				<option className = "drop" id = "artist-option" value = "artist">Artist</option>
 				</select>
 			
-				<input className="input" type="text" placeholder="spotify:track:URI" name="uri" onChange={this.getUri} value={this.props.uri} />
-				<button name="button" onClick={this.handleSearch} disabled={this.props.disabled}>Search</button>
+				<input className = "input" type="text" placeholder = "Enter song or artist name" name="query" onChange = {this.handleQuery} value={this.props.query} />
+				<button className = "button" onClick = {this.handleDbSearch} disabled = {this.props.disabled}>Search</button>
 			</div>
-			<div>
-				<p>AUSTINS ALERT MESSAGE GOES HERE</p>
-			</div>
-		
-			</div>
-		)
-	}
+	
+				{(this.props.data) &&
+					this.props.data.map((listItem, index) => {
+					return <div className="main-flex">
+							<div className="artist-name">
+								<strong>Artist: {listItem.artist}</strong>
+							</div>
+							<div className="song-name">
+								<strong className="song-name">Song: {listItem.name}</strong>
+							</div>
+							<button name={listItem.uri} className="button" id="addToQueue" role="button" onClick={this.handleSelectedSong}>Add Song</button>
+						</div>
+					
+					})
+				}
+					<button className = "button" id="spotify-btn" role="button">More Songs</button>
+		</div>
+		)}
+	
 }
+	
 export default Search;
+

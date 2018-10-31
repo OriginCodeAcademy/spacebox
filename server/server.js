@@ -1,4 +1,9 @@
 'use strict';
+<<<<<<< HEAD
+=======
+
+const { getAccessToken } = require('../../server/utils/playlist')
+>>>>>>> finished the db query and mapping out the results. currently working the functionality of two buttons to add the uri to the queue
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 require('dotenv').config();
@@ -20,7 +25,6 @@ app.start = function () {
 // Sub-apps like REST API are mounted via boot scripts.
 boot(app, __dirname, function (err) {
   if (err) throw err;
-
   // start the server if `$ node server.js`
   if (require.main === module)
     app.io = require('socket.io')(app.start());
@@ -33,3 +37,18 @@ boot(app, __dirname, function (err) {
     });
   });
 });
+      app.start();
+})
+var myUserId = '5bd9d108ef79ae228379334a';
+getAccessToken(myUserId)
+    .then(accessToken => {
+      const spotifyApi = new SpotifyWebApi({ accessToken });
+      spotifyApi.getPlaylist(spotifyID, playlistID)
+    }
+
+    app.get('/api/spotify/:search', (req, res) => {
+      axios.get(
+        `https://api.spotify.com/v1/${type}/{${query}}`
+      )
+      .then(response => res.send(response.data))
+    })

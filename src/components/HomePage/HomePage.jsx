@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import io from 'socket.io-client';
 import Search from '../Search';
 // const socket = io();
 

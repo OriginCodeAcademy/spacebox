@@ -152,6 +152,11 @@ li {
         border-radius: 0;
     }
 }
+#button:hover {
+    background-image: linear-gradient(-134deg,#3023ae,#72257e);
+     border-color: #c86dd7; 
+} 
+
 
 .playlist {
     img {
@@ -577,26 +582,24 @@ li {
     height: 60px;
     color: white;
   }
-  
-  /* Dropdown Content (Hidden by Default) */
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: rgb(204, 32, 32);
-   
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  /* Links inside the dropdown */
-  option {
-    color: white;
-    text-decoration: none;
-    display: block;
-    justify-content: center;
-    background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);
+  #dropdown:hover {
+    background-image: linear-gradient(-134deg,#3023ae,#72257e);
+     border-color: #c86dd7; 
+}
 
+  .main-flex {
+    width: 100%;
+    height: 60px;
+    margin-top: 15px;
+    background-image: linear-gradient(-134deg,#3023ae,#c86dd7);
+    color: #fff;
+    border-radius: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .artist-name {
+      margin-left: 15px;
   }
   
   /* Change color of dropdown links on hover */
@@ -607,3 +610,32 @@ li {
   
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown:hover .dropbtn {background-color: rgb(204, 32, 32); border-color: rgb(204, 32, 32); color: black}
+
+  .song-name {
+    margin-right: 15px;
+}
+#addToQueue {
+    width:14.5%;
+    color: white;
+    font-size: 20px;
+    background-image: linear-gradient(-134deg,#3023ae,#c86dd7);
+
+}
+#addToQueue:hover {
+    background-image: linear-gradient(-134deg,#3023ae,#72257e);
+     border-color: #c86dd7; 
+}
+#spotify-btn {
+    margin-top: 15px;
+    width:14.5%;
+    color: white;
+    font-size: 20px;
+    background-image: linear-gradient(-134deg,#3023ae,#c86dd7);
+    height: 60px;
+    flex-direction: row-reverse;
+
+}
+#spotify-btn:hover {
+    background-image: linear-gradient(-134deg,#3023ae,#72257e);
+     border-color: #c86dd7; 
+}
