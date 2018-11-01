@@ -52,7 +52,7 @@ function getPlaylist(id) {
               .then(accessToken => {
                 const spotifyApi = new SpotifyWebApi({ accessToken });
                 // const spotifyApi = new SpotifyWebApi({ accessToken: 'BQDiDZR9-smMig0tVxtUaYQ6Z09tDRgvP8cLiH51T9wD5A00iLImkOvZ5eU8gMjT1C3tGIEo9YmIvQ06o4q3xRNlqVB1SZs9O16G8fpB8s3jwjjVNJtTPFtoxZktEXefds8VrOvbNrb8X1N9i_qppt9pP_d6MEOed8kV5wUPEZcKCSdxlQ5FtvwQ7Y1HBDiBUltcGwtRsEA14aJ7GKh321WlH6h-GdVMhUgXkvj7Fo0'});
-                spotifyApi.getPlaylist(spotifyID, playlistID)
+                spotifyApi.getPlaylist(playlistID)
                   .then(playlist => {
                     const formatSong = track => ({
                       id: track.id,
@@ -265,7 +265,6 @@ function updatePlaylist(id, songID = null) {
                 let songs = [...tracks]
                 const songCurrentlyPlaying = response.body.item;
                 const isJukeboxOn = response.body.is_playing;
-
                 removeCurrentlyPlaying(songs, songCurrentlyPlaying, id)
                   .then((response) => {
                     songs = response.songs
@@ -276,7 +275,7 @@ function updatePlaylist(id, songID = null) {
                           .then((response) => {
                             let songURIs = response.songURIs;
                             let songIds = response.songIds;
-                            return spotifyApi.replaceTracksInPlaylist(spotifyID, playlistID, songURIs)
+                            return spotifyApi.replaceTracksInPlaylist(playlistID, songURIs)
                               .then(async () => {
                                 if (lastPlayed) {
                                   await Song.findById(lastPlayed)
@@ -287,19 +286,17 @@ function updatePlaylist(id, songID = null) {
                                     })
                                     .catch(err => reject(err))
                                 }
-                                // io.emit('update', songs);
-                                // what is the below function doing?
-                                if (!isJukeboxOn) {
-                                  setTimeout(() => {
-                                    spotifyApi.play({
-                                      context_uri: `spotify:user:${spotifyID}:playlist:${playlistID}`,
-                                      offset: {
-                                        position: 1
-                                      }
-                                    })
-                                      .catch(err => console.log(err))
-                                  }, 5000);
-                                }
+                                // if (!isJukeboxOn) {
+                                //   setTimeout(() => {
+                                //     spotifyApi.play({
+                                //       context_uri: `spotify:playlist:${playlistID}`,
+                                //       offset: {
+                                //         position: 1
+                                //       }
+                                //     })
+                                //       .catch(err => console.log(err))
+                                //   }, 5000);
+                                // }
                                 Queue.findById(id)
                                   .then((singleQueue) => {
                                     var queue = {
@@ -308,7 +305,17 @@ function updatePlaylist(id, songID = null) {
                                       "songIds": songIds,
                                       "userId": userID
                                     }
-                                    resolve(queue)
+                                    Song.find({})
+                                      .then((songs) => {
+                                        let fullSongs = songIds.map((id) => {
+                                          return songs.filter((song) => song.id.toString() == id)
+                                        })
+                                        fullSongs = fullSongs.map((id) => id[0])
+                                        console.log(fullSongs)
+                                        app.io.in(id).emit('update', fullSongs)
+                                        resolve(queue)
+                                      })
+                                      .catch(err => ({ error: 'could not get full song object', err }))
                                   })
                                   .catch(err => reject(err))
                               })
