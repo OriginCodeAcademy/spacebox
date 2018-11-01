@@ -2,7 +2,7 @@
 
 export function updateSongs(songs) {
   return {
-    type: 'UPDATE_ROOM_TRACKS',
+    type: 'UPDATE_SONGS',
     payload: songs
   };
 }
