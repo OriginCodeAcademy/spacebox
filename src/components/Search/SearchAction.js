@@ -57,3 +57,15 @@ export function spotifySearch(type, query, userId) {
 
   }
 }
+export function updateData() {
+  return {
+    type: 'UPDATE_DATA',
+    payload: []
+  }
+}
+export function getSongs(queueId) {
+  return {
+    type: 'GET_SONGS',
+    payload: queueId
+  }
+}

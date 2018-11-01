@@ -30,8 +30,7 @@ module.exports = function (Queue) {
   Queue.updatePlaylist = function (id, songID, cb) {
     updatePlaylist(id, songID)
       .then((queue) => {
-        Queue.replaceOrCreate(queue)
-        cb(null, queue)
+        Queue.replaceOrCreate(queue, cb);
       })
       .catch(err => cb(err));
   }
@@ -61,8 +60,7 @@ module.exports = function (Queue) {
   Queue.addToDefaultSongs = function (id, uri, cb) {
     addToDefaultSongs(id, uri)
       .then((queue) => {
-        Queue.replaceOrCreate(queue)
-        cb(null, queue)
+        Queue.replaceOrCreate(queue, cb);
       })
       .catch(err => cb(err));
   };

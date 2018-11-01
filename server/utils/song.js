@@ -18,23 +18,27 @@ const app = require('../server')
 
 function getSong(songUri, userID) {
   return new Promise((resolve, reject) => {
-    
     if (songUri == undefined) {
       resolve('Bad URI');
       return false;
-    } 
-    
-    if(userID == undefined) {
+    }
+    if (songUri === '' || songUri === []) {
+      resolve('No song URI');
+      return false;
+    }
+    if (userID == undefined) {
       resolve('Bad userID');
       return false;
     }
-    var trackData;
-    const { Song } = app.models;
-  
+    if (userID === '' || userID === []) {
+      resolve('No userID');
+      return false;
+    }
+    let trackData;
+    const {Song} = app.models;
       Song
         .find({ where: { uri: songUri } })
         .then(song => {
-      
           //the following checks if the song does not exist in Song model
           //if no song, go to api and get song data
           if(song==false){
@@ -47,6 +51,7 @@ function getSong(songUri, userID) {
                 trackData = formatSong(res.body); //trackData is an object of a song 
                 Song.create(trackData)
                   .then((songData) => resolve(songData))
+                  .catch(err => console.log('HERE IS THE ERROR DETAILS:', err));
               })
               .catch(err => console.log('HERE IS THE ERROR DETAILS:', err));
             })

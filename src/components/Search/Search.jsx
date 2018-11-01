@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { updateQuery, dbSearch, spotifySearch, updateType, addToQueue } from './SearchAction';
+import { updateQuery, dbSearch, spotifySearch, updateType, addToQueue, updateData, getSongs } from './SearchAction';
 
 class Search extends Component {
 	constructor(props) {
@@ -23,7 +23,7 @@ class Search extends Component {
 		dispatch(updateQuery( value ));
 	}
 	
-	handleDbSearch(e) {
+	handleDbSearch() {
 		const { dispatch, query, type } = this.props;
 		dispatch(dbSearch(type, query));
 	}
@@ -33,8 +33,8 @@ class Search extends Component {
 		const { dispatch, userId } = this.props;
 		var uri = e.target.name
 		dispatch(addToQueue(uri, userId, queueId))
-		dispatch({ type: "UPDATE_DATA", payload: []})
-		dispatch({ type: "GET_SONGS", payload: params.queueId })
+		dispatch(updateData())
+		dispatch(getSongs(params.queueId))
  	}
 
 	handleSpotifyCall() {

@@ -27,17 +27,7 @@ boot(app, __dirname, function (err) {
   app.io.on('connection', function(socket) {
     socket.on('room', (room) => {
       socket.join(room);
-      setTimeout(() => {
-        app.io.in(room).emit('update', []);
-      }, 5000);
+      app.io.in(room).emit('update', []);
     });
   });
 });
- 
-
-    app.get('/api/spotify/:search', (req, res) => {
-      axios.get(
-        `https://api.spotify.com/v1/${type}/{${query}}`
-      )
-      .then(response => res.send(response.data))
-    })

@@ -5,13 +5,13 @@ module.exports = app => {
   user.findOrCreate(
     {
       where: {
-        'username': 'DefaultAdmin',
+        'username': process.env.DEFAULT_ADMIN_USERNAME,
       },
     },
     {
-      'username': 'DefaultAdmin',
-      'email': 'default@admin.com',
-      'password': 'admin',
+      'username': process.env.DEFAULT_ADMIN_USERNAME,
+      'email': process.env.DEFAULT_ADMIN_EMAIL,
+      'password': process.env.DEFAULT_ADMIN_PASSWORD,
     },
     (err, user) => {
       if (err) console.log(err);
