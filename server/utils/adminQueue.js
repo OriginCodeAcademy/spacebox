@@ -1,6 +1,4 @@
 const app = require('../server');
-const axios = require('axios');
-const SpotifyWebApi = require('spotify-web-api-node');
 const {getSong} = require('../../server/utils/song');
 
 function addToDefaultSongs(id, uri) {

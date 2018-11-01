@@ -46,7 +46,7 @@ function getSong(songUri, userID) {
               .then(res => {
                 trackData = formatSong(res.body); //trackData is an object of a song 
                 Song.create(trackData)
-                  .then(() => resolve(trackData))
+                  .then((songData) => resolve(songData))
               })
               .catch(err => console.log('HERE IS THE ERROR DETAILS:', err));
             })

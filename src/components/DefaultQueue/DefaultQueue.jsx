@@ -12,8 +12,8 @@ export default class DefaultQueue extends Component {
   }
 
   componentDidMount() {
-	  const { dispatch, userId } = this.props;
-	  dispatch(getDefaultQueue(userId))
+	  const { dispatch, userID } = this.props;
+	  dispatch(getDefaultQueue(userID))
   }
 
   getDefaultSongs() {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import HomePage from '../HomePage/index';
 import { withRouter } from 'react-router';
-import { updateSongs } from '../HomePage/HomePageAction';
+import { updateSongs } from '../SongQueue/SQueueActions';
 import io from 'socket.io-client';
 const socket = io('http://localhost:3000');
 
@@ -19,7 +19,6 @@ class Room extends Component {
     }
     
     render() {
-        const { messageList } = this.props;
         return (
             <div className='container'>
               <HomePage />

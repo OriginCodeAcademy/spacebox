@@ -1,4 +1,5 @@
 'use strict';
+
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 require('dotenv').config();
@@ -20,7 +21,6 @@ app.start = function () {
 // Sub-apps like REST API are mounted via boot scripts.
 boot(app, __dirname, function (err) {
   if (err) throw err;
-
   // start the server if `$ node server.js`
   if (require.main === module)
     app.io = require('socket.io')(app.start());
@@ -33,3 +33,11 @@ boot(app, __dirname, function (err) {
     });
   });
 });
+ 
+
+    app.get('/api/spotify/:search', (req, res) => {
+      axios.get(
+        `https://api.spotify.com/v1/${type}/{${query}}`
+      )
+      .then(response => res.send(response.data))
+    })

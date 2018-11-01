@@ -21,4 +21,3 @@ export default class AdminContainer extends Component {
     )
   }
 }
-

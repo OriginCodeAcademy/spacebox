@@ -6,7 +6,7 @@ function mapStoreToProps(store) {
 	  queueId: store.DQueue.queueId,
     defaultSongs: store.DQueue.defaultSongs,
     inputValue: store.DQueue.inputValue,
-    userId: store.Login.userId
+    userID: store.Login.userID
   }
 }
 
