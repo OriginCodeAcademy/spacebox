@@ -1,11 +1,6 @@
-import { stringify } from "querystring";
-
-//const dotenv = require('dotenv').config();
-const axios = require ("axios");
-
+const axios = require("axios");
 
 export function dbSearch(type, query) {
-  console.log('inside action', type);
   return {
     type: "DB_SEARCH",
     payload: axios.get(`/api/Songs?filter={"where":{"${type}":"${query}"}}`).then(response => response.data)
@@ -30,25 +25,23 @@ export function updateQuery(query) {
   }
 }
 export function addToQueue(uri, userId, queueId) {
-  console.log('userID in add to Queue', userId)
   return {
     type: "ADD_TO_QUEUE",
     payload:
-     axios.post(`/api/Songs/getTrackData`, {songUri: `${uri}`, userId: `${userId}`})
-   .then (res => {
-     console.log('full res in seach action: ', res)
-     console.log('queueid in seach action: ', queueId)
-     console.log('songid in add to queue action: ', res.data.song[0].id)
-      return axios.put(`/api/Queues/updatePlaylist`, {id: `${queueId}`, songId: `${res.data.song[0].id}`})
-      .catch(err => console.log('we caught an error in search action: ',err))
-   })
-      }
+      axios.post(`/api/Songs/getTrackData`, { songUri: `${uri}`, userID: `${userId}` })
+        .then(res => {
+          if (res.data.song[0]) {
+            return axios.put(`/api/Queues/updatePlaylist`, { id: `${queueId}`, songID: `${res.data.song[0].id}` })
+              .catch(err => alert('We caught an error; song not added.'));
+          } else {
+            return axios.put(`/api/Queues/updatePlaylist`, { id: `${queueId}`, songID: `${res.data.song.id}` })
+              .catch(err => alert('We caught an error; song not added.'));
+          }
+        })
+  }
 
 }
 export function spotifySearch(type, query, userId) {
- console.log('this is type in action: ', type);
- console.log('this is userId in spotifysearch: ', userId);
- console.log('this is query in action: ', query);
   return {
     type: "SPOTIFY_SEARCH",
     payload: axios.get(`/api/Songs/getMoreFromSpotify/`, {
@@ -58,10 +51,9 @@ export function spotifySearch(type, query, userId) {
         types: type,
       }
     })
-    .then(res => {
-      console.log('action output', res.data)
-      return res.data
-    })
+      .then(res => {
+        return res.data
+      })
 
   }
 }

@@ -6,7 +6,6 @@ const initialstate = {
 export default function LoginReducer(state = initialstate, action) {
     const { payload, type } = action;
 
-
     switch (type) {
         case 'UPDATE_USERNAME': {
             return {
@@ -26,7 +25,6 @@ export default function LoginReducer(state = initialstate, action) {
                 error: payload
             }
         }
-
         case 'POST_LOGIN_FULFILLED': {
             return {
                 ...state,

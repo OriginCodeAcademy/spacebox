@@ -100,6 +100,7 @@ li {
         }
     }
 }
+
 .dropdown-content  {
     display: none;
     position: absolute;
@@ -108,6 +109,7 @@ li {
     background-image: linear-gradient(-134deg, #C86DD7 0%,#3023AE 100%);
     width: 100%;
 }
+
 .request {
     width: 100%;
     position: relative;
@@ -152,11 +154,11 @@ li {
         border-radius: 0;
     }
 }
+
 #button:hover {
     background-image: linear-gradient(-134deg,#3023ae,#72257e);
      border-color: #c86dd7; 
 } 
-
 
 .playlist {
     img {
@@ -315,19 +317,6 @@ li {
   src: url('./fonts/NATS.woff2') format('woff2');
 }
 
-/*
-#header, .input-label{
-    color: #fff;
-}
-
-#header{
-    font-size: 60pt;
-    display: block;
-    font-weight: bold;
-    text-align: center;
-} 
-*/
-
 #header{
     margin-bottom: 6vw;
 }
@@ -347,16 +336,6 @@ li {
     margin-top: 20px;
 }
 
-// .input {
-//     display: grid;
-//     justify-items: start;
-//     width: 23vw;
-//     height: 25px;
-//     margin-top: 45px;
-//     margin-left: 15px;
-//     font-size: 14pt;
-// }
-
 #password {
     font-size: 24pt
 }
@@ -373,7 +352,6 @@ li {
     font-size: 20pt;
     padding-left: 0;
     padding-right: 0;
-
 }
 
 #pw-flex{
@@ -384,18 +362,6 @@ li {
   width: 100%;
   position: relative;
 }
-
-// #id body {
-//   position:absolute;
-//   top:0;
-//   bottom:0;
-//   right:0;
-//   left:0;
-// }
-
-// .length-wrapper {
-//   padding-left: 3em;
-// }
 
 .current-track-bottom {
   justify-content: center;
@@ -527,7 +493,7 @@ li {
   top: 10px;
   left: 21px;
   box-sizing: border-box;
-  height: 40px; // 16, 32, 40
+  height: 40px;
   border-color: transparent transparent transparent #202020;
   transition: 100ms all ease;
   will-change: border-width;
@@ -542,7 +508,7 @@ li {
   top: 9px;
   left: 14px;
   box-sizing: border-box;
-  height: 38px; // 16, 32, 40
+  height: 38px; 
   border-color: transparent transparent transparent #202020;
   transition: 100ms all ease;
   will-change: border-width;
@@ -556,10 +522,6 @@ li {
   grid-area: sQueue;
 }
 
-#track-progress {
-
-}
-/* Dropdown Button */
 .dropbtn {
     background-color: rgb(204, 32, 32);
     color: white;
@@ -567,7 +529,6 @@ li {
     border: none;
   }
   
-  /* The container <div> - needed to position the dropdown content */
   .dropdown {
     position: relative;
     display: inline-block;
@@ -602,29 +563,24 @@ li {
       margin-left: 15px;
   }
   
-  /* Change color of dropdown links on hover */
-  .dropdown-content a:hover {background-color: rgb(204, 32, 32); border-color: rgb(204, 32, 32); color: black}
-  
-  /* Show the dropdown menu on hover */
   .dropdown:hover .dropdown-content {display: block;}
-  
-  /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown:hover .dropbtn {background-color: rgb(204, 32, 32); border-color: rgb(204, 32, 32); color: black}
 
   .song-name {
     margin-right: 15px;
 }
+
 #addToQueue {
     width:14.5%;
     color: white;
     font-size: 20px;
     background-image: linear-gradient(-134deg,#3023ae,#c86dd7);
-
 }
+
 #addToQueue:hover {
     background-image: linear-gradient(-134deg,#3023ae,#72257e);
      border-color: #c86dd7; 
 }
+
 #spotify-btn {
     margin-top: 15px;
     width:14.5%;
@@ -633,8 +589,8 @@ li {
     background-image: linear-gradient(-134deg,#3023ae,#c86dd7);
     height: 60px;
     flex-direction: row-reverse;
-
 }
+
 #spotify-btn:hover {
     background-image: linear-gradient(-134deg,#3023ae,#72257e);
      border-color: #c86dd7; 

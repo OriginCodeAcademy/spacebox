@@ -3,12 +3,14 @@ import Search from './Search';
 
 function mapStoreToProps(store) {
 	return {
+		data           : store.Search.data,
 		disabled	   : store.Search.disabled,
 		error	       : store.Search.error,
-		type           : store.Search.type,
-		data           : store.Search.data,
 		query          : store.Search.query,
+		userId         : store.Login.userId,
 		selectedSongUri: store.Search.selectedSongUri,
+		type           : store.Search.type,
 	};
 }
+
 export default connect(mapStoreToProps)(Search);

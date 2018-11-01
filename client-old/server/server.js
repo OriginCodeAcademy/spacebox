@@ -47,7 +47,6 @@ const checkToken = (req, res, cb) => {
       spotifyApi.setAccessToken(data.body['access_token']);
       cb();
     })
-    .catch(err => console.log(err))
   } else {
     cb();
   }

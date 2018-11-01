@@ -45,18 +45,14 @@ function pauseCurrentSong(id) {
     Queue.findById(id)
       .then(queue => {
         var userID = queue.userId;
-        // takes the userID from the queue and gets spotifyID and playlistID from that user
         User.findById(userID)
           .then((user) => {
-            var spotifyID = user.spotifyID
             var playlistID = user.playlistID
             getAccessToken(user.id)
               .then(accessToken => {
                 const spotifyApi = new SpotifyWebApi({ accessToken });
                 spotifyApi.getMyCurrentPlayingTrack()
-                  .then(response => {
-                    const songCurrentlyPlaying = response.body.item;
-                    const isJukeboxOn = response.body.is_playing;
+                  .then(() => {
                     spotifyApi.pause({
                       context_uri: `spotify:playlist:${playlistID}`,
                       offset: {
@@ -77,9 +73,3 @@ function pauseCurrentSong(id) {
 }
 
 module.exports = { playCurrentSong, pauseCurrentSong };
-
-// Take QueueID
-// Get user
-// Use playlist ID + Spotify ID
-// Get current playing song
-// Pause/play current playing song

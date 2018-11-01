@@ -1,12 +1,6 @@
-import axios from 'axios';
 import React, { Component } from 'react';
-<<<<<<< HEAD
-import { updateSearchType, updateSearch, getSearch } from './SearchAction';
-=======
 import { updateQuery, dbSearch, spotifySearch, updateType, addToQueue } from './SearchAction';
-//import { getSong } from '../../../server/utils/song';
 
->>>>>>> finished the db query and mapping out the results. currently working the functionality of two buttons to add the uri to the queue
 class Search extends Component {
 	constructor(props) {
 		super(props);
@@ -15,51 +9,40 @@ class Search extends Component {
 		this.handleQuery           = this.handleQuery.bind(this);
 		this.handleDbSearch        = this.handleDbSearch.bind(this);
 		this.handleSelectedSongUri = this.handleSelectedSongUri.bind(this);
-
-
 	}
-
+	
 	handleSelect(event) {
-		console.log('handle select');
 		const { dispatch } = this.props;
 		const { value }    = event.target;
 		dispatch(updateType( value ));
 	}
-
+	
 	handleQuery(event) {
-		console.log('handle query');
 		const { dispatch } = this.props;
 		const { value }    = event.target;
 		dispatch(updateQuery( value ));
 	}
 	
-		handleDbSearch(e) {
-			console.log('handleDbSearch');
-			const { dispatch, query, type } = this.props;
-			console.log('inside handle', type);
-			dispatch(dbSearch(type, query));
-		}
-		
-		handleSelectedSongUri(e) {
-			var queueId = '5bda3147efea09eace199156';
-			var userId = '5bda30e7efea09eace199155';
-			console.log('this is userid in handle selectedSong: ', userId);
+	handleDbSearch(e) {
+		const { dispatch, query, type } = this.props;
+		dispatch(dbSearch(type, query));
+	}
+	
+	handleSelectedSongUri(e) {
+		const { match: { params } } = this.props;
+		const { dispatch, userId } = this.props;
+		var uri = e.target.name
+		dispatch(addToQueue(uri, userId, queueId))
+		dispatch({ type: "UPDATE_DATA", payload: []})
+		dispatch({ type: "GET_SONGS", payload: params.queueId })
+ 	}
 
-			const { dispatch } = this.props;
-			var uri = e.target.name
-			var userId = '5bda30e7efea09eace199155';
-			console.log('this is uri: ', uri);
-			dispatch(addToQueue(uri, userId, queueId))
- 		}
-
-	  handleSpotifyCall() {
-		var userId = '5bda30e7efea09eace199155';
-		const { dispatch, query } = this.props;
+	handleSpotifyCall() {
+		const { dispatch, userId, query } = this.props;
 		var type = 'track'
 		dispatch({ type: "UPDATE_TYPE" })
 		dispatch(spotifySearch(type, query, userId));
-
-		}
+	}
 
 	render() {
 		return (
@@ -84,7 +67,7 @@ class Search extends Component {
 							<div className="song-name">
 								<strong className="song-name">Song: {listItem.name}</strong>
 							</div>
-							<button name={listItem.uri} className="button" id="addToQueue" role="button" onClick={this.handleSelectedSong}>Add Song</button>
+							<button name={listItem.uri} className="button" id="addToQueue" role="button" onClick={this.handleSelectedSongUri}>Add Song</button>
 						</div>
 					
 					})
@@ -96,13 +79,3 @@ class Search extends Component {
 }
 	
 export default Search;
-
-//{
-//"defaultSongs": [
-//		"5bd787538c6e9c02913b1b84",
-//		"5bd7901f8c6e9c02913b1b85",
-//		"5bd790de8c6e9c02913b1b86"
-//	  ],
-//	  "songIds": [],
-//	  "userId": "5bd9d108ef79ae228379334a"
-//	}

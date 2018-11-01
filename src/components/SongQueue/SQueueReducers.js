@@ -12,6 +12,11 @@ export default function queueReducer(state = initialState, action) {
                 songs: payload
             }
         }
+        case 'UPDATE_SONGS':
+        return {
+            ...state,
+            songs: payload
+        }
         default:
             return {
                 ...state,

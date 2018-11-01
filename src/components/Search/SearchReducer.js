@@ -40,32 +40,26 @@ function SearchReducer(state = initialState, action) {
 				...state,
 				data: payload
 			}
-			
 			case 'SPOTIFY_SEARCH_REJECTED':
 			return {
 				...state,
 				error: 'The song or artist you are looking for was not found.'
 			}
-
 			case 'UPDATE_TYPE':
 			return {
 				...state,
 				type: payload
 			}
-
 			case 'UPDATE_QUERY':
 			return {
 				...state,
 				query: payload
 			}
-
 			case 'UPDATE_SELECTED_SONG_URI':
 			return {
 				...state,
 				selectedSongUri: payload
 			}
-
-			
 		default:
 			return {
 				...state

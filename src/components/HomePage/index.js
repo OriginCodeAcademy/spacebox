@@ -3,7 +3,8 @@ import HomePage from './HomePage';
 
 function mapStoreToProps(store) {
 	return {
-		songs: store.HomePage.songs,
+		songs: store.SQueue.songs,
+		queueId: store.DQueue.queueId
 	};
 }
 
