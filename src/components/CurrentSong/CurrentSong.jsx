@@ -8,12 +8,6 @@ export default class CurrentSong extends Component {
     this.handleBtn = this.handleBtn.bind(this);
   }
 
-  // componentDidMount() {
-  //   const { dispatch, playing } = this.props;
-  //   dispatch(togglePlaying(playing));
-  //   dispatch(startPlayback());
-  // }
-
   handleBtn(e) {
     e.preventDefault();
     const { playing, dispatch, queueId } = this.props;
