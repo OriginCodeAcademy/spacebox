@@ -71,7 +71,7 @@ module.exports = function (Queue) {
       type: 'string'
     },
     http: {
-      path: '/pauseCurrentSong',
+      path: '/{id}/pauseCurrentSong',
       verb: 'get'
     },
     returns: {

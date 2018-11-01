@@ -18,15 +18,15 @@ function playCurrentSong(id) {
                 const spotifyApi = new SpotifyWebApi({ accessToken });
                 spotifyApi.getMyCurrentPlayingTrack()
                   .then(response => {
-                    console.log('response', response);
                     const songCurrentlyPlaying = response.body.item;
                     const isJukeboxOn = response.body.is_playing;
                     spotifyApi.play({
-                      context_uri: `spotify:user:${spotifyID}:playlist:${playlistID}`,
+                      context_uri: `spotify:playlist:${playlistID}`,
                       offset: {
                         position: 0
                       }
                     })
+                      .then(() => resolve({ message: "Jukebox is on!" }))
                       .catch(err => reject(err));
                   })
                   .catch(err => reject(err));
@@ -39,7 +39,7 @@ function playCurrentSong(id) {
   })
 }
 
-function playCurrentSong(id) {
+function pauseCurrentSong(id) {
   const { Queue, User } = app.models;
   return new Promise((resolve, reject) => {
     Queue.findById(id)
@@ -55,15 +55,15 @@ function playCurrentSong(id) {
                 const spotifyApi = new SpotifyWebApi({ accessToken });
                 spotifyApi.getMyCurrentPlayingTrack()
                   .then(response => {
-                    console.log('response', response);
                     const songCurrentlyPlaying = response.body.item;
                     const isJukeboxOn = response.body.is_playing;
-                    spotifyApi.play({
-                      context_uri: `spotify:user:${spotifyID}:playlist:${playlistID}`,
+                    spotifyApi.pause({
+                      context_uri: `spotify:playlist:${playlistID}`,
                       offset: {
                         position: 0
                       }
                     })
+                      .then(() => resolve({ message: "Jukebox is on!" }))
                       .catch(err => reject(err));
                   })
                   .catch(err => reject(err));
