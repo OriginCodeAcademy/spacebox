@@ -4,9 +4,10 @@ const initialState = {
   album: '',
   length: 0,
   playing: false,
+  offset: 0
 };
 
-function SongReducer(state = initialState, action) {
+export default function SongReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case 'UPDATE_SONG_INFO_FULFILLED': {
