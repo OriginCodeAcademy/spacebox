@@ -6,7 +6,7 @@ function mapStoreToProps(store) {
 		username: store.Login.username,
 		password: store.Login.password,
 		token: store.Login.token,
-		userId: store.Login.userId
+		userID: store.Login.userID
 	};
 }
 

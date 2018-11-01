@@ -35,7 +35,7 @@ function SearchReducer(state = initialState, action) {
 				...state,
 				error: 'The song or artist you are looking for is not in our database.'
 			}
-			case 'SPOTIFY_SEARCH_FULLFILLED':
+			case 'SPOTIFY_SEARCH_FULFILLED':
 			return {
 				...state,
 				data: payload
@@ -64,6 +64,7 @@ function SearchReducer(state = initialState, action) {
 				...state,
 				selectedSongUri: payload
 			}
+
 			
 		default:
 			return {

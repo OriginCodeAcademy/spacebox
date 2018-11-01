@@ -1,9 +1,9 @@
 const axios = require('axios');
 
-export function getDefaultQueue(userId) {
+export function getDefaultQueue(userID) {
   return {
 	  type: 'GET_DEFAULT_QUEUE_ID',
-	  payload: axios.get(`/api/users/${userId}/queue`)
+	  payload: axios.get(`/api/users/${userID}/queue`)
 	    .then(response => response.data.id)
   }
 }

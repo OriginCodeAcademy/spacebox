@@ -31,7 +31,7 @@ export default function LoginReducer(state = initialstate, action) {
             return {
                 ...state,
                 token: payload.id,
-                userId: payload.userId
+                userID: payload.userID
             }
         }
         default: {

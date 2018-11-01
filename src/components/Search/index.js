@@ -8,7 +8,7 @@ function mapStoreToProps(store) {
 		type           : store.Search.type,
 		data           : store.Search.data,
 		query          : store.Search.query,
-		selectedSongUri: store.Search.selectedSongUri
+		selectedSongUri: store.Search.selectedSongUri,
 	};
 }
 export default connect(mapStoreToProps)(Search);

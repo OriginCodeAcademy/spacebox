@@ -9,19 +9,25 @@ function getAccessToken(userID = null) {
   });
 
   return new Promise((resolve, reject) => {
+    console.log('here 0')
     if (!userID) {
+      console.log('am i here?')
       reject('No user id provided');
       return false;
     }
+    console.log('how about here?')
     const { User } = app.models;
     User.findById(userID)
       .then((user) => {
+        console.log('im here 1')
         if (!user.spotifyRefreshToken) {
           reject('No refresh token');
           return false;
         }
         // get their refresh token and add accessToken
+        console.log('im here 2')
         spotifyApi.setRefreshToken(user.spotifyRefreshToken);
+        console.log('im here 3')
         spotifyApi.refreshAccessToken()
           .then(({ body: { 'access_token': accessToken } }) => {
             resolve(accessToken);
@@ -39,11 +45,13 @@ function getAccessToken(userID = null) {
 function getPlaylist(id) {
   return new Promise((resolve, reject) => {
     const { Queue, User } = app.models;
+    console.log(1);
     // finds the correct queue based on the queue ID that you put in
     Queue.findById(id, { fields: { userId: true } })
       .then((queue) => {
         var userID = queue.userId;
         // takes the userID from the queue and gets spotifyID and playlistID from that user
+        console.log(2);
         User.findById(userID)
           .then((user) => {
             var spotifyID = user.spotifyID
@@ -95,6 +103,7 @@ function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
         }
 
         let lastPlayed = queue.songIds[0];
+        console.log(4);
         Song.findById(lastPlayed)
           .then((songObject) => {
             var lastPlayedObject = songObject
@@ -112,6 +121,7 @@ function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
                   }
                   Queue.replaceOrCreate(newQueue)
                   // update lastplayed here (Do I still need to do this? duplicating the default above)
+                  console.log(5);
                   Queue.findById(queue.id)
                     .then((queue) => {
                       lastPlayed = queue.songIds[0]
@@ -182,6 +192,7 @@ function addNewSong(songID, songs) {
   return new Promise((resolve, reject) => {
     const { Song } = app.models;
     if (songID) {
+      console.log(6);
       Song.findById(songID)
         .then((song) => {
           if (songs.every((track) => track.uri !== song.uri)) {
@@ -220,6 +231,7 @@ function addDefaultSongsAndGetURIs(songs, id) {
     getSongIds(songURIs)
       .then((songIds) => {
         const justSongIds = songIds
+        console.log(7);
         Queue.findById(id)
           .then((queue) => {
             if (songs.length === 1) {
@@ -278,6 +290,7 @@ function updatePlaylist(id, songID = null) {
                             return spotifyApi.replaceTracksInPlaylist(playlistID, songURIs)
                               .then(async () => {
                                 if (lastPlayed) {
+                                  console.log(8);
                                   await Song.findById(lastPlayed)
                                     .then((lastPlayedSongObject) => {
                                       if (lastPlayedSongObject.uri === songCurrentlyPlaying.uri) {

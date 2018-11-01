@@ -41,23 +41,27 @@ class Search extends Component {
 		}
 		
 		handleSelectedSongUri(e) {
-			console.log('inside if handle selected song uri');
+			var queueId = '5bda3147efea09eace199156';
+			var userId = '5bda30e7efea09eace199155';
+			console.log('this is userid in handle selectedSong: ', userId);
+
 			const { dispatch } = this.props;
 			var uri = e.target.name
+			var userId = '5bda30e7efea09eace199155';
 			console.log('this is uri: ', uri);
-			var userId = '5bd9d108ef79ae228379334a';
-			dispatch(addToQueue(uri, userId))
+			dispatch(addToQueue(uri, userId, queueId))
  		}
 
 	  handleSpotifyCall() {
-		console.log('axios call hit');
-		const { dispatch, type, query } = this.props;
-		dispatch(spotifySearch(type, query));
+		var userId = '5bda30e7efea09eace199155';
+		const { dispatch, query } = this.props;
+		var type = 'track'
+		dispatch({ type: "UPDATE_TYPE" })
+		dispatch(spotifySearch(type, query, userId));
 
 		}
 
 	render() {
-		console.log('this is data: ', this.props.data)
 		return (
 			<div>
 			<div className="request">
@@ -73,7 +77,7 @@ class Search extends Component {
 	
 				{(this.props.data) &&
 					this.props.data.map((listItem, index) => {
-					return <div className="main-flex">
+					return <div className="main-flex" key = {index}>
 							<div className="artist-name">
 								<strong>Artist: {listItem.artist}</strong>
 							</div>
@@ -85,7 +89,7 @@ class Search extends Component {
 					
 					})
 				}
-					<button className = "button" id="spotify-btn" role="button">More Songs</button>
+					<button className = "button" id="spotify-btn" onClick={this.handleSpotifyCall}role="button">More Songs</button>
 		</div>
 		)}
 	
@@ -93,3 +97,12 @@ class Search extends Component {
 	
 export default Search;
 
+//{
+//"defaultSongs": [
+//		"5bd787538c6e9c02913b1b84",
+//		"5bd7901f8c6e9c02913b1b85",
+//		"5bd790de8c6e9c02913b1b86"
+//	  ],
+//	  "songIds": [],
+//	  "userId": "5bd9d108ef79ae228379334a"
+//	}
