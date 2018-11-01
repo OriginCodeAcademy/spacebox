@@ -17,7 +17,6 @@ export default class CurrentSong extends Component {
   handleBtn(e) {
     e.preventDefault();
     const { playing, dispatch, queueId } = this.props;
-    // const id = '5bd9fcb423fa342511b95f08';
     dispatch(togglePlaying(playing));
     playing ? dispatch(pausePlayback(queueId)) : dispatch(startPlayback(queueId));
   }

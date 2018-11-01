@@ -4,7 +4,7 @@ const initialState = {
   album: '',
   length: 0,
   playing: false,
-  offset: 0
+  status: ''
 };
 
 export default function SongReducer(state = initialState, action) {
@@ -17,10 +17,11 @@ export default function SongReducer(state = initialState, action) {
         artist: payload.item.album.artists.name,
         album: payload.item.album.name,
         length: item.duration_ms,
-        playing: false
+        playing: false,
+        status: ''
       }
     }
-    case 'TOGGLE_PLAY': {
+    case 'TOGGLE_PLAYBACK': {
       return {
         ...state,
         playing: payload
@@ -29,7 +30,15 @@ export default function SongReducer(state = initialState, action) {
     case 'START_PLAYBACK_FULFILLED': {
       return {
         ...state,
-        playing: true
+        playing: true,
+        status: payload
+      }
+    }
+    case 'START_PLAYBACK_REJECTED': {
+      return {
+        ...state,
+        playing: true,
+        status: payload
       }
     }
     case 'PAUSE_PLAYBACK_FULFILLED': {
