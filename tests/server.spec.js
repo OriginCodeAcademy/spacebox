@@ -17,7 +17,7 @@ describe('MongoDB', function() {
   });
 
   it('Should be able to connect to MongoDB', (done) => {
-    const url = 'mongodb://localhost:27017/';
+    const url = process.env.MONGODB_URI;
     MongoClient.connect(url, (err, db) => {
       expect(err).to.equal(null);
       db.close();

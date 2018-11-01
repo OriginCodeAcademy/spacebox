@@ -41,10 +41,10 @@ module.exports = function(server) {
 
           const UserModel = server.models.user;
 
-          return UserModel.findOrCreate({ where: { username: 'Origin' } }, {
-            "email": "origin@email.com",
-            "username": "Origin",
-            "password": "origin",
+          return UserModel.findOrCreate({ where: { username: process.env.ORIGIN_USERNAME } }, {
+            "email": process.env.ORIGIN_EMAIL,
+            "username": process.env.ORIGIN_USERNAME,
+            "password": process.env.ORIGIN_PASSWORD,
             "spotifyAccessToken": accessToken,
             "spotifyRefreshToken": refreshToken
           });

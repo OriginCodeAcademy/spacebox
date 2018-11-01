@@ -60,17 +60,8 @@ describe('updatePlaylist functionality', () => {
       expect(response.songs[0].artist).to.equal('Coubo')
       expect(response.songs[0].uri).to.equal('spotify:track:5HE2u1IOizZwM4kWMF5Jpb')
       done();
-    })
-  })
-
-  it('should set last played variable to the first song in the queue', (done) => {
-    removeCurrentlyPlaying(songArr2, songCurrentlyPlaying, '5bd78822b290189455e581ea')
-      .then((response) => {
-        expect(String(response.lastPlayed)).to.equal('5bd8d6f9466abee8136f24fa');
-        done();
-      })
-      .catch(done)
-  }).timeout(17000);
+    });
+  });
 
   it('should find a song and add it to the end of the songs array when passed an empty array', (done) => {
     addNewSong('5bd8d7c2466abee8136f2501', [])
@@ -78,10 +69,9 @@ describe('updatePlaylist functionality', () => {
         expect(String(response[0].name)).to.equal('Where Is My Mind')
         expect(String(response[0].artist)).to.equal('Maxence Cyrin')
         expect(String(response[0].uri)).to.equal('spotify:track:4jNQkWhuzqrbqQuqanFFJ6')
-        expect(String(response[0].id)).to.equal('5bd8d7c2466abee8136f2501')
         done();
-      })
-  })
+      });
+  });
 
   it('should find a song and add it to the end of the songs array when passed an array with songs', (done) => {
     const promiseAddNewSong = addNewSong('5bd8d7c2466abee8136f2501', songArr1)
@@ -89,23 +79,7 @@ describe('updatePlaylist functionality', () => {
       expect(String(response[1].name)).to.equal('Where Is My Mind')
       expect(String(response[1].artist)).to.equal('Maxence Cyrin')
       expect(String(response[1].uri)).to.equal('spotify:track:4jNQkWhuzqrbqQuqanFFJ6')
-      expect(String(response[1].id)).to.equal('5bd8d7c2466abee8136f2501')
       done();
-    })
-  })
-
-  // // NOTE - the queue id being used must have default songs array as this in order to pass:
-  // // "defaultSongs": [
-  // //     "5bd8d6f9466abee8136f24fa",
-  // //     "5bd8d781466abee8136f24fb"
-  // // ]
-
-  it('should add default songs if songs array only has 1 song in it', (done) => {
-    const defaultSongsPromise = addDefaultSongsAndGetURIs(songArr3, '5bd78822b290189455e581ea')
-    defaultSongsPromise.then((response) => {
-      expect(String(response.songIds[1])).to.equal('5bd8d6f9466abee8136f24fa')
-      expect(String(response.songIds[2])).to.equal('5bd8d781466abee8136f24fb')
-      done();
-    })
-  })
-})
+    });
+  });
+});

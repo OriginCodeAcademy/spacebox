@@ -5,7 +5,7 @@ function getAccessToken(userID = null) {
   const spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_CLIENT_ID,
     clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-    redirectUri: process.env.SITE_URL || 'http://localhost:8080',
+    redirectUri: process.env.SITE_URL || 'http://localhost:3000/auth',
   });
 
   return new Promise((resolve, reject) => {
@@ -42,12 +42,12 @@ function getPlaylist(id) {
     // finds the correct queue based on the queue ID that you put in
     Queue.findById(id, { fields: { userId: true } })
       .then((queue) => {
-        var userID = queue.userId;
+        const userID = queue.userId;
         // takes the userID from the queue and gets spotifyID and playlistID from that user
         User.findById(userID)
           .then((user) => {
-            var spotifyID = user.spotifyID
-            var playlistID = user.playlistID
+            const spotifyID = user.spotifyID
+            const playlistID = user.playlistID
             getAccessToken(user.id)
               .then(accessToken => {
                 const spotifyApi = new SpotifyWebApi({ accessToken });
@@ -61,8 +61,8 @@ function getPlaylist(id) {
                       duration: track.duration_ms,
                       uri: track.uri
                     })
-                    var tracks = playlist.body.tracks.items.map(i => formatSong(i.track))
-                    var output = {
+                    const tracks = playlist.body.tracks.items.map(i => formatSong(i.track))
+                    const output = {
                       tracks: tracks,
                       userID: userID,
                       spotifyID: spotifyID,
@@ -96,14 +96,14 @@ function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
         let lastPlayed = queue.songIds[0];
         Song.findById(lastPlayed)
           .then((songObject) => {
-            var lastPlayedObject = songObject
+            let lastPlayedObject = songObject
             if (songs[0].uri === songCurrentlyPlaying.uri) {
               // update the queue so it matches songs(from spotify)
               let songURIs = songs.map(s => s.uri)
               getSongIds(songURIs)
                 .then((songIds) => {
                   const songIdArray = songIds
-                  var newQueue = {
+                  let newQueue = {
                     "defaultSongs": queue.defaultSongs,
                     "id": queue.id,
                     "songIds": songIdArray,
@@ -132,7 +132,7 @@ function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
               getSongIds(songURIs)
                 .then((songIds) => {
                   const songIdArray = songIds
-                  var newQueue = {
+                  let newQueue = {
                     "defaultSongs": queue.defaultSongs,
                     "id": queue.id,
                     "songIds": songIdArray,
@@ -147,7 +147,7 @@ function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
                   getSongIds(songURIs)
                     .then((songIds) => {
                       const songIdArray = songIds
-                      var newQueue = {
+                      let newQueue = {
                         "defaultSongs": queue.defaultSongs,
                         "id": queue.id,
                         "songIds": songIdArray,
@@ -223,10 +223,10 @@ function addDefaultSongsAndGetURIs(songs, id) {
           .then((queue) => {
             if (songs.length === 1) {
               queue.default((err, defaultSongs) => {
-                var defaultSongIds = defaultSongs.map((song) => song.id)
-                var combinedSongIds = justSongIds.concat(defaultSongIds)
-                var defaultSongURIs = defaultSongs.map((song) => song.uri)
-                var combinedSongURIs = songURIs.concat(defaultSongURIs)
+                let defaultSongIds = defaultSongs.map((song) => song.id)
+                let combinedSongIds = justSongIds.concat(defaultSongIds)
+                let defaultSongURIs = defaultSongs.map((song) => song.uri)
+                let combinedSongURIs = songURIs.concat(defaultSongURIs)
                 resolve({
                   songIds: combinedSongIds,
                   songURIs: combinedSongURIs
@@ -251,10 +251,10 @@ function updatePlaylist(id, songID = null) {
   return new Promise((resolve, reject) => {
     getPlaylist(id)
       .then((response) => {
-        var userID = response.userID
-        var spotifyID = response.spotifyID
-        var playlistID = response.playlistID
-        var tracks = response.tracks
+        let userID = response.userID
+        let spotifyID = response.spotifyID
+        let playlistID = response.playlistID
+        let tracks = response.tracks
         getAccessToken(userID)
           .then(accessToken => {
             const spotifyApi = new SpotifyWebApi({ accessToken });
@@ -286,7 +286,7 @@ function updatePlaylist(id, songID = null) {
                                 }
                                 Queue.findById(id)
                                   .then((singleQueue) => {
-                                    var queue = {
+                                    let queue = {
                                       "defaultSongs": singleQueue.defaultSongs,
                                       "id": id,
                                       "songIds": songIds,

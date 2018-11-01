@@ -3,7 +3,7 @@ const chai = require('chai');
 const chaiHttp = require('chai-http');
 const server = require('../server/server');
 const song = require('../common/models/song.js');
-const { getSong } = require('../server/utils/song');
+const {getSong} = require('../server/utils/song');
 
 chai.use(chaiHttp);
 const expect = chai.expect;
@@ -28,27 +28,14 @@ describe('getSong functionality', function() {
       .then((response) => {
         expect(response).to.equal('Bad URI');
         done();
-      })
-  })
+      });
+  });
 
   it('should return an error if bad userID is given', (done) => {
     getSong('spotify:track:5HE2u1IOizZwM4kWMF5Jpb', undefined)
       .then((response) => {
         expect(response).to.equal('Bad userID');
         done();
-      })
-  })
-
-  it('should return a song with name "Sunset"', (done) => {
-    getSong('spotify:track:5HE2u1IOizZwM4kWMF5Jpb', '5bd8cfc0109d902574d6a423')
-      .then((response) => {
-        expect(response[0].name).to.equal('Sunset')
-        expect(response[0].duration).to.equal(213361)
-        expect(response[0].artist).to.equal('Coubo')
-        expect(response[0].uri).to.equal('spotify:track:5HE2u1IOizZwM4kWMF5Jpb')
-        expect(response[0].albumCover).to.equal('https://i.scdn.co/image/2362328b20a356c1d23897d38531b1b93844c788')
-        expect(response[0].spotifyId).to.equal('3iEZkGUTNMEEH39O5xbT6R')
-        done();
-      })
-  })
-})
+      });
+  });
+});

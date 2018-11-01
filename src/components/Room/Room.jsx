@@ -3,7 +3,7 @@ import HomePage from '../HomePage/index';
 import { withRouter } from 'react-router';
 import { updateSongs } from '../SongQueue/SQueueActions';
 import io from 'socket.io-client';
-const socket = io('http://localhost:3000');
+const socket = io();
 
 class Room extends Component {
     constructor(props) {
