@@ -18,7 +18,7 @@ export default function SongReducer(state = initialState, action) {
         album: payload.item.album.name,
         length: item.duration_ms,
         playing: false,
-        status: ''
+        status: '' // Used to test for API call
       }
     }
     case 'TOGGLE_PLAYBACK': {
