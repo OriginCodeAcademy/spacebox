@@ -24,7 +24,6 @@ function getAccessToken(userID = null) {
         spotifyApi.setRefreshToken(user.spotifyRefreshToken);
         spotifyApi.refreshAccessToken()
           .then(({ body: { 'access_token': accessToken } }) => {
-            console.log(accessToken);
             resolve(accessToken);
           })
           .catch(err => reject(err));
@@ -287,17 +286,6 @@ function updatePlaylist(id, songID = null) {
                                     })
                                     .catch(err => reject(err))
                                 }
-                                // if (!isJukeboxOn) {
-                                //   setTimeout(() => {
-                                //     spotifyApi.play({
-                                //       context_uri: `spotify:playlist:${playlistID}`,
-                                //       offset: {
-                                //         position: 1
-                                //       }
-                                //     })
-                                //       .catch(err => console.log(err))
-                                //   }, 5000);
-                                // }
                                 Queue.findById(id)
                                   .then((singleQueue) => {
                                     var queue = {
@@ -312,7 +300,6 @@ function updatePlaylist(id, songID = null) {
                                           return songs.filter((song) => song.id.toString() == id)
                                         })
                                         fullSongs = fullSongs.map((id) => id[0])
-                                        console.log(fullSongs)
                                         app.io.in(id).emit('update', fullSongs)
                                         resolve(queue)
                                       })
