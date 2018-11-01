@@ -29,7 +29,7 @@ export default class CurrentSong extends Component {
       <div id='current-track' className='container'>
         <div id='play-btn-circle'>
           {
-            (playing) ? <div className='press-pause' onClick={this.handleBtn}></div> : <div className='press-play' onClick={this.handleBtn}></div>
+            (playing) ? <div name='pause' className='play-pause press-pause' value={playing} onClick={this.handleBtn}></div> : <div name='play' className='play-pause press-play' value={playing} onClick={this.handleBtn}></div>
           }
         </div>
       </div>
