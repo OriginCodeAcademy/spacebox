@@ -12,7 +12,7 @@
     "build": "webpack",
     "start": "node server/server",
     "dev": "concurrently \"webpack -w\" \"nodemon server\"",
-    "test": "mocha tests --exit"
+    "test": "npm run build && mocha tests/*.spec.js --exit"
   },
   "dependencies": {
     "@babel/core": "^7.0.0-beta.39",

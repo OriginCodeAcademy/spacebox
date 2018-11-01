@@ -11,39 +11,39 @@ server.listen(4444);
 
 // Variables used in tests
 var songArr1 = [{
-    id: '5HE2u1IOizZwM4kWMF5Jpb',
-    name: 'Sunset',
-    artist: 'Coubo',
-    albumCover: 'https://i.scdn.co/image/2362328b20a356c1d23897d38531b1b93844c788',
-    duration: 213361,
-    uri: 'spotify:track:5HE2u1IOizZwM4kWMF5Jpb'
+  id: '5HE2u1IOizZwM4kWMF5Jpb',
+  name: 'Sunset',
+  artist: 'Coubo',
+  albumCover: 'https://i.scdn.co/image/2362328b20a356c1d23897d38531b1b93844c788',
+  duration: 213361,
+  uri: 'spotify:track:5HE2u1IOizZwM4kWMF5Jpb'
 }]
 
 var songArr2 = [{
-    id: '299vmLW2iaQxe8y9HLWNiH',
-    name: 'just ask',
-    artist: 'weird inside',
-    albumCover: 'https://i.scdn.co/image/6b440d0d81145350b4bf87c7a77d679701dd4f22',
-    duration: 173846,
-    uri: 'spotify:track:299vmLW2iaQxe8y9HLWNiH'
+  id: '299vmLW2iaQxe8y9HLWNiH',
+  name: 'just ask',
+  artist: 'weird inside',
+  albumCover: 'https://i.scdn.co/image/6b440d0d81145350b4bf87c7a77d679701dd4f22',
+  duration: 173846,
+  uri: 'spotify:track:299vmLW2iaQxe8y9HLWNiH'
 },
 {
-    id: '5HE2u1IOizZwM4kWMF5Jpb',
-    name: 'Sunset',
-    artist: 'Coubo',
-    albumCover: 'https://i.scdn.co/image/2362328b20a356c1d23897d38531b1b93844c788',
-    duration: 213361,
-    uri: 'spotify:track:5HE2u1IOizZwM4kWMF5Jpb'
+  id: '5HE2u1IOizZwM4kWMF5Jpb',
+  name: 'Sunset',
+  artist: 'Coubo',
+  albumCover: 'https://i.scdn.co/image/2362328b20a356c1d23897d38531b1b93844c788',
+  duration: 213361,
+  uri: 'spotify:track:5HE2u1IOizZwM4kWMF5Jpb'
 }]
 
 var songArr3 = [{
-    name: 'Where Is My Mind',
-    duration: 165160,
-    artist: 'Maxence Cyrin',
-    uri: 'spotify:track:4jNQkWhuzqrbqQuqanFFJ6',
-    albumCover: 'https://i.scdn.co/image/c21c1e4c58342abb6f88dfe1b291c718f6a70e43',
-    spotifyId: '4jNQkWhuzqrbqQuqanFFJ6',
-    id: '5bd8d7c2466abee8136f2501'
+  name: 'Where Is My Mind',
+  duration: 165160,
+  artist: 'Maxence Cyrin',
+  uri: 'spotify:track:4jNQkWhuzqrbqQuqanFFJ6',
+  albumCover: 'https://i.scdn.co/image/c21c1e4c58342abb6f88dfe1b291c718f6a70e43',
+  spotifyId: '4jNQkWhuzqrbqQuqanFFJ6',
+  id: '5bd8d7c2466abee8136f2501'
 }]
 
 var songCurrentlyPlaying = { uri: 'spotify:track:299vmLW2iaQxe8y9HLWNiH' }
@@ -51,61 +51,61 @@ var songCurrentlyPlaying = { uri: 'spotify:track:299vmLW2iaQxe8y9HLWNiH' }
 
 // Tests
 describe('updatePlaylist functionality', () => {
-    
 
-    it('should remove the currently playing song from the songs array', (done) => {
-        const promiseRemoveCurrentlyPlaying = removeCurrentlyPlaying(songArr2, songCurrentlyPlaying, '5bd78822b290189455e581ea')
-        promiseRemoveCurrentlyPlaying.then((response) => {
-            expect(response.songs[0].name).to.equal('Sunset')
-            expect(response.songs[0].artist).to.equal('Coubo')
-            expect(response.songs[0].uri).to.equal('spotify:track:5HE2u1IOizZwM4kWMF5Jpb')
-            done();
-        })
+
+  it('should remove the currently playing song from the songs array', (done) => {
+    const promiseRemoveCurrentlyPlaying = removeCurrentlyPlaying(songArr2, songCurrentlyPlaying, '5bd78822b290189455e581ea')
+    promiseRemoveCurrentlyPlaying.then((response) => {
+      expect(response.songs[0].name).to.equal('Sunset')
+      expect(response.songs[0].artist).to.equal('Coubo')
+      expect(response.songs[0].uri).to.equal('spotify:track:5HE2u1IOizZwM4kWMF5Jpb')
+      done();
     })
+  })
 
-    it('should set last played variable to the first song in the queue', (done) => {
-        removeCurrentlyPlaying(songArr2, songCurrentlyPlaying, '5bd78822b290189455e581ea')
-            .then((response) => {
-                expect(String(response.lastPlayed)).to.equal('5bd8d6f9466abee8136f24fa');
-                done();
-            })
-            .catch(done)
-    }).timeout(17000);
+  it('should set last played variable to the first song in the queue', (done) => {
+    removeCurrentlyPlaying(songArr2, songCurrentlyPlaying, '5bd78822b290189455e581ea')
+      .then((response) => {
+        expect(String(response.lastPlayed)).to.equal('5bd8d6f9466abee8136f24fa');
+        done();
+      })
+      .catch(done)
+  }).timeout(17000);
 
-    it('should find a song and add it to the end of the songs array when passed an empty array', (done) => {
-        addNewSong('5bd8d7c2466abee8136f2501', [])
-            .then((response) => {
-            expect(String(response[0].name)).to.equal('Where Is My Mind')
-            expect(String(response[0].artist)).to.equal('Maxence Cyrin')
-            expect(String(response[0].uri)).to.equal('spotify:track:4jNQkWhuzqrbqQuqanFFJ6')
-            expect(String(response[0].id)).to.equal('5bd8d7c2466abee8136f2501')
-            done();
-        })
+  it('should find a song and add it to the end of the songs array when passed an empty array', (done) => {
+    addNewSong('5bd8d7c2466abee8136f2501', [])
+      .then((response) => {
+        expect(String(response[0].name)).to.equal('Where Is My Mind')
+        expect(String(response[0].artist)).to.equal('Maxence Cyrin')
+        expect(String(response[0].uri)).to.equal('spotify:track:4jNQkWhuzqrbqQuqanFFJ6')
+        expect(String(response[0].id)).to.equal('5bd8d7c2466abee8136f2501')
+        done();
+      })
+  })
+
+  it('should find a song and add it to the end of the songs array when passed an array with songs', (done) => {
+    const promiseAddNewSong = addNewSong('5bd8d7c2466abee8136f2501', songArr1)
+    promiseAddNewSong.then((response) => {
+      expect(String(response[1].name)).to.equal('Where Is My Mind')
+      expect(String(response[1].artist)).to.equal('Maxence Cyrin')
+      expect(String(response[1].uri)).to.equal('spotify:track:4jNQkWhuzqrbqQuqanFFJ6')
+      expect(String(response[1].id)).to.equal('5bd8d7c2466abee8136f2501')
+      done();
     })
+  })
 
-    it('should find a song and add it to the end of the songs array when passed an array with songs', (done) => {
-        const promiseAddNewSong = addNewSong('5bd8d7c2466abee8136f2501', songArr1)
-        promiseAddNewSong.then((response) => {
-                expect(String(response[1].name)).to.equal('Where Is My Mind')
-                expect(String(response[1].artist)).to.equal('Maxence Cyrin')
-                expect(String(response[1].uri)).to.equal('spotify:track:4jNQkWhuzqrbqQuqanFFJ6')
-                expect(String(response[1].id)).to.equal('5bd8d7c2466abee8136f2501')
-                done();
-            })
+  // // NOTE - the queue id being used must have default songs array as this in order to pass:
+  // // "defaultSongs": [
+  // //     "5bd8d6f9466abee8136f24fa",
+  // //     "5bd8d781466abee8136f24fb"
+  // // ]
+
+  it('should add default songs if songs array only has 1 song in it', (done) => {
+    const defaultSongsPromise = addDefaultSongsAndGetURIs(songArr3, '5bd78822b290189455e581ea')
+    defaultSongsPromise.then((response) => {
+      expect(String(response.songIds[1])).to.equal('5bd8d6f9466abee8136f24fa')
+      expect(String(response.songIds[2])).to.equal('5bd8d781466abee8136f24fb')
+      done();
     })
-
-    // // NOTE - the queue id being used must have default songs array as this in order to pass:
-    // // "defaultSongs": [
-    // //     "5bd8d6f9466abee8136f24fa",
-    // //     "5bd8d781466abee8136f24fb"
-    // // ]
-
-    it('should add default songs if songs array only has 1 song in it', (done) => {
-        const defaultSongsPromise = addDefaultSongsAndGetURIs(songArr3, '5bd78822b290189455e581ea')
-        defaultSongsPromise.then((response) => {
-                expect(String(response.songIds[1])).to.equal('5bd8d6f9466abee8136f24fa')
-                expect(String(response.songIds[2])).to.equal('5bd8d781466abee8136f24fb')
-                done();
-            })
-    })
+  })
 })

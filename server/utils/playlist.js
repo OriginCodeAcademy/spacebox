@@ -32,7 +32,7 @@ function getAccessToken(userID = null) {
 }
 
 /**
- * 
+ *
  * @param {String} id ID for queue you're searching for
  * @returns {Promise} Resolves to array of objects with tracks on the playlist
  */
@@ -83,7 +83,7 @@ function getPlaylist(id) {
 function removeCurrentlyPlaying(songs, songCurrentlyPlaying, queueId) {
   return new Promise((resolve, reject) => {
     const { Queue, Song } = app.models;
-    // update database so the queue matches song track from spotify 
+    // update database so the queue matches song track from spotify
     Queue.findById(queueId)
       .then((queue) => {
         // last played is first song in the queue
@@ -286,17 +286,6 @@ function updatePlaylist(id, songID = null) {
                                     })
                                     .catch(err => reject(err))
                                 }
-                                // if (!isJukeboxOn) {
-                                //   setTimeout(() => {
-                                //     spotifyApi.play({
-                                //       context_uri: `spotify:playlist:${playlistID}`,
-                                //       offset: {
-                                //         position: 1
-                                //       }
-                                //     })
-                                //       .catch(err => console.log(err))
-                                //   }, 5000);
-                                // }
                                 Queue.findById(id)
                                   .then((singleQueue) => {
                                     var queue = {
@@ -311,7 +300,6 @@ function updatePlaylist(id, songID = null) {
                                           return songs.filter((song) => song.id.toString() == id)
                                         })
                                         fullSongs = fullSongs.map((id) => id[0])
-                                        console.log(fullSongs)
                                         app.io.in(id).emit('update', fullSongs)
                                         resolve(queue)
                                       })

@@ -468,6 +468,7 @@ li {
 #current-track {
   grid-area: track;
   display: flex;
+  justify-content: center;
 }
 
 #current-track-name {
@@ -476,7 +477,7 @@ li {
 
 #dashboard-container {
   display: grid;
-  width: 90%;
+  width: 90vw;
   height: 90vh;
   grid-template-areas:
     "header header header"
@@ -498,22 +499,52 @@ li {
   grid-area: dQueue;
 }
 
-#play-btn {
+#play-btn-circle {
   display: block;
-  height: 75px;
-  width: 75px;
+  height: 60px;
+  width: 60px;
   border-radius: 50%;
   border: 1px solid white;
   background: silver;
   justify-content: center;
+  box-sizing: content-box;
+  box-shadow: 0 1px 0 #666, 0 5px 0 #444, 0 6px 6px;
 }
 
-#play-triangle {
-  width: 24px;
-  height: 32px;
-  border-top: 8px solid transparent;
-  border-left: 12px solid #000;
-  border-bottom: 8px solid transparent;
+#play-btn-circle:active {
+  -webkit-transform: translateY(3px);
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #666, 0 2px 0 #444, 0 2px 2px;
+}
+
+.press-play {
+  position: relative;
+  top: 10px;
+  left: 21px;
+  box-sizing: border-box;
+  height: 40px; // 16, 32, 40
+  border-color: transparent transparent transparent #202020;
+  transition: 100ms all ease;
+  will-change: border-width;
+  cursor: pointer;
+
+  border-style: solid;
+  border-width: 20px 0 20px 25px;
+}
+
+.press-pause {
+  position: relative;
+  top: 9px;
+  left: 14px;
+  box-sizing: border-box;
+  height: 38px; // 16, 32, 40
+  border-color: transparent transparent transparent #202020;
+  transition: 100ms all ease;
+  will-change: border-width;
+  cursor: pointer;
+
+  border-style: double;
+  border-width: 0px 0 0px 32px;
 }
 
 #song-queue {
