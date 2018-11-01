@@ -24,6 +24,7 @@ function getAccessToken(userID = null) {
         spotifyApi.setRefreshToken(user.spotifyRefreshToken);
         spotifyApi.refreshAccessToken()
           .then(({ body: { 'access_token': accessToken } }) => {
+            console.log(accessToken);
             resolve(accessToken);
           })
           .catch(err => reject(err));

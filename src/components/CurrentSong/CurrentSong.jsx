@@ -19,9 +19,10 @@ export default class CurrentSong extends Component {
 
   handleBtn(e) {
     e.preventDefault();
-    const { playing, dispatch } = this.props;
+    const { playing, dispatch, queueId } = this.props;
+    const id = '5bd9fcb423fa342511b95f08';
     dispatch(togglePlaying(playing));
-    playing ? dispatch(pausePlayback()) : dispatch(startPlayback());
+    playing ? dispatch(pausePlayback(id)) : dispatch(startPlayback(id));
   }
 
   render() {
@@ -32,7 +33,7 @@ export default class CurrentSong extends Component {
       <div id='current-track' className='container'>
         <div id='play-btn-circle'>
           {
-            (playing) ? <div className='press-pause' onClick={this.fakeBtn}></div> : <div className='press-play' onClick={this.fakeBtn}></div>
+            (playing) ? <div className='press-pause' onClick={this.handleBtn}></div> : <div className='press-play' onClick={this.handleBtn}></div>
           }
         </div>
       </div>
