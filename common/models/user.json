@@ -1,0 +1,63 @@
+{
+  "name": "user",
+  "plural": "users",
+  "base": "User",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "required": true
+    },
+    "username": {
+      "type": "string",
+      "required": true
+    },
+    "password": {
+      "type": "string",
+      "required": true
+    },
+    "accessToken": {
+      "type": "string",
+      "required": false
+    },
+    "spotifyID": {
+      "type": "string",
+      "required": false
+    },
+    "playlistID": {
+      "type": "string",
+      "required": false
+    },
+    "spotifyRefreshToken": {
+      "type": "string",
+      "required": false
+    },
+    "spotifyAccessToken": {
+      "type": "string",
+      "required": false
+    },
+    "spotifyAccessToken": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "queue": {
+      "type": "hasOne",
+      "model": "Queue",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}
