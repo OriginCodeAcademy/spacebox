@@ -76,7 +76,7 @@ function pauseCurrentSong(id) {
   })
 }
 
-module.exports = { playCurrentSong };
+module.exports = { playCurrentSong, pauseCurrentSong };
 
 // Take QueueID
 // Get user
