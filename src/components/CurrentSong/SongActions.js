@@ -13,10 +13,10 @@ export const togglePlaying = (playing) => ({
 
 export const startPlayback = (queueId) => ({
   type: 'START_PLAYBACK',
-  payload: axios.get(`/Queues/${queueId}/playCurrentSong`)
+  payload: axios.get(`/api/Queues/playCurrentSong?id=${queueId}`)
 });
 
 export const pausePlayback = (queueId) => ({
   type: 'PAUSE_PLAYBACK',
-  payload: axios.get(`/Queues/${queueId}/pauseCurrentSong`)
+  payload: axios.get(`/api/Queues/pauseCurrentSong?id=${queueId}`)
 });

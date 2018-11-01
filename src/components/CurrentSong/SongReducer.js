@@ -27,12 +27,14 @@ function SongReducer(state = initialState, action) {
     }
     case 'START_PLAYBACK_FULFILLED': {
       return {
-        ...state
+        ...state,
+        playing: true
       }
     }
     case 'PAUSE_PLAYBACK_FULFILLED': {
       return {
-        ...state
+        ...state,
+        playing: false
       }
     }
     default: {
